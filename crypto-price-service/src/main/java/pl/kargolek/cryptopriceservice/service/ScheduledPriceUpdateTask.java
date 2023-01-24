@@ -16,10 +16,13 @@ public class ScheduledPriceUpdateTask {
     @Autowired
     private PriceUpdateService priceUpdateService;
 
-    @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.MINUTES)
+    @Scheduled(
+            fixedDelayString = "${price.update.schedule.fixed.delay.seconds}",
+            initialDelayString = "${price.update.schedule.initial.delay.seconds}",
+            timeUnit = TimeUnit.SECONDS
+    )
     public void scheduledUpdatePriceJob() {
         log.info("Running scheduled update price job");
         priceUpdateService.updateCryptocurrencyPrices();
     }
-
 }

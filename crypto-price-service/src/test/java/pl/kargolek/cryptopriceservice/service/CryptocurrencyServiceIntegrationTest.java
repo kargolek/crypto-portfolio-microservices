@@ -11,9 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.shaded.org.apache.commons.lang3.RandomUtils;
 import pl.kargolek.cryptopriceservice.exception.CryptocurrencyNotFoundException;
@@ -33,11 +33,11 @@ import static org.assertj.core.api.Assertions.*;
 import static pl.kargolek.cryptopriceservice.extension.MockWebServerExtension.mockWebServer;
 
 @Transactional
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MySqlTestContainerExtension.class)
 @ExtendWith(MockWebServerExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Tag("IntegrationTest")
+@ActiveProfiles("test")
 public class CryptocurrencyServiceIntegrationTest {
 
     @Autowired

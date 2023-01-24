@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pl.kargolek.cryptopriceservice.exception.MarketApiClientException;
 import pl.kargolek.cryptopriceservice.extension.MockWebServerExtension;
 import pl.kargolek.cryptopriceservice.extension.MySqlTestContainerExtension;
@@ -34,11 +34,11 @@ import static pl.kargolek.cryptopriceservice.extension.MockWebServerExtension.mo
  * @author Karol Kuta-Orlowicz
  */
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MySqlTestContainerExtension.class)
 @ExtendWith(MockWebServerExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Tag("IntegrationTest")
+@ActiveProfiles("test")
 class PriceUpdateServiceIntegrationTest {
 
     private static final BigDecimal BTC_RES_PRICE = new BigDecimal("25000.12345").setScale(12, RoundingMode.HALF_UP);

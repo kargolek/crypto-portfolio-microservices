@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import pl.kargolek.cryptopriceservice.dto.controller.CryptocurrencyPostDTO;
 import pl.kargolek.cryptopriceservice.exception.JsonApiError;
 import pl.kargolek.cryptopriceservice.extension.MockWebServerExtension;
@@ -41,11 +41,11 @@ import static pl.kargolek.cryptopriceservice.extension.MockWebServerExtension.mo
  * @author Karol Kuta-Orlowicz
  */
 
-@ExtendWith(SpringExtension.class)
 @ExtendWith(MySqlTestContainerExtension.class)
 @ExtendWith(MockWebServerExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Tag("IntegrationTest")
+@ActiveProfiles("test")
 public class CryptocurrencyControllerIntegrationTest {
 
     private static final String BTC_NAME = "Bitcoin";

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Example;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.shaded.org.apache.commons.lang3.RandomUtils;
 import pl.kargolek.cryptopriceservice.extension.MySqlTestContainerExtension;
@@ -23,7 +25,9 @@ import static org.assertj.core.api.Assertions.*;
 @ExtendWith(MySqlTestContainerExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 @Tag("IntegrationTest")
+@ActiveProfiles("test")
 class CryptocurrencyRepositoryIntegrationTest {
 
     @Autowired
