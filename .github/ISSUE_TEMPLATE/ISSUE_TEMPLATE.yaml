@@ -1,0 +1,101 @@
+name: Bug Report
+description: File a bug report
+title: "[Bug]: "
+body:
+  - type: markdown
+    id: bug-details
+    attributes:
+      value: "# **[Bug Details]** "
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: The impact of the defect on the application
+      options:
+        - Blocker
+        - Critical
+        - Major
+        - Minor
+        - Trivial
+    validations:
+      required: true
+  - type: dropdown
+    id: bug_category
+    attributes:
+      label: Bug Category
+      description: Category of bug you are raise on
+      options:
+        - Crash
+        - Freeze/Hangs
+        - Functional
+        - Backend/DB
+        - Performance
+        - Compatibility
+        - Usability
+        - Design
+        - UI
+        - Typo/Text Errors
+    validations:
+      required: true
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: Frequency
+      description: Consistency of the bug
+      options:
+        - Consistent (10/10)
+        - Frequent (7/10)
+        - Occasional (5/10)
+        - Once
+    validations:
+      required: true
+  - type: markdown
+    id: bug-description
+    attributes:
+      value: "# **[Bug Description]**"
+    validations:
+      required: true
+  - type: textarea
+    id: summary-text
+    attributes:
+      label: Summary
+      description: Provide clearly summary of the bug
+      value: "1. "
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Reproduction steps
+      description: Provide clearly steps to reproduce the bug
+      value: "1. "
+    validations:
+      required: true
+  - type: textarea
+    id: actual-results
+    attributes:
+      label: Actual Results
+      description: Provide clearly actual result of the bug
+      value: "1. "
+    validations:
+      required: true
+  - type: textarea
+    id: expected-results
+    attributes:
+      label: Expected Results
+      description: Provide clearly what behaviour should be expected
+      value: "1. "
+    validations:
+      required: true
+  - type: textarea
+    id: code-affected
+    attributes:
+      label: Code affected
+      description: Please copy and paste java code. This will be automatically formatted into java code, so no need for backticks
+      render: java
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into shell code, so no need for backticks.
+      render: shell

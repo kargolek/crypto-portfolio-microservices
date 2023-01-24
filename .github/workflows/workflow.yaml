@@ -1,0 +1,26 @@
+name: Java CI
+
+env:
+  COIN_MARKET_CAP_API_KEY: ${{ secrets.COIN_MARKET_CAP_API_KEY }}
+  MYSQL_USER: ${{ secrets.MYSQL_USER }}
+  MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+
+on: [push]
+
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: 'maven'
+      - name: Build
+        run: mvn -B package --file pom.xml -Dgroups="SmokeTest"
+      - name: Unit Test
+        run: mvn -B test -Dgroups="UnitTest"
+      - name: Integration Test
+        run: mvn -B test -Dgroups="IntegrationTest"
