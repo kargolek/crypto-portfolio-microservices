@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import pl.kargolek.cryptopriceservice.dto.client.CryptocurrencyQuoteDTO;
 import pl.kargolek.cryptopriceservice.dto.model.CryptocurrencyDTO;
 import pl.kargolek.cryptopriceservice.mapper.CryptocurrencyMapper;
-import pl.kargolek.cryptopriceservice.mapper.util.CycleAvoidingMappingContext;
 import pl.kargolek.cryptopriceservice.model.Cryptocurrency;
 import pl.kargolek.cryptopriceservice.model.Price;
 
@@ -36,26 +35,22 @@ public class PriceUpdateService {
         if (cryptocurrencies.isEmpty())
             return Collections.emptyList();
         var cryptocurrencyDTOS = cryptocurrencies.stream()
-                .map((Cryptocurrency cryptocurrency) ->
-                        CryptocurrencyMapper.INSTANCE.mapEntityToCryptocurrencyDto(cryptocurrency,
-                                new CycleAvoidingMappingContext()))
+                .map(CryptocurrencyMapper.INSTANCE::convertEntityDto)
                 .toList();
 
         var ids = createCryptocurrenciesIds(cryptocurrencyDTOS);
 
         var cryptocurrencyQuoteDTOS = marketApiClientService.getLatestPriceByIds(ids)
-                .orElseThrow()
                 .getData()
                 .values();
 
         var prices = updateDtoByNewPrice(cryptocurrencyDTOS, cryptocurrencyQuoteDTOS)
                 .stream()
-                .map(CryptocurrencyMapper.INSTANCE::mapDtoToCryptocurrencyEntity)
+                .map(CryptocurrencyMapper.INSTANCE::convertDtoEntity)
                 .map(Cryptocurrency::getPrice)
                 .filter(price -> price != null && price.getPriceCurrent() != null)
                 .toList();
-        priceService.updatePrices(prices);
-        return prices;
+        return priceService.updatePrices(prices);
     }
 
     private List<CryptocurrencyDTO> updateDtoByNewPrice(List<CryptocurrencyDTO> cryptocurrencyDTOS,

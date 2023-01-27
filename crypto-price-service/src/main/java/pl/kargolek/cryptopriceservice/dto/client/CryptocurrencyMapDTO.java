@@ -23,4 +23,7 @@ public class CryptocurrencyMapDTO {
     @JsonProperty("id")
     private Long coinMarketId;
 
+    @JsonProperty("platform")
+    private PlatformMapDTO platformMapDTO;
+
 }

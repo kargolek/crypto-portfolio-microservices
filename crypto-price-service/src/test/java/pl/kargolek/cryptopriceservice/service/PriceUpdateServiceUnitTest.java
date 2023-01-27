@@ -17,7 +17,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
@@ -125,13 +128,32 @@ class PriceUpdateServiceUnitTest {
     void whenUpdateCryptocurrencyPrices_thenPricesShouldBeUpdated() {
         when(cryptocurrencyService.getCryptocurrencies())
                 .thenReturn(cryptocurrencyEntities);
+
         when(marketApiClientService.getLatestPriceByIds(any()))
-                .thenReturn(Optional.of(quotesDataDTO));
-        var priceEntities = cryptocurrencyEntities.stream()
-                .map(Cryptocurrency::getPrice)
-                .toList();
+                .thenReturn(quotesDataDTO);
+
+        var priceBTC = Price.builder()
+                .priceCurrent(priceQuoteDtoBTC.getPriceCurrent())
+                .percentChange1h(priceQuoteDtoBTC.getPercentChange1h())
+                .percentChange24h(priceQuoteDtoBTC.getPercentChange24h())
+                .percentChange7d(priceQuoteDtoBTC.getPercentChange7d())
+                .percentChange30d(priceQuoteDtoBTC.getPercentChange30d())
+                .percentChange60d(priceQuoteDtoBTC.getPercentChange60d())
+                .percentChange90d(priceQuoteDtoBTC.getPercentChange90d())
+                .build();
+
+        var priceETH = Price.builder()
+                .priceCurrent(priceQuoteDtoETH.getPriceCurrent())
+                .percentChange1h(priceQuoteDtoETH.getPercentChange1h())
+                .percentChange24h(priceQuoteDtoETH.getPercentChange24h())
+                .percentChange7d(priceQuoteDtoETH.getPercentChange7d())
+                .percentChange30d(priceQuoteDtoETH.getPercentChange30d())
+                .percentChange60d(priceQuoteDtoETH.getPercentChange60d())
+                .percentChange90d(priceQuoteDtoETH.getPercentChange90d())
+                .build();
+
         when(priceService.updatePrices(any()))
-                .thenReturn(priceEntities);
+                .thenReturn(List.of(priceBTC, priceETH));
 
         var expected = underTest.updateCryptocurrencyPrices();
 
@@ -140,19 +162,31 @@ class PriceUpdateServiceUnitTest {
                         Price::getId,
                         Price::getPriceCurrent,
                         Price::getPercentChange1h,
-                        Price::getPercentChange24h
+                        Price::getPercentChange24h,
+                        Price::getPercentChange7d,
+                        Price::getPercentChange30d,
+                        Price::getPercentChange60d,
+                        Price::getPercentChange90d
                 ).containsExactly(
                         tuple(
                                 priceBTC.getId(),
                                 priceQuoteDtoBTC.getPriceCurrent(),
                                 priceQuoteDtoBTC.getPercentChange1h(),
-                                priceQuoteDtoBTC.getPercentChange24h()
+                                priceQuoteDtoBTC.getPercentChange24h(),
+                                priceQuoteDtoBTC.getPercentChange7d(),
+                                priceQuoteDtoBTC.getPercentChange30d(),
+                                priceQuoteDtoBTC.getPercentChange60d(),
+                                priceQuoteDtoBTC.getPercentChange90d()
                         ),
                         tuple(
                                 priceETH.getId(),
                                 priceQuoteDtoETH.getPriceCurrent(),
                                 priceQuoteDtoETH.getPercentChange1h(),
-                                priceQuoteDtoETH.getPercentChange24h()
+                                priceQuoteDtoETH.getPercentChange24h(),
+                                priceQuoteDtoETH.getPercentChange7d(),
+                                priceQuoteDtoETH.getPercentChange30d(),
+                                priceQuoteDtoETH.getPercentChange60d(),
+                                priceQuoteDtoETH.getPercentChange90d()
                         )
                 );
     }
@@ -186,7 +220,7 @@ class PriceUpdateServiceUnitTest {
                 .setData(Map.of("1", cryptoQuoteDtoBTC, "1027", cryptoQuoteDtoETH));
 
         when(marketApiClientService.getLatestPriceByIds(any()))
-                .thenReturn(Optional.of(quotesDataDTO));
+                .thenReturn(quotesDataDTO);
 
         var priceEntities = cryptocurrencyEntities.stream()
                 .map(Cryptocurrency::getPrice)
@@ -230,7 +264,7 @@ class PriceUpdateServiceUnitTest {
                 .setData(Map.of("1", cryptoQuoteDtoBTC, "1027", cryptoQuoteDtoETH));
 
         when(marketApiClientService.getLatestPriceByIds(any()))
-                .thenReturn(Optional.of(quotesDataDTO));
+                .thenReturn(quotesDataDTO);
 
         var priceEntities = cryptocurrencyEntities.stream()
                 .map(Cryptocurrency::getPrice)

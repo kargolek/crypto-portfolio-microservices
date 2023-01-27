@@ -183,8 +183,7 @@ class CryptocurrencyControllerUnitTest {
 
         var body = new CryptocurrencyPostDTO()
                 .setName("Bitcoin")
-                .setSymbol("BTC")
-                .setCoinMarketId(1L);
+                .setSymbol("BTC");
 
         mockMvc.perform(MockMvcRequestBuilders.post(path)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -275,8 +274,7 @@ class CryptocurrencyControllerUnitTest {
 
         var body = new CryptocurrencyPostDTO()
                 .setName("Bitcoin")
-                .setSymbol("BTC")
-                .setCoinMarketId(1L);
+                .setSymbol("BTC");
 
         mockMvc.perform(MockMvcRequestBuilders.put(path + "/" + cryptocurrencyBTC.getId())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -293,8 +291,7 @@ class CryptocurrencyControllerUnitTest {
 
         var body = new CryptocurrencyPostDTO()
                 .setName("Bitcoin")
-                .setSymbol("BTC")
-                .setCoinMarketId(1L);
+                .setSymbol("BTC");
 
         mockMvc.perform(MockMvcRequestBuilders.put(path + "/" + cryptocurrencyBTC.getId())
                         .contentType(MediaType.APPLICATION_JSON)
