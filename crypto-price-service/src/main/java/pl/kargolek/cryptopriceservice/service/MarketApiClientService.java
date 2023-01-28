@@ -10,6 +10,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import pl.kargolek.cryptopriceservice.dto.client.MapDataDTO;
 import pl.kargolek.cryptopriceservice.dto.client.QuotesDataDTO;
+import pl.kargolek.cryptopriceservice.exception.NoSuchCryptoSymbolException;
+import pl.kargolek.cryptopriceservice.exception.NoSuchPriceException;
 import pl.kargolek.cryptopriceservice.service.impl.MarketApiClientImpl;
 
 import java.util.Optional;
@@ -31,26 +33,31 @@ public class MarketApiClientService {
     @Value("${api.coin.market.cap.map.endpoint}")
     private String mapCryptocurrencyEndpoint;
 
-
-    public MarketApiClientService(WebClient webClient) {
+    public MarketApiClientService(WebClient webClient,
+                                   String quotesLatestEndpoint,
+                                   String mapCryptocurrencyEndpoint) {
         this.marketApiClient = new MarketApiClientImpl(webClient);
+        this.quotesLatestEndpoint = quotesLatestEndpoint;
+        this.mapCryptocurrencyEndpoint = mapCryptocurrencyEndpoint;
     }
 
-    public Optional<QuotesDataDTO> getLatestPriceByIds(String ids) {
+    public QuotesDataDTO getLatestPriceByIds(String ids) {
         var uri = UriComponentsBuilder.newInstance()
                 .path(this.quotesLatestEndpoint)
                 .queryParamIfPresent("id", Optional.of(ids))
                 .build()
                 .toUri();
-        return marketApiClient.getRequest(uri, QuotesDataDTO.class);
+        return marketApiClient.getRequest(uri, QuotesDataDTO.class).orElseThrow(
+                ()-> new NoSuchPriceException(ids));
     }
 
-    public Optional<MapDataDTO> getCryptoMarketIdBySymbol(String symbol){
+    public MapDataDTO getMapCryptocurrencyInfo(String symbol){
         var uri = UriComponentsBuilder.newInstance()
                 .path(this.mapCryptocurrencyEndpoint)
                 .queryParamIfPresent("symbol", Optional.of(symbol))
                 .build()
                 .toUri();
-        return marketApiClient.getRequest(uri, MapDataDTO.class);
+        return marketApiClient.getRequest(uri, MapDataDTO.class).orElseThrow(
+                () -> new NoSuchCryptoSymbolException(symbol));
     }
 }

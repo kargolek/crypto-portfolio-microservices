@@ -1,7 +1,5 @@
 package pl.kargolek.cryptopriceservice.service;
 
-import okhttp3.mockwebserver.MockResponse;
-import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -9,16 +7,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.annotation.Transactional;
-import org.testcontainers.shaded.org.apache.commons.lang3.RandomUtils;
 import pl.kargolek.cryptopriceservice.exception.CryptocurrencyNotFoundException;
 import pl.kargolek.cryptopriceservice.exception.MarketApiClientException;
-import pl.kargolek.cryptopriceservice.extension.MockWebServerExtension;
+import pl.kargolek.cryptopriceservice.exception.NoMatchCryptoMapException;
+import pl.kargolek.cryptopriceservice.exception.NoSuchCryptoSymbolException;
+import pl.kargolek.cryptopriceservice.extension.MarketMockServerDispatcherExtension;
 import pl.kargolek.cryptopriceservice.extension.MySqlTestContainerExtension;
 import pl.kargolek.cryptopriceservice.model.Cryptocurrency;
 import pl.kargolek.cryptopriceservice.model.Price;
@@ -30,16 +27,18 @@ import java.time.ZoneOffset;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static pl.kargolek.cryptopriceservice.extension.MockWebServerExtension.mockWebServer;
 
 @Transactional
 @ExtendWith(MySqlTestContainerExtension.class)
-@ExtendWith(MockWebServerExtension.class)
+@ExtendWith(MarketMockServerDispatcherExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Tag("IntegrationTest")
 @ActiveProfiles("test")
 public class CryptocurrencyServiceIntegrationTest {
 
+    private static final long BTC_MARKET_ID = 1L;
+    private static final String XEN_PLATFORM_NAME = "Ethereum";
+    private static final String XEN_TOKEN_ADDRESS = "0x06450dEe7FD2Fb8E39061434BAbCFC05599a6Fb8";
     @Autowired
     private CryptocurrencyService underTestService;
     @Autowired
@@ -48,190 +47,166 @@ public class CryptocurrencyServiceIntegrationTest {
     @Autowired
     private PriceRepository priceRepository;
 
-    private Cryptocurrency cryptocurrency;
+    private Cryptocurrency cryptocurrencyBTC;
+    private Cryptocurrency cryptocurrencyXEN;
 
     @DynamicPropertySource
-    static void registerProperty(DynamicPropertyRegistry registry) {
-        registry.add("api.coin.market.cap.baseUrl", () -> mockWebServer.url("/").toString());
+    static void webclientProperties(DynamicPropertyRegistry registry) {
+        registry.add("api.coin.market.cap.baseUrl",
+                () -> MarketMockServerDispatcherExtension.mockWebServer.url("/").toString());
     }
 
     @BeforeEach
     public void setup() {
-        cryptocurrency = Cryptocurrency.builder()
+        cryptocurrencyBTC = Cryptocurrency.builder()
                 .name("Bitcoin")
                 .symbol("BTC")
-                .coinMarketId(RandomUtils.nextLong())
+                .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
+                .build();
+
+        cryptocurrencyXEN = Cryptocurrency.builder()
+                .name("Xen Crypto")
+                .symbol("XEN")
                 .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
                 .build();
     }
 
     @Test
     void whenAddCryptocurrency_thenShouldSaveSuccessful() {
-        var expected = underTestService.addCryptocurrency(cryptocurrency);
-        assertThat(cryptocurrencyRepository.findAll())
+        var expected = underTestService.addCryptocurrency(cryptocurrencyBTC);
+
+        assertThat(expected)
                 .extracting(
-                        Cryptocurrency::getId,
                         Cryptocurrency::getName,
                         Cryptocurrency::getSymbol,
                         Cryptocurrency::getCoinMarketId,
-                        Cryptocurrency::getLastUpdate
+                        Cryptocurrency::getPlatform,
+                        Cryptocurrency::getTokenAddress
                 ).containsExactly(
-                        tuple(
-                                expected.getId(),
-                                expected.getName(),
-                                expected.getSymbol(),
-                                expected.getCoinMarketId(),
-                                expected.getLastUpdate()
-                        )
+                        cryptocurrencyBTC.getName(),
+                        cryptocurrencyBTC.getSymbol(),
+                        BTC_MARKET_ID,
+                        cryptocurrencyBTC.getPlatform(),
+                        cryptocurrencyBTC.getTokenAddress()
+                );
+
+        assertThat(expected.getId())
+                .isGreaterThan(0L);
+
+        assertThat(expected.getLastUpdate())
+                .isBefore(LocalDateTime.now(ZoneOffset.UTC));
+    }
+
+    @Test
+    void whenAddCryptocurrencyPlatformTokenNeedToFetch_thenShouldSaveSuccessful() {
+        var expected = underTestService.addCryptocurrency(cryptocurrencyXEN);
+
+        assertThat(expected)
+                .extracting(
+                        Cryptocurrency::getPlatform,
+                        Cryptocurrency::getTokenAddress
+                ).containsExactly(
+                        XEN_PLATFORM_NAME,
+                        XEN_TOKEN_ADDRESS
                 );
     }
 
     @Test
-    void whenAddCryptocurrencyWithoutMarketId_thenShouldSaveSuccessful() {
-        cryptocurrency.setCoinMarketId(null);
+    void whenAddCryptocurrencyWithPlatformToken_thenShouldSaveSuccessful() {
+        cryptocurrencyBTC.setTokenAddress("MY_PLATFORM");
+        cryptocurrencyBTC.setTokenAddress("MY_TOKEN");
 
-        var bodyRes = """
-                {
-                    "status": {
-                        "timestamp": "2023-01-20T00:06:31.909Z",
-                        "error_code": 0,
-                        "error_message": null,
-                        "elapsed": 16,
-                        "credit_count": 1,
-                        "notice": null
-                    },
-                    "data": [
-                        {
-                            "id": 1,
-                            "name": "Bitcoin",
-                            "symbol": "BTC",
-                            "slug": "bitcoin",
-                            "rank": 1,
-                            "displayTV": 1,
-                            "manualSetTV": 0,
-                            "tvCoinSymbol": "",
-                            "is_active": 1,
-                            "first_historical_data": "2013-04-28T18:47:21.000Z",
-                            "last_historical_data": "2023-01-19T23:59:00.000Z",
-                            "platform": null
-                        }
-                    ]
-                }
-                """;
+        var expected = underTestService.addCryptocurrency(cryptocurrencyBTC);
 
-        mockWebServer.enqueue(
-                new MockResponse()
-                        .setResponseCode(200)
-                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-                        .setBody(bodyRes)
-        );
-
-        var expected = underTestService.addCryptocurrency(cryptocurrency);
-
-        System.out.println("COIN MARKET: " + expected.getCoinMarketId());
-
-        assertThat(cryptocurrencyRepository.findAll())
+        assertThat(expected)
                 .extracting(
-                        Cryptocurrency::getId,
-                        Cryptocurrency::getName,
-                        Cryptocurrency::getSymbol,
-                        Cryptocurrency::getCoinMarketId,
-                        Cryptocurrency::getLastUpdate
+                        Cryptocurrency::getPlatform,
+                        Cryptocurrency::getTokenAddress
                 ).containsExactly(
-                        tuple(
-                                expected.getId(),
-                                expected.getName(),
-                                expected.getSymbol(),
-                                expected.getCoinMarketId(),
-                                expected.getLastUpdate()
-                        )
+                        cryptocurrencyBTC.getPlatform(),
+                        cryptocurrencyBTC.getTokenAddress()
                 );
     }
 
     @Test
-    void whenAddWithoutMarketIdAndMarketResponse500_thenShouldSave() {
-        cryptocurrency.setCoinMarketId(null);
+    void whenAddCryptocurrency_thenPriceEntityShouldSaveAlso() {
+        var expected = underTestService.addCryptocurrency(cryptocurrencyBTC);
 
-        var bodyRes = """
-                {
-                    "status": {
-                    "timestamp": "2018-06-02T22:51:28.209Z",
-                    "error_code": 500,
-                    "error_message": "An internal server error occurred",
-                    "elapsed": 10,
-                    "credit_count": 0
-                    }
-                }
-                """;
+        assertThat(expected.getPrice())
+                .extracting(
+                        Price::getId,
+                        Price::getPriceCurrent,
+                        Price::getPercentChange1h
+                ).containsExactly(
+                        cryptocurrencyBTC.getPrice().getId(),
+                        null,
+                        null
+                );
+    }
 
-        mockWebServer.enqueue(
-                new MockResponse()
-                        .setResponseCode(500)
-                        .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-                        .setBody(bodyRes)
-        );
+    @Test
+    void whenAddCryptoMarketResponse500_thenThrowMarketExc() {
+        cryptocurrencyBTC.setSymbol("SERVER_500");
 
-        assertThatThrownBy(() -> underTestService.addCryptocurrency(cryptocurrency))
+        assertThatThrownBy(() -> underTestService.addCryptocurrency(cryptocurrencyBTC))
                 .isInstanceOf(MarketApiClientException.class)
                 .hasMessageContaining("serverMessage: An internal server error occurred");
     }
 
     @Test
-    void whenAddCryptoWithTheSameCoinMarketId_thenShouldThrowConstraintViolation() {
-        var coinMarketIdRandom = RandomUtils.nextLong();
-        var crypto = Cryptocurrency.builder()
-                .name("Ethereum")
-                .symbol("ETH")
-                .coinMarketId(coinMarketIdRandom)
-                .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
-                .build();
+    void whenAddCryptoMarketResponse400_thenThrowNoSuchSymbolExc() {
+        cryptocurrencyBTC.setSymbol("Unknown");
 
-        var crypto2 = Cryptocurrency.builder()
-                .name("Chia")
-                .symbol("XCH")
-                .coinMarketId(coinMarketIdRandom)
-                .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
-                .build();
-        underTestService.addCryptocurrency(crypto);
-
-        assertThatThrownBy(() -> underTestService.addCryptocurrency(crypto2))
-                .hasCauseInstanceOf(ConstraintViolationException.class);
+        assertThatThrownBy(() -> underTestService.addCryptocurrency(cryptocurrencyBTC))
+                .isInstanceOf(NoSuchCryptoSymbolException.class)
+                .hasMessageContaining("Unable to fetch crypto map from coin market api for provided symbol: Unknown");
     }
 
     @Test
-    void whenUpdateByCorrectId_thenShouldUpdateSuccessful() {
-        var crypto = Cryptocurrency.builder()
-                .name("Ethereum")
-                .symbol("ETH")
-                .coinMarketId(1L)
-                .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
-                .build();
-        var cryptoToUpdate = cryptocurrencyRepository.save(crypto);
+    void whenAddCryptoNameNoMatchWithFetchedMapMarket_thenShouldSave() {
+        cryptocurrencyBTC.setName("UNKNOWN_NAME");
+
+        assertThatThrownBy(() -> underTestService.addCryptocurrency(cryptocurrencyBTC))
+                .isInstanceOf(NoMatchCryptoMapException.class)
+                .hasMessageContaining("Received coin market cap crypto name, no match with provided name:UNKNOWN_NAME");
+    }
+
+    @Test
+    void whenUpdateCrypto_thenShouldUpdateSuccessful() {
+        cryptocurrencyXEN.setCoinMarketId(1200L);
+        var cryptoSaved = cryptocurrencyRepository.save(cryptocurrencyXEN);
 
         var cryptoUpdate = Cryptocurrency.builder()
-                .name("Bitcoin")
-                .symbol("BTC")
-                .coinMarketId(2L)
+                .name("NEW_NAME")
+                .symbol("NEW_SYMBOL")
+                .platform("NEW_PLATFORM")
+                .tokenAddress("NEW_TOKEN_ADDRESS")
                 .build();
 
-        var expected =
-                underTestService.updateCryptocurrency(cryptoToUpdate.getId(), cryptoUpdate);
+        var expected = underTestService.updateCryptocurrency(cryptoSaved.getId(), cryptoUpdate);
 
         assertThat(expected)
                 .extracting(
                         Cryptocurrency::getId,
                         Cryptocurrency::getName,
                         Cryptocurrency::getSymbol,
-                        Cryptocurrency::getCoinMarketId)
-                .containsExactly(cryptoToUpdate.getId(), "Bitcoin", "BTC", 2L);
+                        Cryptocurrency::getPlatform,
+                        Cryptocurrency::getTokenAddress
+                ).containsExactly(
+                        cryptoSaved.getId(),
+                        cryptoUpdate.getName(),
+                        cryptoUpdate.getSymbol(),
+                        cryptoUpdate.getPlatform(),
+                        cryptoUpdate.getTokenAddress()
+                );
     }
 
     @Test
     void whenUpdateByIncorrectId_thenShouldThrowAnException() {
         var crypto = Cryptocurrency.builder()
-                .name("Ethereum")
+                .name(XEN_PLATFORM_NAME)
                 .symbol("ETH")
-                .coinMarketId(1L)
+                .coinMarketId(BTC_MARKET_ID)
                 .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
                 .build();
         var cryptoToUpdate = cryptocurrencyRepository.save(crypto);
@@ -255,9 +230,9 @@ public class CryptocurrencyServiceIntegrationTest {
     @Test
     void whenDeleteById_thenShouldDeleteCryptocurrency() {
         var crypto = Cryptocurrency.builder()
-                .name("Ethereum")
+                .name(XEN_PLATFORM_NAME)
                 .symbol("ETH")
-                .coinMarketId(1L)
+                .coinMarketId(BTC_MARKET_ID)
                 .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
                 .build();
         var id = cryptocurrencyRepository.save(crypto).getId();
@@ -269,16 +244,16 @@ public class CryptocurrencyServiceIntegrationTest {
                         Cryptocurrency::getId,
                         Cryptocurrency::getName
                 ).doesNotContain(
-                        tuple(id, "Ethereum")
+                        tuple(id, XEN_PLATFORM_NAME)
                 );
     }
 
     @Test
     void whenDeleteByIdNotExisted_thenThrowEmptyResultDataAccessExc() {
         var crypto = Cryptocurrency.builder()
-                .name("Ethereum")
+                .name(XEN_PLATFORM_NAME)
                 .symbol("ETH")
-                .coinMarketId(1L)
+                .coinMarketId(BTC_MARKET_ID)
                 .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
                 .build();
         var id = cryptocurrencyRepository.save(crypto);
@@ -290,48 +265,47 @@ public class CryptocurrencyServiceIntegrationTest {
     }
 
     @Test
-    void whenFindByName_thenFindShouldBeSuccessful() {
-        var crypto = Cryptocurrency.builder()
-                .name("Ethereum")
-                .symbol("ETH")
-                .coinMarketId(1L)
-                .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
-                .build();
-        var cryptoSaved = cryptocurrencyRepository.save(crypto);
+    void whenFindByName_thenReturnListWithSearchCrypto() {
+        cryptocurrencyXEN.setPlatform("PLATFORM");
+        cryptocurrencyXEN.setTokenAddress("TOKEN_ADDRESS");
+        cryptocurrencyXEN.setCoinMarketId(1000L);
+        var cryptoSaved = cryptocurrencyRepository.save(cryptocurrencyXEN);
 
-        var expected = underTestService.getByName(List.of("Ethereum", "Bitcoin"));
+        var expected = underTestService.getByName(List.of(cryptoSaved.getName()));
 
         assertThat(expected)
                 .extracting(
                         Cryptocurrency::getId,
                         Cryptocurrency::getName,
                         Cryptocurrency::getSymbol,
-                        Cryptocurrency::getCoinMarketId
+                        Cryptocurrency::getCoinMarketId,
+                        Cryptocurrency::getPlatform,
+                        Cryptocurrency::getTokenAddress
                 ).containsExactly(
                         tuple(
                                 cryptoSaved.getId(),
-                                "Ethereum",
-                                "ETH",
-                                1L
+                                cryptoSaved.getName(),
+                                cryptoSaved.getSymbol(),
+                                cryptoSaved.getCoinMarketId(),
+                                cryptoSaved.getPlatform(),
+                                cryptoSaved.getTokenAddress()
                         )
                 );
+
+        assertThat(expected.get(0).getLastUpdate())
+                .isEqualToIgnoringNanos(cryptoSaved.getLastUpdate());
     }
 
     @Test
-    void whenSaveCryptocurrencyEntity_thenPriceEntityShouldSaveAlso() {
-        underTestService.addCryptocurrency(cryptocurrency);
+    void whenFindByNameUnknownName_thenReturnListEmptyList() {
+        cryptocurrencyXEN.setPlatform("PLATFORM");
+        cryptocurrencyXEN.setTokenAddress("TOKEN_ADDRESS");
+        cryptocurrencyXEN.setCoinMarketId(1000L);
+        cryptocurrencyRepository.save(cryptocurrencyXEN);
 
-        assertThat(priceRepository.findAll())
-                .hasSize(1)
-                .extracting(
-                        Price::getId,
-                        Price::getPriceCurrent,
-                        Price::getPercentChange1h,
-                        Price::getCryptocurrency
-                ).containsExactly(
-                        tuple(
-                                cryptocurrency.getPrice().getId(), null, null, cryptocurrency
-                        )
-                );
+        var expected = underTestService.getByName(List.of("Unknown_name"));
+
+        assertThat(expected)
+                .hasSize(0);
     }
 }

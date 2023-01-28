@@ -13,6 +13,10 @@ public class CryptocurrencyDTO {
     private String name;
     private String symbol;
     private Long coinMarketId;
+
+    @JsonProperty("platform")
+    private PlatformDTO platformDTO;
+
     private LocalDateTime lastUpdate;
 
     @JsonProperty("price")

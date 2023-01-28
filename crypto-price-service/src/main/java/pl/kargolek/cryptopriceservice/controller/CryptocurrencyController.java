@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.kargolek.cryptopriceservice.dto.controller.CryptocurrencyPostDTO;
 import pl.kargolek.cryptopriceservice.dto.model.CryptocurrencyDTO;
 import pl.kargolek.cryptopriceservice.mapper.CryptocurrencyMapper;
-import pl.kargolek.cryptopriceservice.mapper.util.CycleAvoidingMappingContext;
 import pl.kargolek.cryptopriceservice.service.CryptocurrencyService;
 
 import javax.validation.Valid;
@@ -32,7 +31,7 @@ public class CryptocurrencyController {
     @GetMapping("/{id}")
     public ResponseEntity<CryptocurrencyDTO> getCryptocurrencyById(@PathVariable("id") Long id) {
         var cryptocurrency = cryptocurrencyService.getById(id);
-        var cryptocurrencyDto = mapper.mapEntityToCryptocurrencyDto(cryptocurrency, new CycleAvoidingMappingContext());
+        var cryptocurrencyDto = mapper.convertEntityDto(cryptocurrency);
         return ResponseEntity.status(HttpStatus.OK).body(cryptocurrencyDto);
     }
 
@@ -41,20 +40,20 @@ public class CryptocurrencyController {
         return Optional.ofNullable(names).isPresent() ?
                 cryptocurrencyService.getByName(names)
                         .stream()
-                        .map(cryptocurrency -> mapper.mapEntityToCryptocurrencyDto(cryptocurrency, new CycleAvoidingMappingContext()))
+                        .map(mapper::convertEntityDto)
                         .toList() :
                 cryptocurrencyService.getCryptocurrencies()
                         .stream()
-                        .map(cryptocurrency -> mapper.mapEntityToCryptocurrencyDto(cryptocurrency, new CycleAvoidingMappingContext()))
+                        .map(mapper::convertEntityDto)
                         .toList();
     }
 
     @PostMapping("")
     public ResponseEntity<CryptocurrencyDTO> registerCryptocurrency(
             @Valid @RequestBody CryptocurrencyPostDTO cryptocurrencyPostDTO) {
-        var registerCryptocurrency = mapper.mapPostDtoToCryptocurrencyEntity(cryptocurrencyPostDTO);
+        var registerCryptocurrency = mapper.convertPostEntity(cryptocurrencyPostDTO);
         var cryptocurrency = cryptocurrencyService.addCryptocurrency(registerCryptocurrency);
-        var cryptocurrencyDTO = mapper.mapEntityToCryptocurrencyDto(cryptocurrency, new CycleAvoidingMappingContext());
+        var cryptocurrencyDTO = mapper.convertEntityDto(cryptocurrency);
         return ResponseEntity.status(HttpStatus.CREATED).body(cryptocurrencyDTO);
     }
 
@@ -66,9 +65,9 @@ public class CryptocurrencyController {
     @PutMapping("/{id}")
     public ResponseEntity<CryptocurrencyDTO> updateCryptocurrency(@PathVariable("id") Long id,
                                                                   @Valid @RequestBody CryptocurrencyPostDTO cryptocurrencyPostDTO) {
-        var cryptocurrencyUpdate = mapper.mapPostDtoToCryptocurrencyEntity(cryptocurrencyPostDTO);
+        var cryptocurrencyUpdate = mapper.convertPostEntity(cryptocurrencyPostDTO);
         var cryptocurrency = cryptocurrencyService.updateCryptocurrency(id, cryptocurrencyUpdate);
-        var cryptocurrencyDto = mapper.mapEntityToCryptocurrencyDto(cryptocurrency, new CycleAvoidingMappingContext());
+        var cryptocurrencyDto = mapper.convertEntityDto(cryptocurrency);
         return ResponseEntity.status(HttpStatus.OK).body(cryptocurrencyDto);
     }
 

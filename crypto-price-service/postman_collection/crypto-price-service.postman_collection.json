@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "a6f583ec-7ab9-4777-b0a4-81321ea95636",
+		"_postman_id": "821dbb96-fffa-47d2-9d52-b03efc28fdf0",
 		"name": "crypto-price-service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23501952"
+		"_exporter_id": "10127139"
 	},
 	"item": [
 		{
@@ -15,7 +15,6 @@
 						"exec": [
 							"let crypto_name = pm.collectionVariables.get(\"crypto_name\");\r",
 							"let crypto_symbol = pm.collectionVariables.get(\"crypto_symbol\");\r",
-							"let crypto_coin_market_id = pm.collectionVariables.get(\"crypto_coinMarketId\");\r",
 							"\r",
 							"let jsonData = pm.response.json();\r",
 							"\r",
@@ -32,7 +31,15 @@
 							"});\r",
 							"\r",
 							"pm.test(\"Verify json data cryptocurrency coin market id\", function () {\r",
-							"    pm.expect(jsonData.coinMarketId).to.eql(crypto_coin_market_id);\r",
+							"    pm.expect(jsonData.coinMarketId).to.be.a(\"number\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency platform\", function () {\r",
+							"    pm.expect(jsonData.platform.platform).to.be.a(\"string\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency tokenAddress\", function () {\r",
+							"    pm.expect(jsonData.platform.tokenAddress).to.be.a(\"string\");\r",
 							"});\r",
 							"\r",
 							"pm.test(\"Verify json data cryptocurrency lastUpdate is not null\", function () {\r",
@@ -57,13 +64,17 @@
 							"    return randomString;\r",
 							"}\r",
 							"\r",
-							"pm.collectionVariables.set(\"crypto_name\", randomString(50));\r",
-							"pm.collectionVariables.set(\"crypto_symbol\", randomString(15));\r",
-							"pm.collectionVariables.set(\"crypto_coinMarketId\", _.random(1,100000));\r",
+							"pm.collectionVariables.set(\"crypto_name\", \"Bitcoin\");\r",
+							"pm.collectionVariables.set(\"crypto_symbol\", \"BTC\");\r",
+							"pm.collectionVariables.set(\"crypto_platform\", \"bitcoin\");\r",
+							"pm.collectionVariables.set(\"crypto_tokenAddress\", \"token_address\");\r",
 							"\r",
-							"pm.collectionVariables.set(\"crypto_update_name\", randomString(50));\r",
-							"pm.collectionVariables.set(\"crypto_update_symbol\", randomString(15));\r",
-							"pm.collectionVariables.set(\"crypto_update_coinMarketId\", _.random(1,100000));"
+							"pm.collectionVariables.set(\"crypto_update_name\", \"BitcoinSV\");\r",
+							"pm.collectionVariables.set(\"crypto_update_symbol\", \"BSV\");\r",
+							"pm.collectionVariables.set(\"crypto_update_coinMarketId\", _.random(1,100000));\r",
+							"pm.collectionVariables.set(\"crypto_update_platform\", randomString(15));\r",
+							"pm.collectionVariables.set(\"crypto_update_tokenAddress\", randomString(15));\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -74,7 +85,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"{{crypto_name}}\",\r\n    \"symbol\":\"{{crypto_symbol}}\",\r\n    \"coinMarketId\":{{crypto_coinMarketId}}\r\n}",
+					"raw": "{\r\n    \"name\":\"{{crypto_name}}\",\r\n    \"symbol\":\"{{crypto_symbol}}\",\r\n    \"platform\":\"{{crypto_platform}}\",\r\n    \"tokenAddress\":\"{{crypto_tokenAddress}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -124,7 +135,15 @@
 							"});\r",
 							"\r",
 							"pm.test(\"Verify json data cryptocurrency coin market id\", function () {\r",
-							"    pm.expect(jsonData.coinMarketId).to.eql(crypto_coin_market_id);\r",
+							"    pm.expect(jsonData.coinMarketId).to.eql(1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency platform\", function () {\r",
+							"    pm.expect(jsonData.platform.platform).to.be.a(\"string\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency token address\", function () {\r",
+							"    pm.expect(jsonData.platform.tokenAddress).to.be.a(\"string\");\r",
 							"});\r",
 							"\r",
 							"pm.test(\"Verify json data cryptocurrency lastUpdate is not null\", function () {\r",
@@ -186,7 +205,15 @@
 							"});\r",
 							"\r",
 							"pm.test(\"Verify json data cryptocurrency coin market id\", function () {\r",
-							"    pm.expect(jsonDataLastItem.coinMarketId).to.eql(crypto_coin_market_id);\r",
+							"    pm.expect(jsonDataLastItem.coinMarketId).to.eql(1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency platform\", function () {\r",
+							"    pm.expect(jsonDataLastItem.platform.platform).to.be.a(\"string\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency token address\", function () {\r",
+							"    pm.expect(jsonDataLastItem.platform.tokenAddress).to.be.a(\"string\");\r",
 							"});\r",
 							"\r",
 							"pm.test(\"Verify json data cryptocurrency lastUpdate is not null\", function () {\r",
@@ -247,7 +274,15 @@
 							"});\r",
 							"\r",
 							"pm.test(\"Verify json data cryptocurrency coin market id\", function () {\r",
-							"    pm.expect(jsonDataLastItem.coinMarketId).to.eql(crypto_coin_market_id);\r",
+							"    pm.expect(jsonDataLastItem.coinMarketId).to.eql(1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency platform\", function () {\r",
+							"    pm.expect(jsonDataLastItem.platform.platform).to.be.a(\"string\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency token address\", function () {\r",
+							"    pm.expect(jsonDataLastItem.platform.tokenAddress).to.be.a(\"string\");\r",
 							"});\r",
 							"\r",
 							"pm.test(\"Verify json data cryptocurrency lastUpdate is not null\", function () {\r",
@@ -314,7 +349,15 @@
 							"});\r",
 							"\r",
 							"pm.test(\"Verify json data cryptocurrency coin market id\", function () {\r",
-							"    pm.expect(jsonData.coinMarketId).to.eql(crypto_coin_market_id);\r",
+							"    pm.expect(jsonData.coinMarketId).to.eql(1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency platform\", function () {\r",
+							"    pm.expect(jsonData.platform.platform).to.be.a(\"string\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency token address\", function () {\r",
+							"    pm.expect(jsonData.platform.tokenAddress).to.be.a(\"string\");\r",
 							"});\r",
 							"\r",
 							"pm.test(\"Verify json data cryptocurrency lastUpdate is not null\", function () {\r",
@@ -343,7 +386,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"{{crypto_update_name}}\",\r\n    \"symbol\":\"{{crypto_update_symbol}}\",\r\n    \"coinMarketId\":{{crypto_update_coinMarketId}}\r\n}",
+					"raw": "{\r\n    \"name\":\"{{crypto_update_name}}\",\r\n    \"symbol\":\"{{crypto_update_symbol}}\",\r\n    \"platform\":\"{{crypto_update_platform}}\",\r\n    \"tokenAddress\":\"{{crypto_update_tokenAddress}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -442,6 +485,22 @@
 		},
 		{
 			"key": "crypto_update_coinMarketId",
+			"value": ""
+		},
+		{
+			"key": "crypto_update_platform",
+			"value": ""
+		},
+		{
+			"key": "crypto_update_tokenAddress",
+			"value": ""
+		},
+		{
+			"key": "crypto_platform",
+			"value": ""
+		},
+		{
+			"key": "crypto_tokenAddress",
 			"value": ""
 		}
 	]

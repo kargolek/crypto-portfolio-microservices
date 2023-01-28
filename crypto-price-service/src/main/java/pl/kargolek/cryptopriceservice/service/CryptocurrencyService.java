@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.kargolek.cryptopriceservice.dto.client.CryptocurrencyMapDTO;
-import pl.kargolek.cryptopriceservice.dto.client.MapDataDTO;
 import pl.kargolek.cryptopriceservice.exception.CryptocurrencyNotFoundException;
+import pl.kargolek.cryptopriceservice.exception.NoMatchCryptoMapException;
 import pl.kargolek.cryptopriceservice.model.Cryptocurrency;
 import pl.kargolek.cryptopriceservice.model.Price;
 import pl.kargolek.cryptopriceservice.repository.CryptocurrencyRepository;
@@ -13,7 +13,6 @@ import pl.kargolek.cryptopriceservice.repository.CryptocurrencyRepository;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -24,8 +23,21 @@ public class CryptocurrencyService {
     private final MarketApiClientService marketApiClientService;
 
     public Cryptocurrency addCryptocurrency(Cryptocurrency cryptocurrency) {
-        if (cryptocurrency.getCoinMarketId() == null)
-            cryptocurrency.setCoinMarketId(getCoinMarketId(cryptocurrency).orElseThrow());
+
+        CryptocurrencyMapDTO cryptocurrencyMapDTO = getCryptocurrencyInfo(cryptocurrency);
+
+        var isPlatformNoExist = cryptocurrency.getPlatform() == null;
+        var isTokenAddressNoExist = cryptocurrency.getTokenAddress() == null;
+
+        var platformDTO = cryptocurrencyMapDTO.getPlatformMapDTO();
+
+        if (isPlatformNoExist && platformDTO != null)
+            cryptocurrency.setPlatform(platformDTO.getPlatformName());
+
+        if (isTokenAddressNoExist && platformDTO != null)
+            cryptocurrency.setTokenAddress(platformDTO.getTokenAddress());
+
+        cryptocurrency.setCoinMarketId(cryptocurrencyMapDTO.getCoinMarketId());
 
         var price = Price.builder()
                 .cryptocurrency(cryptocurrency)
@@ -34,9 +46,12 @@ public class CryptocurrencyService {
         cryptocurrency.setPrice(price);
         cryptocurrency.setLastUpdate(LocalDateTime.now(ZoneOffset.UTC));
 
-        log.info(String.format("Adding new cryptocurrency name: %s, coinMarketCapId: %s",
+        log.info(String.format("Adding new cryptocurrency name:%s, symbol:%s, coinMarketId:%s, platform:%s, tokenAddress:%s",
                 cryptocurrency.getName(),
-                cryptocurrency.getCoinMarketId()));
+                cryptocurrency.getSymbol(),
+                cryptocurrency.getCoinMarketId(),
+                cryptocurrency.getPlatform(),
+                cryptocurrency.getTokenAddress()));
         return cryptocurrencyRepository.save(cryptocurrency);
     }
 
@@ -57,14 +72,16 @@ public class CryptocurrencyService {
 
         cryptocurrencyToUpdate.setName(cryptocurrency.getName());
         cryptocurrencyToUpdate.setSymbol(cryptocurrency.getSymbol());
-        cryptocurrencyToUpdate.setCoinMarketId(cryptocurrency.getCoinMarketId());
+        cryptocurrencyToUpdate.setPlatform(cryptocurrency.getPlatform());
+        cryptocurrencyToUpdate.setTokenAddress(cryptocurrency.getTokenAddress());
         cryptocurrencyToUpdate.setLastUpdate(LocalDateTime.now(ZoneOffset.UTC));
 
-        log.info(String.format("Updating cryptocurrency with id: %d, new name: %s, symbol: %s, coinMarketId: %d",
+        log.info(String.format("Updating cryptocurrency with id:%d, name:%s, symbol:%s, platform:%s, tokenAddress:%s",
                 cryptocurrencyToUpdate.getId(),
                 cryptocurrency.getName(),
                 cryptocurrency.getSymbol(),
-                cryptocurrency.getCoinMarketId()));
+                cryptocurrency.getPlatform(),
+                cryptocurrency.getTokenAddress()));
         return cryptocurrencyRepository.save(cryptocurrencyToUpdate);
     }
 
@@ -78,13 +95,13 @@ public class CryptocurrencyService {
         return cryptocurrencyRepository.findByName(name);
     }
 
-    private Optional<Long> getCoinMarketId(Cryptocurrency cryptocurrency){
-        return marketApiClientService.getCryptoMarketIdBySymbol(cryptocurrency.getSymbol())
-                .map(MapDataDTO::getData)
-                .orElseThrow()
+    private CryptocurrencyMapDTO getCryptocurrencyInfo(Cryptocurrency cryptocurrency) {
+        return marketApiClientService.getMapCryptocurrencyInfo(cryptocurrency.getSymbol()).getData()
                 .stream()
-                .filter(cryptocurrencyMapDTO -> cryptocurrencyMapDTO.getSymbol().equalsIgnoreCase(cryptocurrency.getSymbol()))
-                .map(CryptocurrencyMapDTO::getCoinMarketId)
-                .findFirst();
+                .filter(cryptocurrencyMapDTO -> cryptocurrencyMapDTO
+                        .getName()
+                        .equalsIgnoreCase(cryptocurrency.getName()))
+                .findFirst()
+                .orElseThrow(() -> new NoMatchCryptoMapException(cryptocurrency.getName()));
     }
 }

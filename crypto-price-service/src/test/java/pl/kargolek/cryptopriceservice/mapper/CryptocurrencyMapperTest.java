@@ -4,12 +4,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
+import pl.kargolek.cryptopriceservice.dto.client.CryptocurrencyMapDTO;
 import pl.kargolek.cryptopriceservice.dto.client.CryptocurrencyQuoteDTO;
+import pl.kargolek.cryptopriceservice.dto.client.PlatformMapDTO;
 import pl.kargolek.cryptopriceservice.dto.client.PriceQuoteDTO;
 import pl.kargolek.cryptopriceservice.dto.controller.CryptocurrencyPostDTO;
 import pl.kargolek.cryptopriceservice.dto.model.CryptocurrencyDTO;
+import pl.kargolek.cryptopriceservice.dto.model.PlatformDTO;
 import pl.kargolek.cryptopriceservice.dto.model.PriceDTO;
-import pl.kargolek.cryptopriceservice.mapper.util.CycleAvoidingMappingContext;
 import pl.kargolek.cryptopriceservice.model.Cryptocurrency;
 import pl.kargolek.cryptopriceservice.model.Price;
 
@@ -24,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Tag("UnitTest")
 class CryptocurrencyMapperTest {
     private static final String FIAT_CURRENCY_USD = "USD";
-    private final CryptocurrencyMapper mapper = Mappers.getMapper(CryptocurrencyMapper.class);
+    private final CryptocurrencyMapper underTest = Mappers.getMapper(CryptocurrencyMapper.class);
     private Cryptocurrency cryptocurrency;
     private CryptocurrencyDTO cryptocurrencyDTO;
     private PriceDTO priceDTO;
@@ -32,6 +34,8 @@ class CryptocurrencyMapperTest {
     private PriceQuoteDTO priceQuoteDTO;
 
     private CryptocurrencyPostDTO cryptocurrencyPostDTO;
+    private PlatformMapDTO platformMapDTO;
+    private CryptocurrencyMapDTO cryptocurrencyMapDTO;
 
     @BeforeEach
     void setUp() {
@@ -46,6 +50,8 @@ class CryptocurrencyMapperTest {
                 .name("Bitcoin")
                 .symbol("BTC")
                 .coinMarketId(1L)
+                .platform("platform")
+                .tokenAddress("tokenAddress")
                 .price(price)
                 .build();
         price.setCryptocurrency(cryptocurrency);
@@ -55,11 +61,16 @@ class CryptocurrencyMapperTest {
                 .setPriceCurrent(new BigDecimal("2000.2000"))
                 .setPercentChange1h(new BigDecimal("0.0001"));
 
+        var platformDTO = new PlatformDTO()
+                .setPlatform("platform")
+                .setTokenAddress("tokenAddress");
+
         cryptocurrencyDTO = new CryptocurrencyDTO()
                 .setId(2L)
                 .setName("Ethereum")
                 .setSymbol("ETH")
                 .setCoinMarketId(1027L)
+                .setPlatformDTO(platformDTO)
                 .setPriceDTO(priceDTO);
 
         priceQuoteDTO = new PriceQuoteDTO()
@@ -74,13 +85,12 @@ class CryptocurrencyMapperTest {
 
         cryptocurrencyPostDTO = new CryptocurrencyPostDTO()
                 .setName("MATIC")
-                .setSymbol("MATIC")
-                .setCoinMarketId(2045L);
+                .setSymbol("MATIC");
     }
 
     @Test
     void whenMapDto_thenReturnPriceEntity() {
-        var entity = mapper.mapDtoToPriceEntity(priceDTO);
+        var entity = underTest.convertDtoEntity(priceDTO);
 
         assertThat(entity).extracting(
                 Price::getId,
@@ -94,23 +104,8 @@ class CryptocurrencyMapperTest {
     }
 
     @Test
-    void whenMapQuotes_thenReturnPriceDTO() {
-        var dto = mapper.mapQuoteDtoToPriceDto(priceQuoteDTO);
-
-        assertThat(dto).extracting(
-                PriceDTO::getId,
-                PriceDTO::getPriceCurrent,
-                PriceDTO::getPercentChange1h
-        ).containsExactly(
-                null,
-                cryptocurrencyQuoteDTO.getQuote().get(FIAT_CURRENCY_USD).getPriceCurrent(),
-                cryptocurrencyQuoteDTO.getQuote().get(FIAT_CURRENCY_USD).getPercentChange1h()
-        );
-    }
-
-    @Test
     void whenMapEntity_thenReturnCryptocurrencyDTO() {
-        var dto = mapper.mapEntityToCryptocurrencyDto(cryptocurrency, new CycleAvoidingMappingContext());
+        var dto = underTest.convertEntityDto(cryptocurrency);
 
         assertThat(dto).extracting(
                 CryptocurrencyDTO::getId,
@@ -134,38 +129,53 @@ class CryptocurrencyMapperTest {
                         cryptocurrency.getPrice().getPriceCurrent(),
                         cryptocurrency.getPrice().getPercentChange1h()
                 );
+
+        assertThat(dto.getPlatformDTO())
+                .extracting(
+                        PlatformDTO::getPlatform,
+                        PlatformDTO::getTokenAddress
+                ).containsExactly(
+                        cryptocurrency.getPlatform(),
+                        cryptocurrency.getTokenAddress()
+                );
     }
 
     @Test
-    void whenMapQuotes_thenReturnCryptocurrencyDto() {
-        var dto = mapper.mapQuoteDtoToCryptocurrencyDto(cryptocurrencyQuoteDTO);
+    void whenMapDTO_thenReturnCryptocurrencyEntity() {
+        var entity = underTest.convertDtoEntity(cryptocurrencyDTO);
 
-        assertThat(dto).extracting(
-                CryptocurrencyDTO::getId,
-                CryptocurrencyDTO::getName,
-                CryptocurrencyDTO::getSymbol,
-                CryptocurrencyDTO::getCoinMarketId
+        assertThat(entity).extracting(
+                Cryptocurrency::getId,
+                Cryptocurrency::getName,
+                Cryptocurrency::getSymbol,
+                Cryptocurrency::getCoinMarketId,
+                Cryptocurrency::getPlatform,
+                Cryptocurrency::getTokenAddress
         ).containsExactly(
-                null,
-                cryptocurrencyQuoteDTO.getName(),
-                cryptocurrencyQuoteDTO.getSymbol(),
-                cryptocurrencyQuoteDTO.getCoinMarketId()
+                cryptocurrencyDTO.getId(),
+                cryptocurrencyDTO.getName(),
+                cryptocurrencyDTO.getSymbol(),
+                cryptocurrencyDTO.getCoinMarketId(),
+                cryptocurrencyDTO.getPlatformDTO().getPlatform(),
+                cryptocurrencyDTO.getPlatformDTO().getTokenAddress()
         );
 
-        assertThat(dto.getPriceDTO()).extracting(
-                PriceDTO::getId,
-                PriceDTO::getPriceCurrent,
-                PriceDTO::getPercentChange1h
-        ).containsExactly(
-                null,
-                cryptocurrencyQuoteDTO.getQuote().get(FIAT_CURRENCY_USD).getPriceCurrent(),
-                cryptocurrencyQuoteDTO.getQuote().get(FIAT_CURRENCY_USD).getPercentChange1h()
-        );
+        assertThat(entity.getPrice())
+                .extracting(
+                        Price::getId,
+                        Price::getPriceCurrent,
+                        Price::getPercentChange1h
+                ).containsExactly(
+                        cryptocurrencyDTO.getPriceDTO().getId(),
+                        cryptocurrencyDTO.getPriceDTO().getPriceCurrent(),
+                        cryptocurrencyDTO.getPriceDTO().getPercentChange1h()
+                );
     }
+
 
     @Test
     void whenUpdateDtoByQuotes_thenReturnUpdatedPriceDto() {
-        var dto = mapper.updateDtoByPriceQuoteDto(priceDTO, priceQuoteDTO);
+        var dto = underTest.updateDtoByPriceQuoteDto(priceDTO, priceQuoteDTO);
 
         assertThat(dto).extracting(
                 PriceDTO::getId,
@@ -180,7 +190,7 @@ class CryptocurrencyMapperTest {
 
     @Test
     void whenUpdateDtoByResponse_thenReturnUpdatedCryptocurrencyDto() {
-        var dtoUpdated = mapper.updateDtoByCryptocurrencyQuoteDto(cryptocurrencyDTO,
+        var dtoUpdated = underTest.updateDtoByCryptocurrencyQuoteDto(cryptocurrencyDTO,
                 cryptocurrencyQuoteDTO);
 
         assertThat(dtoUpdated).extracting(
@@ -208,35 +218,16 @@ class CryptocurrencyMapperTest {
 
     @Test
     void whenMapPostDTO_thenReturnEntity() {
-        var expected = mapper.mapPostDtoToCryptocurrencyEntity(cryptocurrencyPostDTO);
+        var expected = underTest.convertPostEntity(cryptocurrencyPostDTO);
 
         assertThat(expected)
                 .isInstanceOf(Cryptocurrency.class)
                 .extracting(
                         Cryptocurrency::getName,
-                        Cryptocurrency::getSymbol,
-                        Cryptocurrency::getCoinMarketId
+                        Cryptocurrency::getSymbol
                 ).containsExactly(
                         cryptocurrencyPostDTO.getName(),
-                        cryptocurrencyPostDTO.getSymbol(),
-                        cryptocurrencyPostDTO.getCoinMarketId()
-                );
-    }
-
-    @Test
-    void whenMapEntity_thenReturnPostDTO() {
-        var expected = mapper.mapEntityToCryptocurrencyPostDto(cryptocurrency);
-
-        assertThat(expected)
-                .isInstanceOf(CryptocurrencyPostDTO.class)
-                .extracting(
-                        CryptocurrencyPostDTO::getName,
-                        CryptocurrencyPostDTO::getSymbol,
-                        CryptocurrencyPostDTO::getCoinMarketId
-                ).containsExactly(
-                        cryptocurrency.getName(),
-                        cryptocurrency.getSymbol(),
-                        cryptocurrency.getCoinMarketId()
+                        cryptocurrencyPostDTO.getSymbol()
                 );
     }
 }

@@ -80,6 +80,44 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(jsonApiError, jsonApiError.getStatus());
     }
 
+    @ExceptionHandler(NoMatchCryptoMapException.class)
+    public ResponseEntity<?> handleNoMatchCryptoMapException(NoMatchCryptoMapException ex) {
+        var jsonApiError = JsonApiError.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .timestamp(LocalDateTime.now(ZoneOffset.UTC))
+                .message(ex.getMessage())
+                .build();
+        log.info(String.format("Status: %s Message: %s",
+                jsonApiError.getStatus(),
+                jsonApiError.getMessage()));
+        return new ResponseEntity<>(jsonApiError, jsonApiError.getStatus());
+    }
+
+    @ExceptionHandler(NoSuchCryptoSymbolException.class)
+    public ResponseEntity<?> handleNoSuchCryptoSymbolException(NoSuchCryptoSymbolException ex) {
+        var jsonApiError = JsonApiError.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .timestamp(LocalDateTime.now(ZoneOffset.UTC))
+                .message(ex.getMessage())
+                .build();
+        log.info(String.format("Status: %s Message: %s",
+                jsonApiError.getStatus(),
+                jsonApiError.getMessage()));
+        return new ResponseEntity<>(jsonApiError, jsonApiError.getStatus());
+    }
+    @ExceptionHandler(NoSuchPriceException.class)
+    public ResponseEntity<?> handleNoSuchPriceException(NoSuchPriceException ex) {
+        var jsonApiError = JsonApiError.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .timestamp(LocalDateTime.now(ZoneOffset.UTC))
+                .message(ex.getMessage())
+                .build();
+        log.info(String.format("Status: %s Message: %s",
+                jsonApiError.getStatus(),
+                jsonApiError.getMessage()));
+        return new ResponseEntity<>(jsonApiError, jsonApiError.getStatus());
+    }
+
     @NotNull
     @Override
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,

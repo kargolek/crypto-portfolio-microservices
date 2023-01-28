@@ -10,16 +10,20 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.testcontainers.shaded.org.apache.commons.lang3.RandomUtils;
 import pl.kargolek.cryptopriceservice.dto.client.CryptocurrencyMapDTO;
 import pl.kargolek.cryptopriceservice.dto.client.MapDataDTO;
+import pl.kargolek.cryptopriceservice.dto.client.PlatformMapDTO;
 import pl.kargolek.cryptopriceservice.exception.CryptocurrencyNotFoundException;
+import pl.kargolek.cryptopriceservice.exception.NoMatchCryptoMapException;
 import pl.kargolek.cryptopriceservice.model.Cryptocurrency;
 import pl.kargolek.cryptopriceservice.repository.CryptocurrencyRepository;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,6 +31,8 @@ import static org.mockito.Mockito.when;
 @Tag("UnitTest")
 class CryptocurrencyServiceUnitTest {
 
+    private static final String PLATFORM_NAME = "platform";
+    private static final String TOKEN_ADDRESS = "tokenAddress";
     @Mock
     private CryptocurrencyRepository cryptocurrencyRepository;
 
@@ -45,13 +51,19 @@ class CryptocurrencyServiceUnitTest {
                 .id(1L)
                 .name("Bitcoin")
                 .symbol("BTC")
-                .coinMarketId(RandomUtils.nextLong())
-                .lastUpdate(LocalDateTime.now())
+                .coinMarketId(1L)
+                .platform(PLATFORM_NAME)
+                .tokenAddress(TOKEN_ADDRESS)
+                .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
                 .build();
 
         var cryptocurrencyMapDTO = new CryptocurrencyMapDTO()
                 .setName("Bitcoin")
                 .setSymbol("BTC")
+                .setPlatformMapDTO(new PlatformMapDTO()
+                        .setPlatformName(PLATFORM_NAME)
+                        .setTokenAddress(TOKEN_ADDRESS)
+                )
                 .setCoinMarketId(1L);
 
         mapDataDTO = new MapDataDTO()
@@ -62,6 +74,8 @@ class CryptocurrencyServiceUnitTest {
     void whenAddCryptoCurrency_thenReturnEntity() {
         when(cryptocurrencyRepository.save(cryptocurrency))
                 .thenReturn(cryptocurrency);
+        when(marketApiClientService.getMapCryptocurrencyInfo(anyString()))
+                .thenReturn(mapDataDTO);
 
         var expected = underTestService.addCryptocurrency(cryptocurrency);
 
@@ -71,42 +85,81 @@ class CryptocurrencyServiceUnitTest {
                         Cryptocurrency::getName,
                         Cryptocurrency::getSymbol,
                         Cryptocurrency::getCoinMarketId,
+                        Cryptocurrency::getPlatform,
+                        Cryptocurrency::getTokenAddress,
                         Cryptocurrency::getLastUpdate)
                 .containsExactly(
                         cryptocurrency.getId(),
                         cryptocurrency.getName(),
                         cryptocurrency.getSymbol(),
                         cryptocurrency.getCoinMarketId(),
+                        PLATFORM_NAME,
+                        TOKEN_ADDRESS,
                         cryptocurrency.getLastUpdate()
                 );
     }
 
     @Test
     void whenAddCryptoCurrencyWithoutMarketId_thenReturnEntity() {
-        when(marketApiClientService.getCryptoMarketIdBySymbol("BTC"))
-                .thenReturn(Optional.of(mapDataDTO));
+        cryptocurrency.setCoinMarketId(null);
+        when(cryptocurrencyRepository.save(cryptocurrency))
+                .thenReturn(cryptocurrency);
+
+        when(marketApiClientService.getMapCryptocurrencyInfo(anyString()))
+                .thenReturn(mapDataDTO);
+
+        var expected = underTestService.addCryptocurrency(cryptocurrency);
+
+        assertThat(expected)
+                .extracting(Cryptocurrency::getCoinMarketId).isEqualTo(
+                        cryptocurrency.getCoinMarketId()
+                );
+    }
+
+    @Test
+    void whenAddCryptoCurrencyWithoutPlatformTokenAddress_thenReturnEntity() {
+        cryptocurrency.setPlatform(null);
+        cryptocurrency.setTokenAddress(null);
 
         when(cryptocurrencyRepository.save(cryptocurrency))
                 .thenReturn(cryptocurrency);
 
-        cryptocurrency.setCoinMarketId(null);
+        when(marketApiClientService.getMapCryptocurrencyInfo(anyString()))
+                .thenReturn(mapDataDTO);
 
         var expected = underTestService.addCryptocurrency(cryptocurrency);
 
         assertThat(expected)
                 .extracting(
-                        Cryptocurrency::getId,
-                        Cryptocurrency::getName,
-                        Cryptocurrency::getSymbol,
-                        Cryptocurrency::getCoinMarketId,
-                        Cryptocurrency::getLastUpdate)
+                        Cryptocurrency::getPlatform,
+                        Cryptocurrency::getTokenAddress)
                 .containsExactly(
-                        cryptocurrency.getId(),
-                        cryptocurrency.getName(),
-                        cryptocurrency.getSymbol(),
-                        cryptocurrency.getCoinMarketId(),
-                        cryptocurrency.getLastUpdate()
+                        PLATFORM_NAME,
+                        TOKEN_ADDRESS
                 );
+    }
+
+    @Test
+    void whenAddCryptoCurrencyNoMatchNameMarketService_thenThrowExc() {
+        var data = mapDataDTO.getData()
+                .stream()
+                .peek(cryptocurrencyMapDTO -> cryptocurrencyMapDTO.setName("Another name"))
+                .toList();
+        mapDataDTO.setData(data);
+        when(marketApiClientService.getMapCryptocurrencyInfo(anyString()))
+                .thenReturn(mapDataDTO);
+
+     assertThatThrownBy(() -> underTestService.addCryptocurrency(cryptocurrency))
+             .isInstanceOf(NoMatchCryptoMapException.class);
+    }
+
+    @Test
+    void whenAddCryptoCurrencyNullMarketService_thenThrowExc() {
+        when(marketApiClientService.getMapCryptocurrencyInfo(anyString()))
+                .thenReturn(new MapDataDTO());
+
+        assertThatThrownBy(() -> underTestService.addCryptocurrency(cryptocurrency))
+                .isInstanceOf(NoMatchCryptoMapException.class);
     }
 
     @Test
@@ -121,13 +174,32 @@ class CryptocurrencyServiceUnitTest {
                 .extracting(
                         Cryptocurrency::getId,
                         Cryptocurrency::getName,
-                        Cryptocurrency::getCoinMarketId)
+                        Cryptocurrency::getSymbol,
+                        Cryptocurrency::getCoinMarketId,
+                        Cryptocurrency::getPlatform,
+                        Cryptocurrency::getTokenAddress,
+                        Cryptocurrency::getLastUpdate)
                 .containsExactly(
-                        tuple(1L,
-                                "Bitcoin",
-                                cryptocurrency.getCoinMarketId()
+                        tuple(cryptocurrency.getId(),
+                                cryptocurrency.getName(),
+                                cryptocurrency.getSymbol(),
+                                cryptocurrency.getCoinMarketId(),
+                                cryptocurrency.getPlatform(),
+                                cryptocurrency.getTokenAddress(),
+                                cryptocurrency.getLastUpdate()
                         )
                 );
+    }
+
+    @Test
+    void whenGetAllCryptocurrenciesWhenEmpty_thenReturnListCryptocurrencies() {
+        when(cryptocurrencyRepository.findAll())
+                .thenReturn(List.of());
+
+        var expected = underTestService.getCryptocurrencies();
+
+        assertThat(expected)
+                .hasSize(0);
     }
 
     @Test
@@ -143,12 +215,16 @@ class CryptocurrencyServiceUnitTest {
                         Cryptocurrency::getName,
                         Cryptocurrency::getSymbol,
                         Cryptocurrency::getCoinMarketId,
+                        Cryptocurrency::getPlatform,
+                        Cryptocurrency::getTokenAddress,
                         Cryptocurrency::getLastUpdate)
                 .containsExactly(
                         cryptocurrency.getId(),
                         cryptocurrency.getName(),
                         cryptocurrency.getSymbol(),
                         cryptocurrency.getCoinMarketId(),
+                        cryptocurrency.getPlatform(),
+                        cryptocurrency.getTokenAddress(),
                         cryptocurrency.getLastUpdate()
                 );
     }
@@ -167,8 +243,10 @@ class CryptocurrencyServiceUnitTest {
     @Test
     void whenUpdateCryptocurrency_thenShouldUpdateProperValuesOfEntity() {
         var cryptoCurrencyUpdate = Cryptocurrency.builder()
-                .name("Ethereum")
-                .symbol("ETH")
+                .name("NEW_NAME")
+                .symbol("NEW_SYMBOL")
+                .platform("NEW_PLATFORM")
+                .tokenAddress("NEW_TOKEN")
                 .coinMarketId(RandomUtils.nextLong())
                 .build();
 
@@ -181,10 +259,23 @@ class CryptocurrencyServiceUnitTest {
 
         assertThat(expected)
                 .extracting(
+                        Cryptocurrency::getId,
                         Cryptocurrency::getName,
-                        Cryptocurrency::getSymbol
-                )
-                .containsExactly("Ethereum", "ETH");
+                        Cryptocurrency::getSymbol,
+                        Cryptocurrency::getCoinMarketId,
+                        Cryptocurrency::getPlatform,
+                        Cryptocurrency::getTokenAddress
+                ).containsExactly(
+                        cryptocurrency.getId(),
+                        cryptoCurrencyUpdate.getName(),
+                        cryptoCurrencyUpdate.getSymbol(),
+                        cryptocurrency.getCoinMarketId(),
+                        cryptoCurrencyUpdate.getPlatform(),
+                        cryptoCurrencyUpdate.getTokenAddress()
+                );
+
+        assertThat(expected.getLastUpdate())
+                .isAfter(cryptocurrency.getLastUpdate().minusDays(1L));
     }
 
     @Test

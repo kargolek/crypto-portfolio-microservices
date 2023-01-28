@@ -1,10 +1,5 @@
 package pl.kargolek.cryptopriceservice.controller;
 
-import okhttp3.mockwebserver.Dispatcher;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.RecordedRequest;
-import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -18,11 +13,12 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import pl.kargolek.cryptopriceservice.dto.controller.CryptocurrencyPostDTO;
+import pl.kargolek.cryptopriceservice.dto.model.CryptocurrencyDTO;
+import pl.kargolek.cryptopriceservice.dto.model.PriceDTO;
 import pl.kargolek.cryptopriceservice.exception.JsonApiError;
-import pl.kargolek.cryptopriceservice.extension.MockWebServerExtension;
+import pl.kargolek.cryptopriceservice.extension.MarketMockServerDispatcherExtension;
 import pl.kargolek.cryptopriceservice.extension.MySqlTestContainerExtension;
 import pl.kargolek.cryptopriceservice.model.Cryptocurrency;
-import pl.kargolek.cryptopriceservice.model.Price;
 import pl.kargolek.cryptopriceservice.repository.CryptocurrencyRepository;
 
 import java.math.BigDecimal;
@@ -35,14 +31,13 @@ import static java.util.Arrays.stream;
 import static java.util.Objects.requireNonNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
-import static pl.kargolek.cryptopriceservice.extension.MockWebServerExtension.mockWebServer;
 
 /**
  * @author Karol Kuta-Orlowicz
  */
 
 @ExtendWith(MySqlTestContainerExtension.class)
-@ExtendWith(MockWebServerExtension.class)
+@ExtendWith(MarketMockServerDispatcherExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Tag("IntegrationTest")
 @ActiveProfiles("test")
@@ -81,70 +76,9 @@ public class CryptocurrencyControllerIntegrationTest {
     private Long ethereumID;
 
     @DynamicPropertySource
-    static void registerProperty(DynamicPropertyRegistry registry) {
-        registry.add("api.coin.market.cap.baseUrl", () -> mockWebServer.url("/").toString());
-    }
-
-    @BeforeAll
-    public static void setupBeforeAll() {
-        String bodyQuote400 = """
-                {
-                    "status": {
-                        "timestamp": "2023-01-21T21:35:59.813Z",
-                        "error_code": 400,
-                        "error_message": "\\"id\\" should only include comma-separated numeric CoinMarketCap cryptocurrency ids",
-                        "elapsed": 0,
-                        "credit_count": 0
-                    }
-                }
-                """;
-
-        String bodyMaticId = """
-                {
-                    "status": {
-                        "timestamp": "2023-01-21T19:44:52.202Z",
-                        "error_code": 0,
-                        "error_message": null,
-                        "elapsed": 17,
-                        "credit_count": 1,
-                        "notice": null
-                    },
-                    "data": [
-                        {
-                            "id": 3890,
-                            "name": "Polygon",
-                            "symbol": "MATIC",
-                            "slug": "polygon",
-                            "rank": 11,
-                            "displayTV": 1,
-                            "manualSetTV": 0,
-                            "tvCoinSymbol": "",
-                            "is_active": 1,
-                            "first_historical_data": "2019-04-28T20:04:10.000Z",
-                            "last_historical_data": "2023-01-21T19:39:00.000Z",
-                            "platform": null
-                        }
-                    ]
-                }
-                """;
-        final Dispatcher dispatcher = new Dispatcher() {
-            @NotNull
-            @Override
-            public MockResponse dispatch(RecordedRequest request) {
-                return switch (requireNonNull(request.getPath())) {
-                    case "/v2/cryptocurrency/quotes/latest?id=1,1027" -> new MockResponse()
-                            .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-                            .setResponseCode(400)
-                            .setBody(bodyQuote400);
-                    case "/v1/cryptocurrency/map?symbol=MATIC" -> new MockResponse()
-                            .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-                            .setResponseCode(200)
-                            .setBody(bodyMaticId);
-                    default -> new MockResponse().setResponseCode(404);
-                };
-            }
-        };
-        mockWebServer.setDispatcher(dispatcher);
+    static void webclientProperties(DynamicPropertyRegistry registry) {
+        registry.add("api.coin.market.cap.baseUrl",
+                () -> MarketMockServerDispatcherExtension.mockWebServer.url("/").toString());
     }
 
     @BeforeEach
@@ -167,27 +101,27 @@ public class CryptocurrencyControllerIntegrationTest {
     @Test
     @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenGetCryptos_thenReturnBodyWithProperData() {
-        var responseEntity = template.getForEntity("/api/v1/cryptocurrency", Cryptocurrency[].class);
+        var responseEntity = template.getForEntity("/api/v1/cryptocurrency", CryptocurrencyDTO[].class);
 
         var cryptocurrencies = stream(requireNonNull(responseEntity.getBody())).toList();
         var prices = cryptocurrencies.stream()
-                .map(Cryptocurrency::getPrice)
+                .map(CryptocurrencyDTO::getPriceDTO)
                 .toList();
         var cryptoIds = cryptocurrencies.stream()
-                .map(Cryptocurrency::getId)
+                .map(CryptocurrencyDTO::getId)
                 .toList();
         var priceIds = cryptocurrencies.stream()
-                .map(Cryptocurrency::getPrice)
-                .map(Price::getId)
+                .map(CryptocurrencyDTO::getPriceDTO)
+                .map(PriceDTO::getId)
                 .toList();
 
         var cryptosDateTime = cryptocurrencies.stream()
-                .map(Cryptocurrency::getLastUpdate)
+                .map(CryptocurrencyDTO::getLastUpdate)
                 .toList();
 
         var pricesDateTime = cryptocurrencies.stream()
-                .map(Cryptocurrency::getPrice)
-                .map(Price::getLastUpdate)
+                .map(CryptocurrencyDTO::getPriceDTO)
+                .map(PriceDTO::getLastUpdate)
                 .toList();
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -196,9 +130,9 @@ public class CryptocurrencyControllerIntegrationTest {
                 .allMatch(aLong -> aLong > 0L);
 
         assertThat(cryptocurrencies).extracting(
-                Cryptocurrency::getName,
-                Cryptocurrency::getSymbol,
-                Cryptocurrency::getCoinMarketId
+                CryptocurrencyDTO::getName,
+                CryptocurrencyDTO::getSymbol,
+                CryptocurrencyDTO::getCoinMarketId
         ).containsExactly(
                 tuple(
                         BTC_NAME,
@@ -219,13 +153,13 @@ public class CryptocurrencyControllerIntegrationTest {
                 .allMatch(aLong -> aLong > 0L);
 
         assertThat(prices).extracting(
-                Price::getPriceCurrent,
-                Price::getPercentChange1h,
-                Price::getPercentChange24h,
-                Price::getPercentChange7d,
-                Price::getPercentChange30d,
-                Price::getPercentChange60d,
-                Price::getPercentChange90d
+                PriceDTO::getPriceCurrent,
+                PriceDTO::getPercentChange1h,
+                PriceDTO::getPercentChange24h,
+                PriceDTO::getPercentChange7d,
+                PriceDTO::getPercentChange30d,
+                PriceDTO::getPercentChange60d,
+                PriceDTO::getPercentChange90d
         ).containsExactly(
                 tuple(
                         BTC_PRICE,
@@ -270,27 +204,27 @@ public class CryptocurrencyControllerIntegrationTest {
     @Test
     @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenGetCryptosByQueryNames_thenReturnBodyWithProperData() {
-        var responseEntity = template.getForEntity("/api/v1/cryptocurrency?name=Bitcoin,Ethereum", Cryptocurrency[].class);
+        var responseEntity = template.getForEntity("/api/v1/cryptocurrency?name=Bitcoin,Ethereum", CryptocurrencyDTO[].class);
 
         var cryptocurrencies = stream(requireNonNull(responseEntity.getBody())).toList();
         var prices = cryptocurrencies.stream()
-                .map(Cryptocurrency::getPrice)
+                .map(CryptocurrencyDTO::getPriceDTO)
                 .toList();
         var cryptoIds = cryptocurrencies.stream()
-                .map(Cryptocurrency::getId)
+                .map(CryptocurrencyDTO::getId)
                 .toList();
         var priceIds = cryptocurrencies.stream()
-                .map(Cryptocurrency::getPrice)
-                .map(Price::getId)
+                .map(CryptocurrencyDTO::getPriceDTO)
+                .map(PriceDTO::getId)
                 .toList();
 
         var cryptosDateTime = cryptocurrencies.stream()
-                .map(Cryptocurrency::getLastUpdate)
+                .map(CryptocurrencyDTO::getLastUpdate)
                 .toList();
 
         var pricesDateTime = cryptocurrencies.stream()
-                .map(Cryptocurrency::getPrice)
-                .map(Price::getLastUpdate)
+                .map(CryptocurrencyDTO::getPriceDTO)
+                .map(PriceDTO::getLastUpdate)
                 .toList();
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -299,9 +233,9 @@ public class CryptocurrencyControllerIntegrationTest {
                 .allMatch(aLong -> aLong > 0L);
 
         assertThat(cryptocurrencies).extracting(
-                Cryptocurrency::getName,
-                Cryptocurrency::getSymbol,
-                Cryptocurrency::getCoinMarketId
+                CryptocurrencyDTO::getName,
+                CryptocurrencyDTO::getSymbol,
+                CryptocurrencyDTO::getCoinMarketId
         ).containsExactly(
                 tuple(
                         BTC_NAME,
@@ -322,13 +256,13 @@ public class CryptocurrencyControllerIntegrationTest {
                 .allMatch(aLong -> aLong > 0L);
 
         assertThat(prices).extracting(
-                Price::getPriceCurrent,
-                Price::getPercentChange1h,
-                Price::getPercentChange24h,
-                Price::getPercentChange7d,
-                Price::getPercentChange30d,
-                Price::getPercentChange60d,
-                Price::getPercentChange90d
+                PriceDTO::getPriceCurrent,
+                PriceDTO::getPercentChange1h,
+                PriceDTO::getPercentChange24h,
+                PriceDTO::getPercentChange7d,
+                PriceDTO::getPercentChange30d,
+                PriceDTO::getPercentChange60d,
+                PriceDTO::getPercentChange90d
         ).containsExactly(
                 tuple(
                         BTC_PRICE,
@@ -364,27 +298,27 @@ public class CryptocurrencyControllerIntegrationTest {
     @Test
     @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenGetCryptosBySecondExistQueryName_thenReturnBodyWithOneCryptoData() {
-        var responseEntity = template.getForEntity("/api/v1/cryptocurrency?name=NotExist,Ethereum", Cryptocurrency[].class);
+        var responseEntity = template.getForEntity("/api/v1/cryptocurrency?name=NotExist,Ethereum", CryptocurrencyDTO[].class);
 
         var cryptocurrencies = stream(requireNonNull(responseEntity.getBody())).toList();
         var prices = cryptocurrencies.stream()
-                .map(Cryptocurrency::getPrice)
+                .map(CryptocurrencyDTO::getPriceDTO)
                 .toList();
         var cryptoIds = cryptocurrencies.stream()
-                .map(Cryptocurrency::getId)
+                .map(CryptocurrencyDTO::getId)
                 .toList();
         var priceIds = cryptocurrencies.stream()
-                .map(Cryptocurrency::getPrice)
-                .map(Price::getId)
+                .map(CryptocurrencyDTO::getPriceDTO)
+                .map(PriceDTO::getId)
                 .toList();
 
         var cryptosDateTime = cryptocurrencies.stream()
-                .map(Cryptocurrency::getLastUpdate)
+                .map(CryptocurrencyDTO::getLastUpdate)
                 .toList();
 
         var pricesDateTime = cryptocurrencies.stream()
-                .map(Cryptocurrency::getPrice)
-                .map(Price::getLastUpdate)
+                .map(CryptocurrencyDTO::getPriceDTO)
+                .map(PriceDTO::getLastUpdate)
                 .toList();
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -393,9 +327,9 @@ public class CryptocurrencyControllerIntegrationTest {
                 .allMatch(aLong -> aLong > 0L);
 
         assertThat(cryptocurrencies).extracting(
-                Cryptocurrency::getName,
-                Cryptocurrency::getSymbol,
-                Cryptocurrency::getCoinMarketId
+                CryptocurrencyDTO::getName,
+                CryptocurrencyDTO::getSymbol,
+                CryptocurrencyDTO::getCoinMarketId
         ).containsExactly(
                 tuple(
                         ETH_NAME,
@@ -411,13 +345,13 @@ public class CryptocurrencyControllerIntegrationTest {
                 .allMatch(aLong -> aLong > 0L);
 
         assertThat(prices).extracting(
-                Price::getPriceCurrent,
-                Price::getPercentChange1h,
-                Price::getPercentChange24h,
-                Price::getPercentChange7d,
-                Price::getPercentChange30d,
-                Price::getPercentChange60d,
-                Price::getPercentChange90d
+                PriceDTO::getPriceCurrent,
+                PriceDTO::getPercentChange1h,
+                PriceDTO::getPercentChange24h,
+                PriceDTO::getPercentChange7d,
+                PriceDTO::getPercentChange30d,
+                PriceDTO::getPercentChange60d,
+                PriceDTO::getPercentChange90d
         ).containsExactly(
                 tuple(
                         ETH_PRICE,
@@ -436,27 +370,27 @@ public class CryptocurrencyControllerIntegrationTest {
     @Test
     @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenGetCryptosByFirstExistQueryName_thenReturnBodyOneCryptoData() {
-        var responseEntity = template.getForEntity("/api/v1/cryptocurrency?name=Bitcoin,NotExist", Cryptocurrency[].class);
+        var responseEntity = template.getForEntity("/api/v1/cryptocurrency?name=Bitcoin,NotExist", CryptocurrencyDTO[].class);
 
         var cryptocurrencies = stream(requireNonNull(responseEntity.getBody())).toList();
         var prices = cryptocurrencies.stream()
-                .map(Cryptocurrency::getPrice)
+                .map(CryptocurrencyDTO::getPriceDTO)
                 .toList();
         var cryptoIds = cryptocurrencies.stream()
-                .map(Cryptocurrency::getId)
+                .map(CryptocurrencyDTO::getId)
                 .toList();
         var priceIds = cryptocurrencies.stream()
-                .map(Cryptocurrency::getPrice)
-                .map(Price::getId)
+                .map(CryptocurrencyDTO::getPriceDTO)
+                .map(PriceDTO::getId)
                 .toList();
 
         var cryptosDateTime = cryptocurrencies.stream()
-                .map(Cryptocurrency::getLastUpdate)
+                .map(CryptocurrencyDTO::getLastUpdate)
                 .toList();
 
         var pricesDateTime = cryptocurrencies.stream()
-                .map(Cryptocurrency::getPrice)
-                .map(Price::getLastUpdate)
+                .map(CryptocurrencyDTO::getPriceDTO)
+                .map(PriceDTO::getLastUpdate)
                 .toList();
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -465,9 +399,9 @@ public class CryptocurrencyControllerIntegrationTest {
                 .allMatch(aLong -> aLong > 0L);
 
         assertThat(cryptocurrencies).extracting(
-                Cryptocurrency::getName,
-                Cryptocurrency::getSymbol,
-                Cryptocurrency::getCoinMarketId
+                CryptocurrencyDTO::getName,
+                CryptocurrencyDTO::getSymbol,
+                CryptocurrencyDTO::getCoinMarketId
         ).containsExactly(
                 tuple(
                         BTC_NAME,
@@ -483,13 +417,13 @@ public class CryptocurrencyControllerIntegrationTest {
                 .allMatch(aLong -> aLong > 0L);
 
         assertThat(prices).extracting(
-                Price::getPriceCurrent,
-                Price::getPercentChange1h,
-                Price::getPercentChange24h,
-                Price::getPercentChange7d,
-                Price::getPercentChange30d,
-                Price::getPercentChange60d,
-                Price::getPercentChange90d
+                PriceDTO::getPriceCurrent,
+                PriceDTO::getPercentChange1h,
+                PriceDTO::getPercentChange24h,
+                PriceDTO::getPercentChange7d,
+                PriceDTO::getPercentChange30d,
+                PriceDTO::getPercentChange60d,
+                PriceDTO::getPercentChange90d
         ).containsExactly(
                 tuple(
                         BTC_PRICE,
@@ -518,17 +452,17 @@ public class CryptocurrencyControllerIntegrationTest {
     @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenGetCryptoByID_thenReturnBodyWithCryptoData() {
         var responseEntity = template.getForEntity("/api/v1/cryptocurrency/" + bitcoinID,
-                Cryptocurrency.class);
+                CryptocurrencyDTO.class);
 
         var crypto = Objects.requireNonNull(responseEntity.getBody());
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         assertThat(crypto).extracting(
-                Cryptocurrency::getId,
-                Cryptocurrency::getName,
-                Cryptocurrency::getSymbol,
-                Cryptocurrency::getCoinMarketId
+                CryptocurrencyDTO::getId,
+                CryptocurrencyDTO::getName,
+                CryptocurrencyDTO::getSymbol,
+                CryptocurrencyDTO::getCoinMarketId
         ).containsExactly(
                 bitcoinID,
                 BTC_NAME,
@@ -539,14 +473,14 @@ public class CryptocurrencyControllerIntegrationTest {
         assertThat(crypto.getLastUpdate())
                 .isBefore(LocalDateTime.now());
 
-        assertThat(crypto.getPrice()).extracting(
-                Price::getPriceCurrent,
-                Price::getPercentChange1h,
-                Price::getPercentChange24h,
-                Price::getPercentChange7d,
-                Price::getPercentChange30d,
-                Price::getPercentChange60d,
-                Price::getPercentChange90d
+        assertThat(crypto.getPriceDTO()).extracting(
+                PriceDTO::getPriceCurrent,
+                PriceDTO::getPercentChange1h,
+                PriceDTO::getPercentChange24h,
+                PriceDTO::getPercentChange7d,
+                PriceDTO::getPercentChange30d,
+                PriceDTO::getPercentChange60d,
+                PriceDTO::getPercentChange90d
         ).containsExactly(
                 BTC_PRICE,
                 BTC_PERCENT_1H,
@@ -557,10 +491,10 @@ public class CryptocurrencyControllerIntegrationTest {
                 BTC_PERCENT_90D
         );
 
-        assertThat(crypto.getPrice().getId())
+        assertThat(crypto.getPriceDTO().getId())
                 .isGreaterThan(0L);
 
-        assertThat(crypto.getPrice().getLastUpdate())
+        assertThat(crypto.getPriceDTO().getLastUpdate())
                 .isBefore(LocalDateTime.now());
     }
 
@@ -611,8 +545,7 @@ public class CryptocurrencyControllerIntegrationTest {
     void whenPostCryptocurrencyNameSymbolMarketID_thenReturnStatus200AndBody() {
         var body = new CryptocurrencyPostDTO()
                 .setName(POLYGON_NAME)
-                .setSymbol(POLYGON_SYMBOL)
-                .setCoinMarketId(POLYGON_MARKET_ID);
+                .setSymbol(POLYGON_SYMBOL);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -621,17 +554,17 @@ public class CryptocurrencyControllerIntegrationTest {
         var responseEntity = template.exchange("/api/v1/cryptocurrency/",
                 HttpMethod.POST,
                 entity,
-                Cryptocurrency.class);
+                CryptocurrencyDTO.class);
 
         var crypto = Objects.requireNonNull(responseEntity.getBody());
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
         assertThat(crypto).extracting(
-                Cryptocurrency::getId,
-                Cryptocurrency::getName,
-                Cryptocurrency::getSymbol,
-                Cryptocurrency::getCoinMarketId
+                CryptocurrencyDTO::getId,
+                CryptocurrencyDTO::getName,
+                CryptocurrencyDTO::getSymbol,
+                CryptocurrencyDTO::getCoinMarketId
         ).containsExactly(
                 (ethereumID + 1L),
                 POLYGON_NAME,
@@ -642,14 +575,14 @@ public class CryptocurrencyControllerIntegrationTest {
         assertThat(crypto.getLastUpdate())
                 .isBefore(LocalDateTime.now());
 
-        assertThat(crypto.getPrice()).extracting(
-                Price::getPriceCurrent,
-                Price::getPercentChange1h,
-                Price::getPercentChange24h,
-                Price::getPercentChange7d,
-                Price::getPercentChange30d,
-                Price::getPercentChange60d,
-                Price::getPercentChange90d
+        assertThat(crypto.getPriceDTO()).extracting(
+                PriceDTO::getPriceCurrent,
+                PriceDTO::getPercentChange1h,
+                PriceDTO::getPercentChange24h,
+                PriceDTO::getPercentChange7d,
+                PriceDTO::getPercentChange30d,
+                PriceDTO::getPercentChange60d,
+                PriceDTO::getPercentChange90d
         ).containsExactly(
                 null,
                 null,
@@ -660,10 +593,10 @@ public class CryptocurrencyControllerIntegrationTest {
                 null
         );
 
-        assertThat(crypto.getPrice().getId())
+        assertThat(crypto.getPriceDTO().getId())
                 .isGreaterThan(0L);
 
-        assertThat(crypto.getPrice().getLastUpdate())
+        assertThat(crypto.getPriceDTO().getLastUpdate())
                 .isBefore(LocalDateTime.now());
 
     }
@@ -682,7 +615,7 @@ public class CryptocurrencyControllerIntegrationTest {
         var responseEntity = template.exchange("/api/v1/cryptocurrency/",
                 HttpMethod.POST,
                 entity,
-                Cryptocurrency.class);
+                CryptocurrencyDTO.class);
 
         var crypto = Objects.requireNonNull(responseEntity.getBody());
 
@@ -693,9 +626,9 @@ public class CryptocurrencyControllerIntegrationTest {
                 .isGreaterThan(0L);
 
         assertThat(crypto).extracting(
-                Cryptocurrency::getName,
-                Cryptocurrency::getSymbol,
-                Cryptocurrency::getCoinMarketId
+                CryptocurrencyDTO::getName,
+                CryptocurrencyDTO::getSymbol,
+                CryptocurrencyDTO::getCoinMarketId
         ).containsExactly(
                 POLYGON_NAME,
                 POLYGON_SYMBOL,
@@ -705,14 +638,14 @@ public class CryptocurrencyControllerIntegrationTest {
         assertThat(crypto.getLastUpdate())
                 .isBefore(LocalDateTime.now());
 
-        assertThat(crypto.getPrice()).extracting(
-                Price::getPriceCurrent,
-                Price::getPercentChange1h,
-                Price::getPercentChange24h,
-                Price::getPercentChange7d,
-                Price::getPercentChange30d,
-                Price::getPercentChange60d,
-                Price::getPercentChange90d
+        assertThat(crypto.getPriceDTO()).extracting(
+                PriceDTO::getPriceCurrent,
+                PriceDTO::getPercentChange1h,
+                PriceDTO::getPercentChange24h,
+                PriceDTO::getPercentChange7d,
+                PriceDTO::getPercentChange30d,
+                PriceDTO::getPercentChange60d,
+                PriceDTO::getPercentChange90d
         ).containsExactly(
                 null,
                 null,
@@ -723,10 +656,10 @@ public class CryptocurrencyControllerIntegrationTest {
                 null
         );
 
-        assertThat(crypto.getPrice().getId())
+        assertThat(crypto.getPriceDTO().getId())
                 .isGreaterThan(0L);
 
-        assertThat(crypto.getPrice().getLastUpdate())
+        assertThat(crypto.getPriceDTO().getLastUpdate())
                 .isBefore(LocalDateTime.now());
     }
 
@@ -857,66 +790,7 @@ public class CryptocurrencyControllerIntegrationTest {
     void whenPostCryptocurrencyDuplicateName_thenReturnStatus400AndBody() {
         var body = new CryptocurrencyPostDTO()
                 .setName(BTC_NAME)
-                .setSymbol("NEW_SYMBOL")
-                .setCoinMarketId(10909L);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<CryptocurrencyPostDTO> entity = new HttpEntity<>(body, headers);
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/",
-                HttpMethod.POST,
-                entity,
-                JsonApiError.class);
-
-        assertThat(responseEntity.getStatusCode())
-                .isEqualTo(HttpStatus.BAD_REQUEST);
-
-        assertThat(responseEntity.getBody()).extracting(
-                JsonApiError::getStatus,
-                JsonApiError::getMessage
-        ).containsExactly(
-                HttpStatus.BAD_REQUEST,
-                "Duplicate entry 'Bitcoin' for key 'cryptocurrency.UniqueName'"
-        );
-    }
-
-    @Test
-    @Sql({"/delete_data.sql", "/insert_data.sql"})
-    void whenPostCryptocurrencyDuplicateSymbol_thenReturnStatus400AndBody() {
-        var body = new CryptocurrencyPostDTO()
-                .setName("NEW_NAME")
-                .setSymbol(BTC_SYMBOL)
-                .setCoinMarketId(109L);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<CryptocurrencyPostDTO> entity = new HttpEntity<>(body, headers);
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/",
-                HttpMethod.POST,
-                entity,
-                JsonApiError.class);
-
-        assertThat(responseEntity.getStatusCode())
-                .isEqualTo(HttpStatus.BAD_REQUEST);
-
-        assertThat(responseEntity.getBody()).extracting(
-                JsonApiError::getStatus,
-                JsonApiError::getMessage
-        ).containsExactly(
-                HttpStatus.BAD_REQUEST,
-                "Duplicate entry 'BTC' for key 'cryptocurrency.UniqueSymbol'"
-        );
-    }
-
-    @Test
-    @Sql({"/delete_data.sql", "/insert_data.sql"})
-    void whenPostCryptocurrencyDuplicateMarketID_thenReturnStatus400AndBody() {
-        var body = new CryptocurrencyPostDTO()
-                .setName("NEW_NAME")
-                .setSymbol("NEW_SYMBOL")
-                .setCoinMarketId(1L);
+                .setSymbol(BTC_SYMBOL);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -941,11 +815,38 @@ public class CryptocurrencyControllerIntegrationTest {
 
     @Test
     @Sql({"/delete_data.sql", "/insert_data.sql"})
+    void whenPostCryptocurrencyDuplicateSymbol_thenReturnStatus400AndBody() {
+        var body = new CryptocurrencyPostDTO()
+                .setName("NEW_NAME")
+                .setSymbol(BTC_SYMBOL);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<CryptocurrencyPostDTO> entity = new HttpEntity<>(body, headers);
+        var responseEntity = template.exchange("/api/v1/cryptocurrency/",
+                HttpMethod.POST,
+                entity,
+                JsonApiError.class);
+
+        assertThat(responseEntity.getStatusCode())
+                .isEqualTo(HttpStatus.BAD_REQUEST);
+
+        assertThat(responseEntity.getBody()).extracting(
+                JsonApiError::getStatus,
+                JsonApiError::getMessage
+        ).containsExactly(
+                HttpStatus.BAD_REQUEST,
+                "Received coin market cap crypto name, no match with provided name:NEW_NAME"
+        );
+    }
+
+    @Test
+    @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenPutCryptocurrency_thenReturnStatus200AndBody() {
         var body = new CryptocurrencyPostDTO()
                 .setName("NEW_NAME")
-                .setSymbol("NEW_SYMBOL")
-                .setCoinMarketId(100L);
+                .setSymbol("NEW_SYMBOL");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -954,7 +855,7 @@ public class CryptocurrencyControllerIntegrationTest {
         var responseEntity = template.exchange("/api/v1/cryptocurrency/" + bitcoinID,
                 HttpMethod.PUT,
                 entity,
-                Cryptocurrency.class);
+                CryptocurrencyDTO.class);
 
         assertThat(responseEntity.getStatusCode())
                 .isEqualTo(HttpStatus.OK);
@@ -962,28 +863,28 @@ public class CryptocurrencyControllerIntegrationTest {
         var cryptocurrency = responseEntity.getBody();
 
         assertThat(cryptocurrency).extracting(
-                Cryptocurrency::getId,
-                Cryptocurrency::getName,
-                Cryptocurrency::getSymbol,
-                Cryptocurrency::getCoinMarketId
+                CryptocurrencyDTO::getId,
+                CryptocurrencyDTO::getName,
+                CryptocurrencyDTO::getSymbol,
+                CryptocurrencyDTO::getCoinMarketId
         ).containsExactly(
                 bitcoinID,
                 "NEW_NAME",
                 "NEW_SYMBOL",
-                100L
+                1L
         );
 
         assertThat(requireNonNull(cryptocurrency).getLastUpdate())
                 .isBefore(LocalDateTime.now());
 
-        assertThat(requireNonNull(cryptocurrency).getPrice()).extracting(
-                Price::getPriceCurrent,
-                Price::getPercentChange1h,
-                Price::getPercentChange24h,
-                Price::getPercentChange7d,
-                Price::getPercentChange30d,
-                Price::getPercentChange60d,
-                Price::getPercentChange90d
+        assertThat(requireNonNull(cryptocurrency).getPriceDTO()).extracting(
+                PriceDTO::getPriceCurrent,
+                PriceDTO::getPercentChange1h,
+                PriceDTO::getPercentChange24h,
+                PriceDTO::getPercentChange7d,
+                PriceDTO::getPercentChange30d,
+                PriceDTO::getPercentChange60d,
+                PriceDTO::getPercentChange90d
         ).containsExactly(
                 BTC_PRICE,
                 BTC_PERCENT_1H,
@@ -994,10 +895,10 @@ public class CryptocurrencyControllerIntegrationTest {
                 BTC_PERCENT_90D
         );
 
-        assertThat(cryptocurrency.getPrice().getId())
+        assertThat(cryptocurrency.getPriceDTO().getId())
                 .isGreaterThan(0L);
 
-        assertThat(cryptocurrency.getPrice().getLastUpdate())
+        assertThat(cryptocurrency.getPriceDTO().getLastUpdate())
                 .isBefore(LocalDateTime.now());
     }
 
@@ -1006,8 +907,7 @@ public class CryptocurrencyControllerIntegrationTest {
     void whenPutCryptocurrencyNotExistID_thenReturnStatus404AndBody() {
         var body = new CryptocurrencyPostDTO()
                 .setName("NEW_NAME")
-                .setSymbol("NEW_SYMBOL")
-                .setCoinMarketId(100L);
+                .setSymbol("NEW_SYMBOL");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -1036,8 +936,7 @@ public class CryptocurrencyControllerIntegrationTest {
     void whenPutCryptocurrencyNoUniqueName_thenReturnStatus400AndBody() {
         var body = new CryptocurrencyPostDTO()
                 .setName(ETH_NAME)
-                .setSymbol("NEW_SYMBOL")
-                .setCoinMarketId(100L);
+                .setSymbol("NEW_SYMBOL");
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -1066,8 +965,7 @@ public class CryptocurrencyControllerIntegrationTest {
     void whenPutCryptocurrencyNoUniqueSymbol_thenReturnStatus400AndBody() {
         var body = new CryptocurrencyPostDTO()
                 .setName("NEW NAME")
-                .setSymbol(ETH_SYMBOL)
-                .setCoinMarketId(100L);
+                .setSymbol(ETH_SYMBOL);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -1088,36 +986,6 @@ public class CryptocurrencyControllerIntegrationTest {
                 ).containsExactly(
                         HttpStatus.BAD_REQUEST,
                         "Duplicate entry 'ETH' for key 'cryptocurrency.UniqueSymbol'"
-                );
-    }
-
-    @Test
-    @Sql({"/delete_data.sql", "/insert_data.sql"})
-    void whenPutCryptocurrencyNoUniqueMarketID_thenReturnStatus400AndBody() {
-        var body = new CryptocurrencyPostDTO()
-                .setName("NEW NAME")
-                .setSymbol("NEW_SYMBOL")
-                .setCoinMarketId(ETH_MARKET_ID);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<CryptocurrencyPostDTO> entity = new HttpEntity<>(body, headers);
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/" + bitcoinID,
-                HttpMethod.PUT,
-                entity,
-                JsonApiError.class);
-
-        assertThat(responseEntity.getStatusCode())
-                .isEqualTo(HttpStatus.BAD_REQUEST);
-
-        assertThat(responseEntity.getBody())
-                .extracting(
-                        JsonApiError::getStatus,
-                        JsonApiError::getMessage
-                ).containsExactly(
-                        HttpStatus.BAD_REQUEST,
-                        "Duplicate entry '1027' for key 'cryptocurrency.UniqueCoinMarketCapId'"
                 );
     }
 }

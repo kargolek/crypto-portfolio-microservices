@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 @Table(name = "cryptocurrency", uniqueConstraints = {
         @UniqueConstraint(name = "UniqueCoinMarketCapId", columnNames = "coin_market_id"),
         @UniqueConstraint(name = "UniqueName", columnNames = "name"),
-        @UniqueConstraint(name = "UniqueSymbol", columnNames = "symbol")
+        @UniqueConstraint(name = "UniqueSymbol", columnNames = "symbol"),
+        @UniqueConstraint(name = "UniqueSmartContractAddress", columnNames = "token_address")
 })
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,6 +33,12 @@ public class Cryptocurrency {
 
     @Column(name = "coin_market_id", nullable = false)
     private Long coinMarketId;
+
+    @Column(name = "platform", length = 100)
+    private String platform;
+
+    @Column(name = "token_address")
+    private String tokenAddress;
 
     @Column(name = "last_update", nullable = false)
     private LocalDateTime lastUpdate;

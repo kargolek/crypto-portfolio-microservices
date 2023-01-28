@@ -3,7 +3,6 @@ package pl.kargolek.cryptopriceservice.dto.controller;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -22,6 +21,9 @@ public class CryptocurrencyPostDTO {
     @Size(min = 2, max = 20, message = "Symbol length exceeds range [2,20]")
     private String symbol;
 
-    @Min(value = 1, message = "Coin market ID must be greater than 0")
-    private Long coinMarketId;
+    @Size(min = 2, max = 100, message = "Platform length exceeds range [2,100]")
+    private String platform;
+
+    @Size(min = 2, message = "Token address length exceeds range [2,255]")
+    private String tokenAddress;
 }

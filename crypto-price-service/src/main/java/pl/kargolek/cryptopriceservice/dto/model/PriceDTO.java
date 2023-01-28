@@ -23,5 +23,5 @@ public class PriceDTO {
     private BigDecimal percentChange90d;
     private LocalDateTime lastUpdate;
     @JsonIgnore
-    private CryptocurrencyDTO cryptocurrencyDTO;
+    private Long cryptocurrencyId;
 }
