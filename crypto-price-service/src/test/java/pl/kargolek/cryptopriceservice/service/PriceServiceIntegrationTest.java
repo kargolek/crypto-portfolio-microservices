@@ -130,7 +130,6 @@ class PriceServiceIntegrationTest {
 
     @Test
     void whenUpdatePricesByNotExistPrice_thenThrowPriceNotFoundExc() {
-        ;
         var priceNotExist = Price.builder()
                 .id(120L)
                 .priceCurrent(new BigDecimal("120.0"))

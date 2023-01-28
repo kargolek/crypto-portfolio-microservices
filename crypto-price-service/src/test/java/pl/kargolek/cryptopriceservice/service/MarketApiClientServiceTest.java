@@ -25,6 +25,7 @@ import static org.assertj.core.groups.Tuple.tuple;
 @Tag("UnitTest")
 class MarketApiClientServiceTest {
     private static final String MARKET_ID_400_RESPONSE = "400";
+    private static final String MARKET_ID_401_RESPONSE = "401";
     private MarketApiClientService underTest;
 
     @BeforeEach
@@ -38,7 +39,7 @@ class MarketApiClientServiceTest {
     }
 
     @Test
-    void whenServerRespond200_thenClientReturnRespondDTOCollection() {
+    void whenGetPriceServerRespond200_thenClientReturnListQuotesDataDTO() {
         var response = underTest.getLatestPriceByIds("1");
         var cryptoResponse = response.getData().get("1");
         var priceResponse = response.getData().get("1").getQuote().get("USD");
@@ -74,21 +75,28 @@ class MarketApiClientServiceTest {
     }
 
     @Test
-    void whenServerRespond400_thenClientThrowCustomExc() {
+    void whenGetPriceServerRespond400_thenClientThrowCustomExc() {
         assertThatThrownBy(() -> underTest.getLatestPriceByIds(MARKET_ID_400_RESPONSE))
                 .isInstanceOf(MarketApiClientException.class)
                 .hasMessageContaining("Status code: 400, clientMessage: Error during calling get request, serverMessage: Invalid value for \"id\"");
     }
 
     @Test
-    void whenServerRespond500_thenClientThrowCustomExc() {
+    void whenGetPriceServerRespond401_thenClientThrowCustomExc() {
+        assertThatThrownBy(() -> underTest.getLatestPriceByIds(MARKET_ID_401_RESPONSE))
+                .isInstanceOf(MarketApiClientException.class)
+                .hasMessageContaining("Status code: 401, clientMessage: Error during calling get request, serverMessage: API key missing.");
+    }
+
+    @Test
+    void whenGetPriceServerRespond500_thenClientThrowCustomExc() {
         assertThatThrownBy(() -> underTest.getLatestPriceByIds("500"))
                 .isInstanceOf(MarketApiClientException.class)
                 .hasMessageContaining("Error during calling get request, serverMessage: An internal server error occurred");
     }
 
     @Test
-    void whenServerRes200_thenClientReturnMapDataDTO() {
+    void whenGetMapServerRes200_thenClientReturnMapDataDTO() {
         var expected = underTest.getMapCryptocurrencyInfo("ETH");
 
         assertThat(expected.getData())
@@ -106,10 +114,24 @@ class MarketApiClientServiceTest {
     }
 
     @Test
-    void whenServerRes400_thenThrowMarketClientExc() {
+    void whenGetMapServerRes400_thenThrowMarketClientExc() {
         assertThatThrownBy(() -> underTest.getMapCryptocurrencyInfo(""))
                 .isInstanceOf(MarketApiClientException.class)
                 .hasMessageContaining("serverMessage: \"symbol\" is not allowed to be empty");
+    }
+
+    @Test
+    void whenGetMapServerRes401_thenThrowMarketClientExc() {
+        assertThatThrownBy(() -> underTest.getMapCryptocurrencyInfo("SERVER_401"))
+                .isInstanceOf(MarketApiClientException.class)
+                .hasMessageContaining("Status code: 401, clientMessage: Error during calling get request, serverMessage: API key missing.");
+    }
+
+    @Test
+    void whenGetMapServerRes500_thenThrowMarketClientExc() {
+        assertThatThrownBy(() -> underTest.getMapCryptocurrencyInfo("SERVER_500"))
+                .isInstanceOf(MarketApiClientException.class)
+                .hasMessageContaining("Status code: 500, clientMessage: Error during calling get request, serverMessage: An internal server error occurred");
     }
 
 }

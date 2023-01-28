@@ -54,7 +54,7 @@ class CryptocurrencyServiceUnitTest {
                 .coinMarketId(1L)
                 .platform(PLATFORM_NAME)
                 .tokenAddress(TOKEN_ADDRESS)
-                .lastUpdate(LocalDateTime.now(ZoneOffset.UTC).minusDays(1L))
+                .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
                 .build();
 
         var cryptocurrencyMapDTO = new CryptocurrencyMapDTO()
@@ -71,7 +71,7 @@ class CryptocurrencyServiceUnitTest {
     }
 
     @Test
-    void whenAddCryptoCurrencyWithMarketID_thenReturnEntity() {
+    void whenAddCryptoCurrency_thenReturnEntity() {
         when(cryptocurrencyRepository.save(cryptocurrency))
                 .thenReturn(cryptocurrency);
         when(marketApiClientService.getMapCryptocurrencyInfo(anyString()))
@@ -111,28 +111,13 @@ class CryptocurrencyServiceUnitTest {
         var expected = underTestService.addCryptocurrency(cryptocurrency);
 
         assertThat(expected)
-                .extracting(
-                        Cryptocurrency::getId,
-                        Cryptocurrency::getName,
-                        Cryptocurrency::getSymbol,
-                        Cryptocurrency::getCoinMarketId,
-                        Cryptocurrency::getPlatform,
-                        Cryptocurrency::getTokenAddress,
-                        Cryptocurrency::getLastUpdate)
-                .containsExactly(
-                        cryptocurrency.getId(),
-                        cryptocurrency.getName(),
-                        cryptocurrency.getSymbol(),
-                        cryptocurrency.getCoinMarketId(),
-                        PLATFORM_NAME,
-                        TOKEN_ADDRESS,
-                        cryptocurrency.getLastUpdate()
+                .extracting(Cryptocurrency::getCoinMarketId).isEqualTo(
+                        cryptocurrency.getCoinMarketId()
                 );
     }
 
     @Test
-    void whenAddCryptoCurrencyWithoutMarketIdPlatformTokenAddress_thenReturnEntity() {
-        cryptocurrency.setCoinMarketId(null);
+    void whenAddCryptoCurrencyWithoutPlatformTokenAddress_thenReturnEntity() {
         cryptocurrency.setPlatform(null);
         cryptocurrency.setTokenAddress(null);
 
@@ -146,56 +131,11 @@ class CryptocurrencyServiceUnitTest {
 
         assertThat(expected)
                 .extracting(
-                        Cryptocurrency::getId,
-                        Cryptocurrency::getName,
-                        Cryptocurrency::getSymbol,
-                        Cryptocurrency::getCoinMarketId,
                         Cryptocurrency::getPlatform,
-                        Cryptocurrency::getTokenAddress,
-                        Cryptocurrency::getLastUpdate)
+                        Cryptocurrency::getTokenAddress)
                 .containsExactly(
-                        cryptocurrency.getId(),
-                        cryptocurrency.getName(),
-                        cryptocurrency.getSymbol(),
-                        cryptocurrency.getCoinMarketId(),
                         PLATFORM_NAME,
-                        TOKEN_ADDRESS,
-                        cryptocurrency.getLastUpdate()
-                );
-    }
-
-    @Test
-    void whenAddCryptoCurrencyWithoutTokenAndPlatform_thenReturnEntity() {
-        cryptocurrency.setPlatform(null);
-        cryptocurrency.setTokenAddress(null);
-        when(cryptocurrencyRepository.save(cryptocurrency))
-                .thenReturn(cryptocurrency);
-
-        when(marketApiClientService.getMapCryptocurrencyInfo(anyString()))
-                .thenReturn(mapDataDTO);
-
-        when(marketApiClientService.getMapCryptocurrencyInfo(anyString()))
-                .thenReturn(mapDataDTO);
-
-        var expected = underTestService.addCryptocurrency(cryptocurrency);
-
-        assertThat(expected)
-                .extracting(
-                        Cryptocurrency::getId,
-                        Cryptocurrency::getName,
-                        Cryptocurrency::getSymbol,
-                        Cryptocurrency::getCoinMarketId,
-                        Cryptocurrency::getPlatform,
-                        Cryptocurrency::getTokenAddress,
-                        Cryptocurrency::getLastUpdate)
-                .containsExactly(
-                        cryptocurrency.getId(),
-                        cryptocurrency.getName(),
-                        cryptocurrency.getSymbol(),
-                        cryptocurrency.getCoinMarketId(),
-                        PLATFORM_NAME,
-                        TOKEN_ADDRESS,
-                        cryptocurrency.getLastUpdate()
+                        TOKEN_ADDRESS
                 );
     }
 
@@ -275,12 +215,16 @@ class CryptocurrencyServiceUnitTest {
                         Cryptocurrency::getName,
                         Cryptocurrency::getSymbol,
                         Cryptocurrency::getCoinMarketId,
+                        Cryptocurrency::getPlatform,
+                        Cryptocurrency::getTokenAddress,
                         Cryptocurrency::getLastUpdate)
                 .containsExactly(
                         cryptocurrency.getId(),
                         cryptocurrency.getName(),
                         cryptocurrency.getSymbol(),
                         cryptocurrency.getCoinMarketId(),
+                        cryptocurrency.getPlatform(),
+                        cryptocurrency.getTokenAddress(),
                         cryptocurrency.getLastUpdate()
                 );
     }

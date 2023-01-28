@@ -24,6 +24,6 @@ public class CryptocurrencyPostDTO {
     @Size(min = 2, max = 100, message = "Platform length exceeds range [2,100]")
     private String platform;
 
-    @Size(min = 2, message = "Platform length exceeds range [2,255]")
+    @Size(min = 2, message = "Token address length exceeds range [2,255]")
     private String tokenAddress;
 }

@@ -44,6 +44,10 @@ public class MarketMockServerDispatcherExtension extends MarketMockServerExtensi
                             .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
                             .setResponseCode(500)
                             .setBody(serverResponses.getBodyRes500ErrorServerNotAvailable());
+                    case "/v2/cryptocurrency/quotes/latest?id=401", "/v1/cryptocurrency/map?symbol=SERVER_401" -> new MockResponse()
+                            .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                            .setResponseCode(401)
+                            .setBody(serverResponses.getBodyRes401Unauthorized());
                     case "/v2/cryptocurrency/quotes/latest?id=400" -> new MockResponse()
                             .setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
                             .setResponseCode(400)

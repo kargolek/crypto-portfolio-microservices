@@ -430,5 +430,17 @@ public class ServerResponses {
             }
             """;
 
+    private final String bodyRes401Unauthorized = """
+            {
+                "status": {
+                    "timestamp": "2018-06-02T22:51:28.209Z",
+                    "error_code": 1002,
+                    "error_message": "API key missing.",
+                    "elapsed": 10,
+                    "credit_count": 0
+                }
+            }
+            """;
+
 
 }

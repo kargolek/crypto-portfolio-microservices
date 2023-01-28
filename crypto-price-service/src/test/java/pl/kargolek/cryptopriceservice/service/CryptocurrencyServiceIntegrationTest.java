@@ -1,6 +1,5 @@
 package pl.kargolek.cryptopriceservice.service;
 
-import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -58,7 +57,7 @@ public class CryptocurrencyServiceIntegrationTest {
     }
 
     @BeforeEach
-    public void setup(MockWebServer mockWebServer) {
+    public void setup() {
         cryptocurrencyBTC = Cryptocurrency.builder()
                 .name("Bitcoin")
                 .symbol("BTC")
