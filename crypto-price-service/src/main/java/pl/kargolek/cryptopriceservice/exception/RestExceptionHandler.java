@@ -118,6 +118,19 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(jsonApiError, jsonApiError.getStatus());
     }
 
+    @ExceptionHandler(NoSmartContractAddressException.class)
+    public ResponseEntity<?> handleNoSmartContractAddressException(NoSmartContractAddressException ex) {
+        var jsonApiError = JsonApiError.builder()
+                .status(HttpStatus.NOT_FOUND)
+                .timestamp(LocalDateTime.now(ZoneOffset.UTC))
+                .message(ex.getMessage())
+                .build();
+        log.info(String.format("Status: %s Message: %s",
+                jsonApiError.getStatus(),
+                jsonApiError.getMessage()));
+        return new ResponseEntity<>(jsonApiError, jsonApiError.getStatus());
+    }
+
     @NotNull
     @Override
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,

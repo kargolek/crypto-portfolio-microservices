@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import pl.kargolek.cryptopriceservice.dto.controller.CryptocurrencyPostDTO;
 import pl.kargolek.cryptopriceservice.exception.CryptocurrencyNotFoundException;
 import pl.kargolek.cryptopriceservice.exception.MarketApiClientException;
+import pl.kargolek.cryptopriceservice.exception.NoSmartContractAddressException;
 import pl.kargolek.cryptopriceservice.model.Cryptocurrency;
 import pl.kargolek.cryptopriceservice.model.Price;
 import pl.kargolek.cryptopriceservice.repository.CryptocurrencyRepository;
@@ -39,6 +40,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Tag("UnitTest")
 class CryptocurrencyControllerUnitTest {
 
+    private static final String PLATFORM_USER_INPUT = "platform";
+    private static final String TOKEN_ADDRESS_USER_INPUT = "tokenAddress";
     private final String path = "/api/v1/cryptocurrency";
     @Autowired
     private MockMvc mockMvc;
@@ -63,6 +66,8 @@ class CryptocurrencyControllerUnitTest {
                 .name("Bitcoin")
                 .symbol("BTC")
                 .coinMarketId(1L)
+                .platform(PLATFORM_USER_INPUT)
+                .tokenAddress(TOKEN_ADDRESS_USER_INPUT)
                 .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
                 .build();
 
@@ -285,7 +290,7 @@ class CryptocurrencyControllerUnitTest {
     }
 
     @Test
-    void whenUpdateCryptocurrencyWhenIdNotExist_thenReturn404JsonError() throws Exception {
+    void whenUpdateCryptocurrencyWhenIdNotExist_thenReturn200JsonError() throws Exception {
         when(cryptocurrencyService.updateCryptocurrency(anyLong(), any(Cryptocurrency.class)))
                 .thenThrow(new CryptocurrencyNotFoundException(1L));
 
@@ -300,4 +305,34 @@ class CryptocurrencyControllerUnitTest {
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.status").value("NOT_FOUND"));
     }
+
+    @Test
+    void whenGetCryptocurrencyBySmartContractAddress_thenReturn200JsonCryptocurrencyData() throws Exception {
+        when(cryptocurrencyService.getBySmartContractAddress(TOKEN_ADDRESS_USER_INPUT))
+                .thenReturn(cryptocurrencyBTC);
+
+        mockMvc.perform(MockMvcRequestBuilders.get(path + "/contract-address/" + TOKEN_ADDRESS_USER_INPUT))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.name").value("Bitcoin"))
+                .andExpect(jsonPath("$.symbol").value("BTC"))
+                .andExpect(jsonPath("$.coinMarketId").value(1L))
+                .andExpect(jsonPath("$.platform.platform").value(PLATFORM_USER_INPUT))
+                .andExpect(jsonPath("$.platform.tokenAddress").value(TOKEN_ADDRESS_USER_INPUT))
+                .andExpect(jsonPath("$.price.priceCurrent").isNumber())
+                .andExpect(jsonPath("$.lastUpdate").isNotEmpty());
+    }
+
+    @Test
+    void whenGetCryptocurrencyByNotExistSmartContractAddress_thenReturn200JsonCryptocurrencyData() throws Exception {
+        when(cryptocurrencyService.getBySmartContractAddress(TOKEN_ADDRESS_USER_INPUT))
+                .thenThrow(new NoSmartContractAddressException(TOKEN_ADDRESS_USER_INPUT));
+
+        mockMvc.perform(MockMvcRequestBuilders.get(path + "/contract-address/" + TOKEN_ADDRESS_USER_INPUT))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status").value("NOT_FOUND"));
+    }
+
 }

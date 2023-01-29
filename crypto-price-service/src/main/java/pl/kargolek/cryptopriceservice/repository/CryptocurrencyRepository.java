@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import pl.kargolek.cryptopriceservice.model.Cryptocurrency;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CryptocurrencyRepository extends JpaRepository<Cryptocurrency, Long> {
@@ -14,5 +15,9 @@ public interface CryptocurrencyRepository extends JpaRepository<Cryptocurrency, 
             "WHERE name in :name " +
             "ORDER BY id ASC", nativeQuery = true)
     List<Cryptocurrency> findByName(@Param("name") List<String> name);
+
+    @Query(value = "SELECT * FROM cryptocurrency " +
+            "WHERE token_Address = :contractAddress", nativeQuery = true)
+    Optional<Cryptocurrency> findByContractAddress(@Param("contractAddress") String contractAddress);
 
 }

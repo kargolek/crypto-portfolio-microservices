@@ -323,6 +323,77 @@
 			"response": []
 		},
 		{
+			"name": "cryptocurrency-contract-address",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let crypto_name = pm.collectionVariables.get(\"crypto_name\");\r",
+							"let crypto_symbol = pm.collectionVariables.get(\"crypto_symbol\");\r",
+							"let crypto_coin_market_id = pm.collectionVariables.get(\"crypto_coinMarketId\");\r",
+							"let crypto_price_id = pm.collectionVariables.get(\"crypto_price_id\");\r",
+							"\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Successful GET request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency name\", function () {\r",
+							"    pm.expect(jsonData.name).to.eql(crypto_name);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency symbol\", function () {\r",
+							"    pm.expect(jsonData.symbol).to.eql(crypto_symbol);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency coin market id\", function () {\r",
+							"    pm.expect(jsonData.coinMarketId).to.eql(1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency platform\", function () {\r",
+							"    pm.expect(jsonData.platform.platform).to.be.a(\"string\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency token address\", function () {\r",
+							"    pm.expect(jsonData.platform.tokenAddress).to.be.a(\"string\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency lastUpdate is not null\", function () {\r",
+							"    pm.expect(jsonData.lastUpdate).is.not.null\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify json data cryptocurrency price id\", function () {\r",
+							"    pm.expect(jsonData.price.id).to.eql(crypto_price_id);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/cryptocurrency/contract-address/{{crypto_tokenAddress}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"cryptocurrency",
+						"contract-address",
+						"{{crypto_tokenAddress}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "cryptocurrency",
 			"event": [
 				{

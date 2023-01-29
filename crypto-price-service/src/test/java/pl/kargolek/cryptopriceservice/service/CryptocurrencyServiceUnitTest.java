@@ -13,6 +13,7 @@ import pl.kargolek.cryptopriceservice.dto.client.MapDataDTO;
 import pl.kargolek.cryptopriceservice.dto.client.PlatformMapDTO;
 import pl.kargolek.cryptopriceservice.exception.CryptocurrencyNotFoundException;
 import pl.kargolek.cryptopriceservice.exception.NoMatchCryptoMapException;
+import pl.kargolek.cryptopriceservice.exception.NoSmartContractAddressException;
 import pl.kargolek.cryptopriceservice.model.Cryptocurrency;
 import pl.kargolek.cryptopriceservice.repository.CryptocurrencyRepository;
 
@@ -336,4 +337,44 @@ class CryptocurrencyServiceUnitTest {
                 .isInstanceOf(CryptocurrencyNotFoundException.class)
                 .hasMessage("Unable to find cryptocurrency with name: " + cryptoName);
     }
+
+    @Test
+    void whenGetByContractAddress_thenReturnProperEntity() {
+        when(cryptocurrencyRepository.findByContractAddress(anyString()))
+                .thenReturn(Optional.of(cryptocurrency));
+
+        var expected = underTestService.getBySmartContractAddress(TOKEN_ADDRESS);
+
+        assertThat(expected)
+                .extracting(
+                        Cryptocurrency::getId,
+                        Cryptocurrency::getName,
+                        Cryptocurrency::getSymbol,
+                        Cryptocurrency::getCoinMarketId,
+                        Cryptocurrency::getPlatform,
+                        Cryptocurrency::getTokenAddress,
+                        Cryptocurrency::getLastUpdate
+                ).containsExactly(
+                        cryptocurrency.getId(),
+                        cryptocurrency.getName(),
+                        cryptocurrency.getSymbol(),
+                        cryptocurrency.getCoinMarketId(),
+                        cryptocurrency.getPlatform(),
+                        cryptocurrency.getTokenAddress(),
+                        cryptocurrency.getLastUpdate()
+                );
+    }
+
+    @Test
+    void whenGetByNoExistContractAddress_thenReturnProperEntity() {
+        var no_exist_address = "NO_EXIST_CONTRACT_ADDRESS";
+
+        when(cryptocurrencyRepository.findByContractAddress(anyString()))
+                .thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> underTestService.getBySmartContractAddress(no_exist_address))
+                .isInstanceOf(NoSmartContractAddressException.class)
+                .hasMessageContaining(no_exist_address);
+    }
+
 }

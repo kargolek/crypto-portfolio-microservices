@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import pl.kargolek.cryptopriceservice.dto.client.CryptocurrencyMapDTO;
 import pl.kargolek.cryptopriceservice.exception.CryptocurrencyNotFoundException;
 import pl.kargolek.cryptopriceservice.exception.NoMatchCryptoMapException;
+import pl.kargolek.cryptopriceservice.exception.NoSmartContractAddressException;
 import pl.kargolek.cryptopriceservice.model.Cryptocurrency;
 import pl.kargolek.cryptopriceservice.model.Price;
 import pl.kargolek.cryptopriceservice.repository.CryptocurrencyRepository;
@@ -64,6 +65,11 @@ public class CryptocurrencyService {
         log.info(String.format("Finding cryptocurrency by id: %d", id));
         return cryptocurrencyRepository.findById(id)
                 .orElseThrow(() -> new CryptocurrencyNotFoundException(id));
+    }
+
+    public Cryptocurrency getBySmartContractAddress(String contractAddress){
+        return cryptocurrencyRepository.findByContractAddress(contractAddress)
+                .orElseThrow(() -> new NoSmartContractAddressException(contractAddress));
     }
 
     public Cryptocurrency updateCryptocurrency(Long id, Cryptocurrency cryptocurrency) {
