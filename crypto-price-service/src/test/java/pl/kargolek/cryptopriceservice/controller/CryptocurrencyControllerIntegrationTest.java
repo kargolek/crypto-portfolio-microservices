@@ -14,6 +14,7 @@ import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import pl.kargolek.cryptopriceservice.dto.controller.CryptocurrencyPostDTO;
 import pl.kargolek.cryptopriceservice.dto.model.CryptocurrencyDTO;
+import pl.kargolek.cryptopriceservice.dto.model.PlatformDTO;
 import pl.kargolek.cryptopriceservice.dto.model.PriceDTO;
 import pl.kargolek.cryptopriceservice.exception.JsonApiError;
 import pl.kargolek.cryptopriceservice.extension.MarketMockServerDispatcherExtension;
@@ -66,6 +67,9 @@ public class CryptocurrencyControllerIntegrationTest {
     private static final String POLYGON_NAME = "Polygon";
     private static final String POLYGON_SYMBOL = "MATIC";
     private static final long POLYGON_MARKET_ID = 3890L;
+    private static final String API_BASE_URL = "/api/v1/cryptocurrency";
+    private static final String PLATFORM_BTC = "platformBTC";
+    private static final String TOKEN_ADDRESS_BTC = "tokenAddressBTC";
     @Autowired
     private TestRestTemplate template;
 
@@ -101,7 +105,7 @@ public class CryptocurrencyControllerIntegrationTest {
     @Test
     @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenGetCryptos_thenReturnBodyWithProperData() {
-        var responseEntity = template.getForEntity("/api/v1/cryptocurrency", CryptocurrencyDTO[].class);
+        var responseEntity = template.getForEntity(API_BASE_URL, CryptocurrencyDTO[].class);
 
         var cryptocurrencies = stream(requireNonNull(responseEntity.getBody())).toList();
         var prices = cryptocurrencies.stream()
@@ -186,7 +190,7 @@ public class CryptocurrencyControllerIntegrationTest {
     @Test
     @Sql({"/delete_data.sql"})
     void whenGetCryptosAndDBEmpty_thenReturnEmptyBody() {
-        var responseEntity = template.getForEntity("/api/v1/cryptocurrency", String.class);
+        var responseEntity = template.getForEntity(API_BASE_URL, String.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isEqualTo("[]");
@@ -195,7 +199,7 @@ public class CryptocurrencyControllerIntegrationTest {
     @Test
     @Sql({"/delete_data.sql"})
     void whenGetCryptosByQueryNamesAndDBEmpty_thenReturnEmptyBody() {
-        var responseEntity = template.getForEntity("/api/v1/cryptocurrency?name=Bitcoin,Ethereum", String.class);
+        var responseEntity = template.getForEntity(API_BASE_URL + "?name=Bitcoin,Ethereum", String.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isEqualTo("[]");
@@ -204,7 +208,7 @@ public class CryptocurrencyControllerIntegrationTest {
     @Test
     @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenGetCryptosByQueryNames_thenReturnBodyWithProperData() {
-        var responseEntity = template.getForEntity("/api/v1/cryptocurrency?name=Bitcoin,Ethereum", CryptocurrencyDTO[].class);
+        var responseEntity = template.getForEntity(API_BASE_URL + "?name=Bitcoin,Ethereum", CryptocurrencyDTO[].class);
 
         var cryptocurrencies = stream(requireNonNull(responseEntity.getBody())).toList();
         var prices = cryptocurrencies.stream()
@@ -289,7 +293,7 @@ public class CryptocurrencyControllerIntegrationTest {
     @Test
     @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenGetCryptosByNotExistQueryNames_thenReturnBodyWithProperData() {
-        var responseEntity = template.getForEntity("/api/v1/cryptocurrency?name=NotExist,NotExist2", String.class);
+        var responseEntity = template.getForEntity(API_BASE_URL + "?name=NotExist,NotExist2", String.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isEqualTo("[]");
@@ -298,7 +302,7 @@ public class CryptocurrencyControllerIntegrationTest {
     @Test
     @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenGetCryptosBySecondExistQueryName_thenReturnBodyWithOneCryptoData() {
-        var responseEntity = template.getForEntity("/api/v1/cryptocurrency?name=NotExist,Ethereum", CryptocurrencyDTO[].class);
+        var responseEntity = template.getForEntity(API_BASE_URL + "?name=NotExist,Ethereum", CryptocurrencyDTO[].class);
 
         var cryptocurrencies = stream(requireNonNull(responseEntity.getBody())).toList();
         var prices = cryptocurrencies.stream()
@@ -370,7 +374,7 @@ public class CryptocurrencyControllerIntegrationTest {
     @Test
     @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenGetCryptosByFirstExistQueryName_thenReturnBodyOneCryptoData() {
-        var responseEntity = template.getForEntity("/api/v1/cryptocurrency?name=Bitcoin,NotExist", CryptocurrencyDTO[].class);
+        var responseEntity = template.getForEntity(API_BASE_URL + "?name=Bitcoin,NotExist", CryptocurrencyDTO[].class);
 
         var cryptocurrencies = stream(requireNonNull(responseEntity.getBody())).toList();
         var prices = cryptocurrencies.stream()
@@ -442,7 +446,7 @@ public class CryptocurrencyControllerIntegrationTest {
     @Test
     @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenGetCryptosByEmptyQueryName_thenReturnEmptyBody() {
-        var responseEntity = template.getForEntity("/api/v1/cryptocurrency?name=", String.class);
+        var responseEntity = template.getForEntity(API_BASE_URL + "?name=", String.class);
 
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isEqualTo("[]");
@@ -451,7 +455,7 @@ public class CryptocurrencyControllerIntegrationTest {
     @Test
     @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenGetCryptoByID_thenReturnBodyWithCryptoData() {
-        var responseEntity = template.getForEntity("/api/v1/cryptocurrency/" + bitcoinID,
+        var responseEntity = template.getForEntity(API_BASE_URL + "/" + bitcoinID,
                 CryptocurrencyDTO.class);
 
         var crypto = Objects.requireNonNull(responseEntity.getBody());
@@ -501,7 +505,7 @@ public class CryptocurrencyControllerIntegrationTest {
     @Test
     @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenGetCryptoByNotExistID_thenReturnStatus404NotFound() {
-        var responseEntity = template.getForEntity("/api/v1/cryptocurrency/1234567890",
+        var responseEntity = template.getForEntity(API_BASE_URL + "/1234567890",
                 JsonApiError.class);
 
         var crypto = Objects.requireNonNull(responseEntity.getBody());
@@ -520,7 +524,7 @@ public class CryptocurrencyControllerIntegrationTest {
     @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenDeleteCryptoByID_thenReturnStatus200() {
         HttpEntity<String> entity = new HttpEntity<>(null, new HttpHeaders());
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/" + bitcoinID,
+        var responseEntity = template.exchange(API_BASE_URL + "/" + bitcoinID,
                 HttpMethod.DELETE,
                 entity,
                 String.class);
@@ -532,7 +536,7 @@ public class CryptocurrencyControllerIntegrationTest {
     @Sql({"/delete_data.sql", "/insert_data.sql"})
     void whenDeleteCryptoByNoExistID_thenReturnStatus404() {
         HttpEntity<String> entity = new HttpEntity<>(null, new HttpHeaders());
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/1234567",
+        var responseEntity = template.exchange(API_BASE_URL + "/1234567",
                 HttpMethod.DELETE,
                 entity,
                 String.class);
@@ -612,7 +616,7 @@ public class CryptocurrencyControllerIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<CryptocurrencyPostDTO> entity = new HttpEntity<>(body, headers);
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/",
+        var responseEntity = template.exchange(API_BASE_URL,
                 HttpMethod.POST,
                 entity,
                 CryptocurrencyDTO.class);
@@ -674,7 +678,7 @@ public class CryptocurrencyControllerIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<CryptocurrencyPostDTO> entity = new HttpEntity<>(body, headers);
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/",
+        var responseEntity = template.exchange(API_BASE_URL,
                 HttpMethod.POST,
                 entity,
                 JsonApiError.class);
@@ -704,7 +708,7 @@ public class CryptocurrencyControllerIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<CryptocurrencyPostDTO> entity = new HttpEntity<>(body, headers);
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/",
+        var responseEntity = template.exchange(API_BASE_URL,
                 HttpMethod.POST,
                 entity,
                 JsonApiError.class);
@@ -732,7 +736,7 @@ public class CryptocurrencyControllerIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<CryptocurrencyPostDTO> entity = new HttpEntity<>(body, headers);
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/",
+        var responseEntity = template.exchange(API_BASE_URL,
                 HttpMethod.POST,
                 entity,
                 JsonApiError.class);
@@ -764,7 +768,7 @@ public class CryptocurrencyControllerIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<CryptocurrencyPostDTO> entity = new HttpEntity<>(body, headers);
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/",
+        var responseEntity = template.exchange(API_BASE_URL,
                 HttpMethod.POST,
                 entity,
                 JsonApiError.class);
@@ -796,7 +800,7 @@ public class CryptocurrencyControllerIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<CryptocurrencyPostDTO> entity = new HttpEntity<>(body, headers);
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/",
+        var responseEntity = template.exchange(API_BASE_URL,
                 HttpMethod.POST,
                 entity,
                 JsonApiError.class);
@@ -824,7 +828,7 @@ public class CryptocurrencyControllerIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<CryptocurrencyPostDTO> entity = new HttpEntity<>(body, headers);
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/",
+        var responseEntity = template.exchange(API_BASE_URL,
                 HttpMethod.POST,
                 entity,
                 JsonApiError.class);
@@ -852,7 +856,7 @@ public class CryptocurrencyControllerIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<CryptocurrencyPostDTO> entity = new HttpEntity<>(body, headers);
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/" + bitcoinID,
+        var responseEntity = template.exchange(API_BASE_URL + "/" + bitcoinID,
                 HttpMethod.PUT,
                 entity,
                 CryptocurrencyDTO.class);
@@ -913,7 +917,7 @@ public class CryptocurrencyControllerIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<CryptocurrencyPostDTO> entity = new HttpEntity<>(body, headers);
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/123456",
+        var responseEntity = template.exchange(API_BASE_URL + "/123456",
                 HttpMethod.PUT,
                 entity,
                 JsonApiError.class);
@@ -942,7 +946,7 @@ public class CryptocurrencyControllerIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<CryptocurrencyPostDTO> entity = new HttpEntity<>(body, headers);
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/" + bitcoinID,
+        var responseEntity = template.exchange(API_BASE_URL + "/" + bitcoinID,
                 HttpMethod.PUT,
                 entity,
                 JsonApiError.class);
@@ -971,7 +975,7 @@ public class CryptocurrencyControllerIntegrationTest {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<CryptocurrencyPostDTO> entity = new HttpEntity<>(body, headers);
-        var responseEntity = template.exchange("/api/v1/cryptocurrency/" + bitcoinID,
+        var responseEntity = template.exchange(API_BASE_URL + "/" + bitcoinID,
                 HttpMethod.PUT,
                 entity,
                 JsonApiError.class);
@@ -986,6 +990,92 @@ public class CryptocurrencyControllerIntegrationTest {
                 ).containsExactly(
                         HttpStatus.BAD_REQUEST,
                         "Duplicate entry 'ETH' for key 'cryptocurrency.UniqueSymbol'"
+                );
+    }
+
+    @Test
+    @Sql({"/delete_data.sql", "/insert_data.sql"})
+    void whenGetCryptocurrencyByContractAddress_thenReturn200AndJsonBody() {
+        var responseEntity = template.getForEntity(API_BASE_URL + "/contract-address/" + TOKEN_ADDRESS_BTC,
+                CryptocurrencyDTO.class);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        var crypto = requireNonNull(responseEntity.getBody());
+
+        assertThat(crypto).extracting(
+                CryptocurrencyDTO::getId,
+                CryptocurrencyDTO::getName,
+                CryptocurrencyDTO::getSymbol,
+                CryptocurrencyDTO::getCoinMarketId
+        ).containsExactly(
+                bitcoinID,
+                BTC_NAME,
+                BTC_SYMBOL,
+                BTC_MARKET_ID
+        );
+
+        assertThat(crypto.getLastUpdate())
+                .isBefore(LocalDateTime.now());
+
+        assertThat(crypto.getPriceDTO()).extracting(
+                PriceDTO::getPriceCurrent,
+                PriceDTO::getPercentChange1h,
+                PriceDTO::getPercentChange24h,
+                PriceDTO::getPercentChange7d,
+                PriceDTO::getPercentChange30d,
+                PriceDTO::getPercentChange60d,
+                PriceDTO::getPercentChange90d
+        ).containsExactly(
+                BTC_PRICE,
+                BTC_PERCENT_1H,
+                BTC_PERCENT_24H,
+                BTC_PERCENT_7D,
+                BTC_PERCENT_30D,
+                BTC_PERCENT_60D,
+                BTC_PERCENT_90D
+        );
+
+        assertThat(crypto.getPlatformDTO())
+                .extracting(
+                        PlatformDTO::getPlatform,
+                        PlatformDTO::getTokenAddress
+                ).containsExactly(
+                        PLATFORM_BTC,
+                        TOKEN_ADDRESS_BTC
+                );
+    }
+
+    @Test
+    @Sql({"/delete_data.sql", "/insert_data.sql"})
+    void whenGetCryptocurrencyByNotExistContractAddress_thenReturn404AndJsonBody() {
+        var responseEntity = template.getForEntity(API_BASE_URL + "/contract-address/1234",
+                JsonApiError.class);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+
+        assertThat(responseEntity.getBody())
+                .extracting(
+                        JsonApiError::getStatus,
+                        JsonApiError::getMessage
+                ).containsExactly(
+                        HttpStatus.NOT_FOUND,
+                        "Provided contract address is not exist, contractAddress: 1234"
+                );
+    }
+
+    @Test
+    @Sql({"/delete_data.sql"})
+    void whenGetCryptocurrencyByContractAddressEmptyDB_thenReturn404AndJsonBody() {
+        var responseEntity = template.getForEntity(API_BASE_URL + "/contract-address/1234",
+                JsonApiError.class);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+
+        assertThat(responseEntity.getBody())
+                .extracting(
+                        JsonApiError::getStatus,
+                        JsonApiError::getMessage
+                ).containsExactly(
+                        HttpStatus.NOT_FOUND,
+                        "Provided contract address is not exist, contractAddress: 1234"
                 );
     }
 }

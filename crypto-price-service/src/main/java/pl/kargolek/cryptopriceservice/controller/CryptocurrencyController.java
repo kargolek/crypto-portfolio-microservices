@@ -35,6 +35,13 @@ public class CryptocurrencyController {
         return ResponseEntity.status(HttpStatus.OK).body(cryptocurrencyDto);
     }
 
+    @GetMapping("/contract-address/{contractAddress}")
+    public ResponseEntity<CryptocurrencyDTO> getCryptocurrencyContractAddress(@PathVariable("contractAddress") String contractAddress) {
+        var cryptocurrency = cryptocurrencyService.getBySmartContractAddress(contractAddress);
+        var cryptocurrencyDto = mapper.convertEntityDto(cryptocurrency);
+        return ResponseEntity.status(HttpStatus.OK).body(cryptocurrencyDto);
+    }
+
     @GetMapping("")
     public List<CryptocurrencyDTO> getCryptocurrencies(@RequestParam(name = "name", required = false) List<String> names) {
         return Optional.ofNullable(names).isPresent() ?

@@ -41,6 +41,8 @@ class CryptocurrencyRepositoryIntegrationTest {
                 .name("Bitcoin")
                 .symbol("BTC")
                 .coinMarketId(RandomUtils.nextLong())
+                .platform("platform")
+                .tokenAddress("tokenAddress")
                 .lastUpdate(LocalDateTime.now())
                 .build();
     }
@@ -123,5 +125,29 @@ class CryptocurrencyRepositoryIntegrationTest {
                         cryptocurrency.getPrice()
                 )
         );
+    }
+
+    @Test
+    void whenGetBySmartContractAddress_thenReturnProperEntityOptional() {
+        underTestRepository.save(cryptocurrency);
+
+        var expected = underTestRepository.findByContractAddress("tokenAddress");
+
+        assertThat(expected)
+                .get()
+                .extracting(
+                        Cryptocurrency::getTokenAddress
+                ).isEqualTo(
+                        cryptocurrency.getTokenAddress()
+                );
+    }
+
+    @Test
+    void whenGetByNotExistSmartContractAddress_thenReturnEmptyOptional() {
+        underTestRepository.save(cryptocurrency);
+
+        var expected = underTestRepository.findByContractAddress("no_exist_tokenAddress");
+
+        assertThat(expected).isEmpty();
     }
 }

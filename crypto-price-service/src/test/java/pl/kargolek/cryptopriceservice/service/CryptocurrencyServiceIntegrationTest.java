@@ -11,10 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.transaction.annotation.Transactional;
-import pl.kargolek.cryptopriceservice.exception.CryptocurrencyNotFoundException;
-import pl.kargolek.cryptopriceservice.exception.MarketApiClientException;
-import pl.kargolek.cryptopriceservice.exception.NoMatchCryptoMapException;
-import pl.kargolek.cryptopriceservice.exception.NoSuchCryptoSymbolException;
+import pl.kargolek.cryptopriceservice.exception.*;
 import pl.kargolek.cryptopriceservice.extension.MarketMockServerDispatcherExtension;
 import pl.kargolek.cryptopriceservice.extension.MySqlTestContainerExtension;
 import pl.kargolek.cryptopriceservice.model.Cryptocurrency;
@@ -39,6 +36,8 @@ public class CryptocurrencyServiceIntegrationTest {
     private static final long BTC_MARKET_ID = 1L;
     private static final String XEN_PLATFORM_NAME = "Ethereum";
     private static final String XEN_TOKEN_ADDRESS = "0x06450dEe7FD2Fb8E39061434BAbCFC05599a6Fb8";
+    private static final String PLATFORM_USER_INPUT = "PLATFORM";
+    private static final String TOKEN_ADDRESS_USER_INPUT = "TOKEN_ADDRESS";
     @Autowired
     private CryptocurrencyService underTestService;
     @Autowired
@@ -266,8 +265,8 @@ public class CryptocurrencyServiceIntegrationTest {
 
     @Test
     void whenFindByName_thenReturnListWithSearchCrypto() {
-        cryptocurrencyXEN.setPlatform("PLATFORM");
-        cryptocurrencyXEN.setTokenAddress("TOKEN_ADDRESS");
+        cryptocurrencyXEN.setPlatform(PLATFORM_USER_INPUT);
+        cryptocurrencyXEN.setTokenAddress(TOKEN_ADDRESS_USER_INPUT);
         cryptocurrencyXEN.setCoinMarketId(1000L);
         var cryptoSaved = cryptocurrencyRepository.save(cryptocurrencyXEN);
 
@@ -298,8 +297,8 @@ public class CryptocurrencyServiceIntegrationTest {
 
     @Test
     void whenFindByNameUnknownName_thenReturnListEmptyList() {
-        cryptocurrencyXEN.setPlatform("PLATFORM");
-        cryptocurrencyXEN.setTokenAddress("TOKEN_ADDRESS");
+        cryptocurrencyXEN.setPlatform(PLATFORM_USER_INPUT);
+        cryptocurrencyXEN.setTokenAddress(TOKEN_ADDRESS_USER_INPUT);
         cryptocurrencyXEN.setCoinMarketId(1000L);
         cryptocurrencyRepository.save(cryptocurrencyXEN);
 
@@ -307,5 +306,35 @@ public class CryptocurrencyServiceIntegrationTest {
 
         assertThat(expected)
                 .hasSize(0);
+    }
+
+    @Test
+    void whenGetCryptocurrencyByContractAddress_theReturnProperEntity(){
+        cryptocurrencyBTC.setCoinMarketId(1L);
+        cryptocurrencyBTC.setPlatform(PLATFORM_USER_INPUT);
+        cryptocurrencyBTC.setTokenAddress(TOKEN_ADDRESS_USER_INPUT);
+
+        cryptocurrencyRepository.save(cryptocurrencyBTC);
+
+        var expected = underTestService.getBySmartContractAddress(TOKEN_ADDRESS_USER_INPUT);
+
+        assertThat(expected)
+                .extracting(Cryptocurrency::getTokenAddress)
+                .isEqualTo(TOKEN_ADDRESS_USER_INPUT);
+    }
+
+    @Test
+    void whenGetCryptocurrencyByNoExistContractAddress_theThrowNoSmartContractAddressExc(){
+        cryptocurrencyBTC.setCoinMarketId(1L);
+        cryptocurrencyBTC.setPlatform(PLATFORM_USER_INPUT);
+        cryptocurrencyBTC.setTokenAddress(TOKEN_ADDRESS_USER_INPUT);
+
+        cryptocurrencyRepository.save(cryptocurrencyBTC);
+
+        var unknown_address = "UNKNOWN_TOKEN_ADDRESS";
+
+        assertThatThrownBy(() -> underTestService.getBySmartContractAddress(unknown_address))
+                .isInstanceOf(NoSmartContractAddressException.class)
+                .hasMessageContaining(unknown_address);
     }
 }
