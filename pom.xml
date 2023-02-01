@@ -7,6 +7,8 @@
 
     <modules>
         <module>crypto-price-service</module>
+        <module>wallet-service</module>
+        <module>discovery-server</module>
     </modules>
 
     <parent>
