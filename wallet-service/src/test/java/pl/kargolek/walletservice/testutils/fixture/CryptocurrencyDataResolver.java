@@ -1,4 +1,4 @@
-package pl.kargolek.walletservice.util;
+package pl.kargolek.walletservice.testutils.fixture;
 
 import pl.kargolek.walletservice.dto.CryptocurrencyDTO;
 import pl.kargolek.walletservice.dto.PlatformDTO;

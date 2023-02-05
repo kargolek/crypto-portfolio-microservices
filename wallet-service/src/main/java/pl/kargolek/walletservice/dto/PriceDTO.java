@@ -1,7 +1,6 @@
 package pl.kargolek.walletservice.dto;
 
 import lombok.Data;
-import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
@@ -12,9 +11,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Accessors(chain = true)
-@ToString
 public class PriceDTO {
-
     private Long id;
     private BigDecimal priceCurrent;
     private BigDecimal percentChange1h;

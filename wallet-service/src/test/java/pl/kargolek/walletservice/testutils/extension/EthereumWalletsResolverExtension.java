@@ -1,23 +1,22 @@
-package pl.kargolek.walletservice.extension;
+package pl.kargolek.walletservice.testutils.extension;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
-import pl.kargolek.walletservice.util.CryptoPriceServiceMockResponse;
+import pl.kargolek.walletservice.testutils.fixture.EthereumWalletsData;
 
 /**
  * @author Karol Kuta-Orlowicz
  */
-public class CryptoPriceMockResponseExtension implements ParameterResolver {
-
+public class EthereumWalletsResolverExtension implements ParameterResolver {
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        return parameterContext.getParameter().getType() == CryptoPriceServiceMockResponse.class;
+        return parameterContext.getParameter().getType() == EthereumWalletsData.class;
     }
 
     @Override
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        return new CryptoPriceServiceMockResponse();
+        return new EthereumWalletsData();
     }
 }
