@@ -1,6 +1,7 @@
 package pl.kargolek.walletservice.validation.impl;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import pl.kargolek.walletservice.exception.InvalidAddressException;
@@ -18,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  */
 
 @ExtendWith(EthereumWalletsResolverExtension.class)
+@Tag("UnitTest")
 class EtherscanMultiWalletAddressValidatorTest {
 
     private MultiWalletAddressValidator underTest;

@@ -117,8 +117,7 @@ class CryptocurrencyServiceClientTest {
     }
 
     @Test
-    void whenGetAllCryptocurrenciesStatus500_thenReturnEmptyListCryptocurrencyDTO(CryptoPriceServiceMockResponse cryptoPriceServiceMockResponse,
-                                                                                  CryptocurrencyDataResolver cryptocurrencyDataResolver) {
+    void whenGetAllCryptocurrenciesStatus500_thenReturnEmptyListCryptocurrencyDTO(CryptoPriceServiceMockResponse cryptoPriceServiceMockResponse) {
         mockWebServer.enqueue(
                 cryptoPriceServiceMockResponse.getAllCryptocurrenciesHttpStatus500()
         );
@@ -207,8 +206,7 @@ class CryptocurrencyServiceClientTest {
     }
 
     @Test
-    void whenGetCryptocurrenciesByNameStatus500_thenReturnEmptyListCryptocurrencyDTO(CryptoPriceServiceMockResponse cryptoPriceServiceMockResponse,
-                                                                                     CryptocurrencyDataResolver cryptocurrencyDataResolver) {
+    void whenGetCryptocurrenciesByNameStatus500_thenReturnEmptyListCryptocurrencyDTO(CryptoPriceServiceMockResponse cryptoPriceServiceMockResponse) {
         mockWebServer.enqueue(
                 cryptoPriceServiceMockResponse.getAllCryptocurrenciesHttpStatus500()
         );
