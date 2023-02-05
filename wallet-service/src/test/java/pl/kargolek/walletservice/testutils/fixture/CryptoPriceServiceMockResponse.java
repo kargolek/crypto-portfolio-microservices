@@ -1,4 +1,4 @@
-package pl.kargolek.walletservice.util;
+package pl.kargolek.walletservice.testutils.fixture;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

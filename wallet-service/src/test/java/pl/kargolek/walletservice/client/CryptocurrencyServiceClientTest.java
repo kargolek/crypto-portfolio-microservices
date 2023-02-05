@@ -8,14 +8,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import pl.kargolek.walletservice.config.CryptoPriceMockServerConfig;
-import pl.kargolek.walletservice.config.MockWebServerInitializer;
 import pl.kargolek.walletservice.dto.CryptocurrencyDTO;
 import pl.kargolek.walletservice.dto.PriceDTO;
-import pl.kargolek.walletservice.extension.CryptoPriceMockResponseExtension;
-import pl.kargolek.walletservice.extension.CryptocurrencyResolverExtension;
-import pl.kargolek.walletservice.util.CryptoPriceServiceMockResponse;
-import pl.kargolek.walletservice.util.CryptocurrencyDataResolver;
+import pl.kargolek.walletservice.testutils.config.CryptoPriceMockServerConfig;
+import pl.kargolek.walletservice.testutils.config.CryptoPriceMockWebServerInitializer;
+import pl.kargolek.walletservice.testutils.extension.CryptoPriceMockResponseExtension;
+import pl.kargolek.walletservice.testutils.extension.CryptocurrencyResolverExtension;
+import pl.kargolek.walletservice.testutils.fixture.CryptoPriceServiceMockResponse;
+import pl.kargolek.walletservice.testutils.fixture.CryptocurrencyDataResolver;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ import static org.assertj.core.groups.Tuple.tuple;
 @ExtendWith(CryptoPriceMockResponseExtension.class)
 @ExtendWith(CryptocurrencyResolverExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ContextConfiguration(initializers = {MockWebServerInitializer.class}, classes = {CryptoPriceMockServerConfig.class})
+@ContextConfiguration(initializers = {CryptoPriceMockWebServerInitializer.class}, classes = {CryptoPriceMockServerConfig.class})
 @Tag("IntegrationTest")
 class CryptocurrencyServiceClientTest {
 
@@ -117,8 +117,7 @@ class CryptocurrencyServiceClientTest {
     }
 
     @Test
-    void whenGetAllCryptocurrenciesStatus500_thenReturnEmptyListCryptocurrencyDTO(CryptoPriceServiceMockResponse cryptoPriceServiceMockResponse,
-                                                                                  CryptocurrencyDataResolver cryptocurrencyDataResolver) {
+    void whenGetAllCryptocurrenciesStatus500_thenReturnEmptyListCryptocurrencyDTO(CryptoPriceServiceMockResponse cryptoPriceServiceMockResponse) {
         mockWebServer.enqueue(
                 cryptoPriceServiceMockResponse.getAllCryptocurrenciesHttpStatus500()
         );
@@ -207,8 +206,7 @@ class CryptocurrencyServiceClientTest {
     }
 
     @Test
-    void whenGetCryptocurrenciesByNameStatus500_thenReturnEmptyListCryptocurrencyDTO(CryptoPriceServiceMockResponse cryptoPriceServiceMockResponse,
-                                                                                     CryptocurrencyDataResolver cryptocurrencyDataResolver) {
+    void whenGetCryptocurrenciesByNameStatus500_thenReturnEmptyListCryptocurrencyDTO(CryptoPriceServiceMockResponse cryptoPriceServiceMockResponse) {
         mockWebServer.enqueue(
                 cryptoPriceServiceMockResponse.getAllCryptocurrenciesHttpStatus500()
         );

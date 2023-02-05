@@ -1,4 +1,4 @@
-package pl.kargolek.walletservice.config;
+package pl.kargolek.walletservice.testutils.config;
 
 import lombok.SneakyThrows;
 import okhttp3.mockwebserver.MockWebServer;
@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * @author Karol Kuta-Orlowicz
  */
-public class MockWebServerInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+public class CryptoPriceMockWebServerInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     @SneakyThrows
     @Override

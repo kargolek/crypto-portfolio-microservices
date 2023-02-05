@@ -1,4 +1,4 @@
-package pl.kargolek.walletservice.config;
+package pl.kargolek.walletservice.testutils.config;
 
 import okhttp3.mockwebserver.MockWebServer;
 import org.springframework.beans.factory.annotation.Autowired;

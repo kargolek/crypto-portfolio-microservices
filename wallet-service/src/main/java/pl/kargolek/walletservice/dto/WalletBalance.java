@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class PlatformDTO {
-    private String platform;
-    private String tokenAddress;
+public class WalletBalance {
+    private String account;
+    private String balance;
 }

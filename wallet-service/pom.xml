@@ -26,6 +26,7 @@
         <assertj-core.version>3.24.2</assertj-core.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
         <maven-surefire-junit5-tree-reporter.version>1.1.0</maven-surefire-junit5-tree-reporter.version>
+        <web3j.version>4.9.6</web3j.version>
     </properties>
 
     <dependencies>
@@ -48,6 +49,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
         <dependency>
@@ -95,6 +101,11 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.web3j</groupId>
+            <artifactId>core</artifactId>
+            <version>${web3j.version}</version>
+        </dependency>
 
     </dependencies>
 
@@ -137,6 +148,7 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
+
                 <dependencies>
                     <dependency>
                         <groupId>me.fabriciorby</groupId>
@@ -144,6 +156,7 @@
                         <version>${maven-surefire-junit5-tree-reporter.version}</version>
                     </dependency>
                 </dependencies>
+
                 <configuration>
                     <reportFormat>plain</reportFormat>
                     <consoleOutputReporter>
@@ -153,6 +166,7 @@
                             implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter">
                     </statelessTestsetInfoReporter>
                 </configuration>
+
             </plugin>
         </plugins>
     </build>
