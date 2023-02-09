@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @Accessors(chain = true)
 public class WalletBalance {
     private String account;
+
     @JsonProperty("balance")
     private BigDecimal quantity;
 }

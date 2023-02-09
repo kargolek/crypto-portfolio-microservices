@@ -82,7 +82,7 @@ class EthereumBalanceCalculationServiceTest {
                         UserBalance::getBalance60d,
                         UserBalance::getBalance90d
                 ).containsExactlyInAnyOrder(
-                        tuple("0x8111111111111111111111111111111111111111",
+                        tuple(WALLET_ADDRESS_1,
                                 new BigDecimal("10"),
                                 new BigDecimal("18005.0"),
                                 new BigDecimal("19895.5250"),
@@ -92,7 +92,7 @@ class EthereumBalanceCalculationServiceTest {
                                 new BigDecimal("20255.6250"),
                                 new BigDecimal("20345.650")
                         ),
-                        tuple("0x8222222222222222222222222222222222222222",
+                        tuple(WALLET_ADDRESS_2,
                                 new BigDecimal("20"),
                                 new BigDecimal("36010.0"),
                                 new BigDecimal("39791.0500"),
