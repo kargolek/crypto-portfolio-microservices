@@ -19,7 +19,7 @@ feign:
 api:
   etherscan:
     baseUrl: "https://api.etherscan.io/api"
-    apiKey: "FQ1NMUSD7AGFUB51XHUZB25A62IVQ6PE99"
+    apiKey: ${ETHERSCAN_API_KEY}
     fixedDelayMillis: 1200
     maxRetryAttempts: 10
     validateBodyFieldName: status
