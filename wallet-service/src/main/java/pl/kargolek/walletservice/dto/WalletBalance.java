@@ -1,7 +1,10 @@
 package pl.kargolek.walletservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import java.math.BigDecimal;
 
 /**
  * @author Karol Kuta-Orlowicz
@@ -10,5 +13,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class WalletBalance {
     private String account;
-    private String balance;
+
+    @JsonProperty("balance")
+    private BigDecimal quantity;
 }

@@ -24,3 +24,4 @@ api:
     maxRetryAttempts: 10
     validateBodyFieldName: status
     validationValue: 1
+    maxWalletsPerRequest: 20

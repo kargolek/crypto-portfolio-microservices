@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import pl.kargolek.walletservice.exception.InvalidAddressException;
-import pl.kargolek.walletservice.testutils.extension.EthereumWalletsResolverExtension;
-import pl.kargolek.walletservice.testutils.fixture.EthereumInvalidWallets;
-import pl.kargolek.walletservice.testutils.fixture.EthereumValidWallets;
-import pl.kargolek.walletservice.testutils.fixture.EthereumWalletsData;
+import pl.kargolek.walletservice.testutils.extension.ExtEthereumWalletsResolver;
+import pl.kargolek.walletservice.testutils.fixture.DataWalletAddressInvalid;
+import pl.kargolek.walletservice.testutils.fixture.DataWalletsAddressValid;
+import pl.kargolek.walletservice.testutils.fixture.DataEthereumWallets;
 import pl.kargolek.walletservice.validation.MultiWalletAddressValidator;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @author Karol Kuta-Orlowicz
  */
 
-@ExtendWith(EthereumWalletsResolverExtension.class)
+@ExtendWith(ExtEthereumWalletsResolver.class)
 @Tag("UnitTest")
 class EtherscanMultiWalletAddressValidatorTest {
 
@@ -31,30 +31,30 @@ class EtherscanMultiWalletAddressValidatorTest {
     }
 
     @Test
-    public void when20WalletsValid_thenReturnTrue(EthereumWalletsData data) {
+    public void when20WalletsValid_thenReturnTrue(DataEthereumWallets data) {
         assertThat(underTest.isValidAddresses(data.WALLETS_20_ALL_VALID)).isTrue();
     }
 
     @Test
-    public void when19WalletsValid_thenReturnTrue(EthereumWalletsData data) {
+    public void when19WalletsValid_thenReturnTrue(DataEthereumWallets data) {
         assertThat(underTest.isValidAddresses(data.WALLETS_19_ALL_VALID)).isTrue();
     }
 
     @Test
-    public void when21WalletsValid_thenThrowInvalidAddressException(EthereumWalletsData data) {
+    public void when21WalletsValid_thenThrowInvalidAddressException(DataEthereumWallets data) {
         assertThatThrownBy(() -> underTest.isValidAddresses(data.WALLETS_21_ALL_VALID))
                 .isInstanceOf(InvalidAddressException.class);
     }
 
     @Test
-    public void when20WalletsValidOneInvalid_thenThrowInvalidAddressException(EthereumWalletsData data) {
+    public void when20WalletsValidOneInvalid_thenThrowInvalidAddressException(DataEthereumWallets data) {
         assertThatThrownBy(() -> underTest.isValidAddresses(data.WALLETS_20_ONE_INVALID))
                 .isInstanceOf(InvalidAddressException.class);
     }
 
     @Test
     public void when1WalletsInvalid_thenThrowInvalidAddressException() {
-        assertThatThrownBy(() -> underTest.isValidAddresses(EthereumInvalidWallets.WALLET_1.getAddress()))
+        assertThatThrownBy(() -> underTest.isValidAddresses(DataWalletAddressInvalid.WALLET_1.getAddress()))
                 .isInstanceOf(InvalidAddressException.class);
     }
 
@@ -72,14 +72,14 @@ class EtherscanMultiWalletAddressValidatorTest {
 
     @Test
     public void whenWalletsWhiteSpace_thenThrowInvalidAddressException() {
-        var multiWalletsWhiteSpace = EthereumValidWallets.WALLET_1 + ", " + EthereumValidWallets.WALLET_2;
+        var multiWalletsWhiteSpace = DataWalletsAddressValid.WALLET_1 + ", " + DataWalletsAddressValid.WALLET_2;
         assertThatThrownBy(() -> underTest.isValidAddresses(multiWalletsWhiteSpace))
                 .isInstanceOf(InvalidAddressException.class);
     }
 
     @Test
     public void whenWalletsInvalidCharacter_thenThrowInvalidAddressException() {
-        var multiWalletsWhiteSpace = EthereumValidWallets.WALLET_1 + "!" + EthereumValidWallets.WALLET_2;
+        var multiWalletsWhiteSpace = DataWalletsAddressValid.WALLET_1 + "!" + DataWalletsAddressValid.WALLET_2;
         assertThatThrownBy(() -> underTest.isValidAddresses(multiWalletsWhiteSpace))
                 .isInstanceOf(InvalidAddressException.class);
     }

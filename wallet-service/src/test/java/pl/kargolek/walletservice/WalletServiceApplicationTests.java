@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.reactive.function.client.WebClient;
-import pl.kargolek.walletservice.client.CryptocurrencyServiceClient;
+import pl.kargolek.walletservice.client.CryptoPriceServiceClient;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -15,7 +15,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class WalletServiceApplicationTests {
 
 	@Autowired
-	private CryptocurrencyServiceClient cryptocurrencyServiceClient;
+	private CryptoPriceServiceClient cryptoPriceServiceClient;
 	@Autowired
 	@Qualifier("etherscanWebClient")
 	private WebClient etherscanWebClient;
@@ -23,6 +23,6 @@ class WalletServiceApplicationTests {
 	@Test
 	void contextLoads() {
 		assertThat(etherscanWebClient).isNotNull();
-		assertThat(cryptocurrencyServiceClient).isNotNull();
+		assertThat(cryptoPriceServiceClient).isNotNull();
 	}
 }

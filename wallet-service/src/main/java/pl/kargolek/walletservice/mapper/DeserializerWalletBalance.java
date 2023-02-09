@@ -7,21 +7,22 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import pl.kargolek.walletservice.dto.MultiWalletBalance;
+import pl.kargolek.walletservice.dto.WalletMultiBalance;
 import pl.kargolek.walletservice.dto.WalletBalance;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @author Karol Kuta-Orlowicz
  */
 @Slf4j
-public class DeserializerWalletBalance extends JsonDeserializer<MultiWalletBalance> {
+public class DeserializerWalletBalance extends JsonDeserializer<WalletMultiBalance> {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
-    public MultiWalletBalance deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+    public WalletMultiBalance deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         ObjectCodec oc = jsonParser.getCodec();
         JsonNode node = oc.readTree(jsonParser);
 
@@ -31,7 +32,7 @@ public class DeserializerWalletBalance extends JsonDeserializer<MultiWalletBalan
         var resultNode = node.get("result");
 
         if (resultNode == null) {
-            return new MultiWalletBalance()
+            return new WalletMultiBalance()
                     .setStatus(status)
                     .setMessage(message)
                     .setResult(null);
@@ -39,13 +40,13 @@ public class DeserializerWalletBalance extends JsonDeserializer<MultiWalletBalan
 
         if (resultNode.isArray()) {
             var resultAsWalletBalance = mapper.readValue(resultNode.toString(), WalletBalance[].class);
-            return new MultiWalletBalance()
+            return new WalletMultiBalance()
                     .setStatus(status)
                     .setMessage(message)
-                    .setResult(resultAsWalletBalance);
+                    .setResult(Arrays.asList(resultAsWalletBalance));
         }
 
-        return new MultiWalletBalance()
+        return new WalletMultiBalance()
                 .setStatus(status)
                 .setMessage(message)
                 .setResult(null);
