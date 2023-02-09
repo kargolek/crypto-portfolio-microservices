@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
-import pl.kargolek.walletservice.client.validation.impl.ValidateBodyImpl;
+import pl.kargolek.walletservice.validation.impl.RequestBodyValidatorImpl;
 import pl.kargolek.walletservice.exception.ExternalServiceCallException;
 import reactor.util.retry.RetryBackoffSpec;
 import reactor.util.retry.RetrySpec;
@@ -49,7 +49,7 @@ public class WebClientConfig {
     }
 
     @Bean("etherscanValidateBody")
-    public ValidateBodyImpl etherscanValidateBody(){
-        return new ValidateBodyImpl(validateFieldName, validationValue);
+    public RequestBodyValidatorImpl etherscanValidateBody(){
+        return new RequestBodyValidatorImpl(validateFieldName, validationValue);
     }
 }

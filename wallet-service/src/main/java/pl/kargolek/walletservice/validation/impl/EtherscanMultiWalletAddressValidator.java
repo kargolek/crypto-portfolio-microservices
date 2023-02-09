@@ -2,6 +2,7 @@ package pl.kargolek.walletservice.validation.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import pl.kargolek.walletservice.validation.WalletAddressValidator;
 @Qualifier("etherscanMultiWalletAddressValidator")
 @NoArgsConstructor
 @AllArgsConstructor
+@Slf4j
 public class EtherscanMultiWalletAddressValidator implements MultiWalletAddressValidator {
 
     @Autowired
@@ -24,6 +26,7 @@ public class EtherscanMultiWalletAddressValidator implements MultiWalletAddressV
 
     @Override
     public boolean isValidAddresses(String wallets) {
+        log.info("Validating wallets: {}", wallets);
         if (wallets == null || wallets.isEmpty() || wallets.matches("[^a-zA-Z0-9,]+")) {
             throw new InvalidAddressException("ETH", wallets, "wallets are null, empty or not match to the pattern");
         }
