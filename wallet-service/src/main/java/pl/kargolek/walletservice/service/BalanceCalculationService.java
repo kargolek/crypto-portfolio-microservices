@@ -7,13 +7,15 @@ import pl.kargolek.walletservice.client.CryptoPriceServiceClient;
 import pl.kargolek.walletservice.dto.TokenDTO;
 import pl.kargolek.walletservice.dto.UserBalance;
 import pl.kargolek.walletservice.dto.UserWallet;
-import pl.kargolek.walletservice.exception.NoSuchCryptoPriceException;
+import pl.kargolek.walletservice.exception.NoSuchCryptoPriceDataException;
 import pl.kargolek.walletservice.util.CryptoType;
 import pl.kargolek.walletservice.util.CryptoUnitConvert;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -40,6 +42,8 @@ public abstract class BalanceCalculationService<T> {
                 .map(mapped -> List.of(String.join(",", mapped)));
     }
 
+    protected abstract List<UserWallet> callWalletsBalanceCalculation(String wallets);
+
     protected List<T> getWalletsBalances(List<String> wallets) {
         return wallets.stream()
                 .parallel()
@@ -52,7 +56,7 @@ public abstract class BalanceCalculationService<T> {
         return cryptoPriceServiceClient.getTokensByName(List.of(name)).stream()
                 .filter(tokenDTO -> tokenDTO.getName().equalsIgnoreCase(name))
                 .findFirst()
-                .orElseThrow(() -> new NoSuchCryptoPriceException(name));
+                .orElseThrow(() -> new NoSuchCryptoPriceDataException(name));
     }
 
     protected UserWallet calculateUserBalances(UserWallet userWallet, TokenDTO tokenDTO, CryptoType cryptoType) {
@@ -92,11 +96,15 @@ public abstract class BalanceCalculationService<T> {
     }
 
     private BigDecimal calculateBalance(BigDecimal walletBalance, BigDecimal currentPrice) {
-        return walletBalance.multiply(currentPrice);
+        var currentPriceOptional = Optional.ofNullable(currentPrice).orElseThrow(NoSuchCryptoPriceDataException::new);
+        var balance = walletBalance.multiply(currentPriceOptional);
+        return balance.setScale(2, RoundingMode.HALF_EVEN);
     }
 
     private BigDecimal calcBalancePercentChange(BigDecimal balance, BigDecimal percent) {
-        var diff = balance.multiply(percent.divide(new BigDecimal("100")));
-        return balance.add(diff);
+        var percentOptional = Optional.ofNullable(percent).orElseThrow(NoSuchCryptoPriceDataException::new);
+        var diff = balance.multiply(percentOptional.divide(new BigDecimal("100")));
+        var balance_change = balance.add(diff);
+        return balance_change.setScale(2, RoundingMode.HALF_EVEN);
     }
 }

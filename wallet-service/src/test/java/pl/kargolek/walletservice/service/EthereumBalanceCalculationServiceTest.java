@@ -14,7 +14,7 @@ import pl.kargolek.walletservice.dto.UserBalance;
 import pl.kargolek.walletservice.dto.UserWallet;
 import pl.kargolek.walletservice.exception.ExternalServiceCallException;
 import pl.kargolek.walletservice.exception.InvalidAddressException;
-import pl.kargolek.walletservice.exception.NoSuchCryptoPriceException;
+import pl.kargolek.walletservice.exception.NoSuchCryptoPriceDataException;
 import pl.kargolek.walletservice.testutils.config.ConfigCryptoPriceMockServer;
 import pl.kargolek.walletservice.testutils.config.InitializerCryptoPriceMockWebServer;
 import pl.kargolek.walletservice.testutils.extension.ExtCryptoPriceResponseResolver;
@@ -126,7 +126,7 @@ class EthereumBalanceCalculationServiceTest {
         etherscanMockWebServer.enqueue(ethMockResponse.getMockedResStatus200());
 
         assertThatThrownBy(() -> ethereumBalanceCalculationService.callWalletsBalanceCalculation(WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2))
-                .isInstanceOf(NoSuchCryptoPriceException.class)
+                .isInstanceOf(NoSuchCryptoPriceDataException.class)
                 .hasMessageContaining("Unable to get price for crypto: Ethereum");
     }
 

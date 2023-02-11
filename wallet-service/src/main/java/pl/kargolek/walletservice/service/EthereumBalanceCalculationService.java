@@ -36,6 +36,7 @@ public class EthereumBalanceCalculationService extends BalanceCalculationService
         super(walletBalanceService);
     }
 
+    @Override
     public List<UserWallet> callWalletsBalanceCalculation(String wallets) {
         walletsValidator.isValidAddresses(wallets);
         var tokenDTO = this.getCryptoPrice(CryptoType.ETHEREUM);

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import pl.kargolek.walletservice.exception.InvalidAddressException;
 import pl.kargolek.walletservice.validation.MultiWalletAddressValidator;
@@ -24,6 +25,13 @@ public class EtherscanMultiWalletAddressValidator implements MultiWalletAddressV
     @Qualifier("ethereumWalletAddressValidator")
     private WalletAddressValidator walletAddressValidator;
 
+    @Value("${api.etherscan.maxWalletsCheck}")
+    private String maxWalletsCheck;
+
+    public EtherscanMultiWalletAddressValidator(WalletAddressValidator walletAddressValidator) {
+        this.walletAddressValidator = walletAddressValidator;
+    }
+
     @Override
     public boolean isValidAddresses(String wallets) {
         log.info("Validating wallets: {}", wallets);
@@ -31,7 +39,7 @@ public class EtherscanMultiWalletAddressValidator implements MultiWalletAddressV
             throw new InvalidAddressException("ETH", wallets, "wallets are null, empty or not match to the pattern");
         }
         String[] addresses = wallets.split(",");
-        if (addresses.length > 20) {
+        if (addresses.length > Integer.parseInt(maxWalletsCheck)) {
             throw new InvalidAddressException("ETH", wallets, "wallets exceed max num 20 for etherscan multi wallet balance");
         }
         for (String address : addresses) {
