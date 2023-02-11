@@ -3,10 +3,9 @@ package pl.kargolek.walletservice.mapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import pl.kargolek.walletservice.dto.UserBalance;
 import pl.kargolek.walletservice.dto.WalletBalance;
-import pl.kargolek.walletservice.testutils.extension.ExtEthereumWalletsResolver;
+import pl.kargolek.walletservice.testutils.BaseParamTest;
 import pl.kargolek.walletservice.testutils.fixture.DataEthereumWallets;
 
 import java.math.BigDecimal;
@@ -18,9 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Karol Kuta-Orlowicz
  */
 
-@ExtendWith(ExtEthereumWalletsResolver.class)
 @Tag("UnitTest")
-class UserBalanceMapperTest {
+class UserBalanceMapperTest extends BaseParamTest {
 
     private final UserBalanceMapper underTest = UserBalanceMapper.INSTANCE;
     private WalletBalance walletBalance1;

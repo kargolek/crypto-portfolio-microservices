@@ -14,11 +14,10 @@ import pl.kargolek.walletservice.dto.UserBalance;
 import pl.kargolek.walletservice.dto.UserWallet;
 import pl.kargolek.walletservice.exception.ExternalServiceCallException;
 import pl.kargolek.walletservice.exception.InvalidAddressException;
-import pl.kargolek.walletservice.exception.NoSuchCryptoPriceException;
+import pl.kargolek.walletservice.exception.NoSuchCryptoPriceDataException;
+import pl.kargolek.walletservice.testutils.BaseParamTest;
 import pl.kargolek.walletservice.testutils.config.ConfigCryptoPriceMockServer;
 import pl.kargolek.walletservice.testutils.config.InitializerCryptoPriceMockWebServer;
-import pl.kargolek.walletservice.testutils.extension.ExtCryptoPriceResponseResolver;
-import pl.kargolek.walletservice.testutils.extension.ExtEtherscanResponseResolver;
 import pl.kargolek.walletservice.testutils.extension.ExtMockEtherscanServer;
 import pl.kargolek.walletservice.testutils.fixture.ResponseCryptoPriceService;
 import pl.kargolek.walletservice.testutils.fixture.ResponseEtherscanService;
@@ -34,13 +33,11 @@ import static pl.kargolek.walletservice.testutils.extension.ExtMockEtherscanServ
  * @author Karol Kuta-Orlowicz
  */
 
-@ExtendWith(ExtCryptoPriceResponseResolver.class)
-@ExtendWith(ExtEtherscanResponseResolver.class)
 @ExtendWith(ExtMockEtherscanServer.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = {InitializerCryptoPriceMockWebServer.class}, classes = {ConfigCryptoPriceMockServer.class})
 @Tag("IntegrationTest")
-class EthereumBalanceCalculationServiceTest {
+class EthereumBalanceCalculationServiceTest extends BaseParamTest {
 
     @Autowired
     private EthereumBalanceCalculationService ethereumBalanceCalculationService;
@@ -84,23 +81,23 @@ class EthereumBalanceCalculationServiceTest {
                 ).containsExactlyInAnyOrder(
                         tuple(WALLET_ADDRESS_1,
                                 new BigDecimal("10"),
-                                new BigDecimal("18005.0"),
-                                new BigDecimal("19895.5250"),
-                                new BigDecimal("19985.550"),
-                                new BigDecimal("20075.5750"),
-                                new BigDecimal("20165.600"),
-                                new BigDecimal("20255.6250"),
-                                new BigDecimal("20345.650")
+                                new BigDecimal("18005.00"),
+                                new BigDecimal("19895.52"),
+                                new BigDecimal("19985.55"),
+                                new BigDecimal("20075.58"),
+                                new BigDecimal("20165.60"),
+                                new BigDecimal("20255.62"),
+                                new BigDecimal("20345.65")
                         ),
                         tuple(WALLET_ADDRESS_2,
                                 new BigDecimal("20"),
-                                new BigDecimal("36010.0"),
-                                new BigDecimal("39791.0500"),
-                                new BigDecimal("39971.100"),
-                                new BigDecimal("40151.1500"),
-                                new BigDecimal("40331.200"),
-                                new BigDecimal("40511.2500"),
-                                new BigDecimal("40691.300")
+                                new BigDecimal("36010.00"),
+                                new BigDecimal("39791.05"),
+                                new BigDecimal("39971.10"),
+                                new BigDecimal("40151.15"),
+                                new BigDecimal("40331.20"),
+                                new BigDecimal("40511.25"),
+                                new BigDecimal("40691.30")
                         )
                 );
     }
@@ -126,7 +123,7 @@ class EthereumBalanceCalculationServiceTest {
         etherscanMockWebServer.enqueue(ethMockResponse.getMockedResStatus200());
 
         assertThatThrownBy(() -> ethereumBalanceCalculationService.callWalletsBalanceCalculation(WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2))
-                .isInstanceOf(NoSuchCryptoPriceException.class)
+                .isInstanceOf(NoSuchCryptoPriceDataException.class)
                 .hasMessageContaining("Unable to get price for crypto: Ethereum");
     }
 

@@ -10,7 +10,7 @@ import org.springframework.test.context.DynamicPropertySource;
 import pl.kargolek.walletservice.dto.WalletBalance;
 import pl.kargolek.walletservice.dto.WalletMultiBalance;
 import pl.kargolek.walletservice.exception.ExternalServiceCallException;
-import pl.kargolek.walletservice.testutils.extension.ExtEtherscanResponseResolver;
+import pl.kargolek.walletservice.testutils.BaseParamTest;
 import pl.kargolek.walletservice.testutils.extension.ExtMockEtherscanServer;
 import pl.kargolek.walletservice.testutils.fixture.ResponseEtherscanService;
 
@@ -23,11 +23,10 @@ import static pl.kargolek.walletservice.testutils.extension.ExtMockEtherscanServ
 /**
  * @author Karol Kuta-Orlowicz
  */
-@ExtendWith(ExtEtherscanResponseResolver.class)
 @ExtendWith(ExtMockEtherscanServer.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Tag("IntegrationTest")
-class MultiEthereumWalletServiceTest {
+class MultiEthereumWalletServiceTest extends BaseParamTest {
 
     private static final int MOCK_SERVER_RES_NUM = 11;
     @Autowired

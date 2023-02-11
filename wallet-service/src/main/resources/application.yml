@@ -25,3 +25,4 @@ api:
     validateBodyFieldName: status
     validationValue: 1
     maxWalletsPerRequest: 20
+    maxWalletsCheck: 120
