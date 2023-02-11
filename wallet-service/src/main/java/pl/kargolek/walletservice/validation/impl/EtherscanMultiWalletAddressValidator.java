@@ -28,10 +28,6 @@ public class EtherscanMultiWalletAddressValidator implements MultiWalletAddressV
     @Value("${api.etherscan.maxWalletsCheck}")
     private String maxWalletsCheck;
 
-    public EtherscanMultiWalletAddressValidator(WalletAddressValidator walletAddressValidator) {
-        this.walletAddressValidator = walletAddressValidator;
-    }
-
     @Override
     public boolean isValidAddresses(String wallets) {
         log.info("Validating wallets: {}", wallets);

@@ -3,12 +3,11 @@ package pl.kargolek.walletservice.validation.impl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import pl.kargolek.walletservice.exception.InvalidAddressException;
-import pl.kargolek.walletservice.testutils.extension.ExtEthereumWalletsResolver;
+import pl.kargolek.walletservice.testutils.BaseParamTest;
+import pl.kargolek.walletservice.testutils.fixture.DataEthereumWallets;
 import pl.kargolek.walletservice.testutils.fixture.DataWalletAddressInvalid;
 import pl.kargolek.walletservice.testutils.fixture.DataWalletsAddressValid;
-import pl.kargolek.walletservice.testutils.fixture.DataEthereumWallets;
 import pl.kargolek.walletservice.validation.MultiWalletAddressValidator;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,16 +17,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @author Karol Kuta-Orlowicz
  */
 
-@ExtendWith(ExtEthereumWalletsResolver.class)
 @Tag("UnitTest")
-class EtherscanMultiWalletAddressValidatorTest {
+class EtherscanMultiWalletAddressValidatorTest extends BaseParamTest {
 
     private MultiWalletAddressValidator underTest;
 
     @BeforeEach
     void setUp() {
         var ethWalletValidator = new EthereumWalletAddressValidator();
-        underTest = new EtherscanMultiWalletAddressValidator(ethWalletValidator);
+        underTest = new EtherscanMultiWalletAddressValidator(ethWalletValidator, "120");
     }
 
     @Test
@@ -41,9 +39,14 @@ class EtherscanMultiWalletAddressValidatorTest {
     }
 
     @Test
-    public void when21WalletsValid_thenThrowInvalidAddressException(DataEthereumWallets data) {
-        assertThatThrownBy(() -> underTest.isValidAddresses(data.WALLETS_21_ALL_VALID))
-                .isInstanceOf(InvalidAddressException.class);
+    public void when121WalletsValid_thenThrowInvalidAddressException(DataEthereumWallets data) {
+        assertThatThrownBy(() -> underTest.isValidAddresses(data.WALLETS_21_ALL_VALID + "," +
+                data.WALLETS_21_ALL_VALID + "," +
+                data.WALLETS_21_ALL_VALID + "," +
+                data.WALLETS_21_ALL_VALID + "," +
+                data.WALLETS_21_ALL_VALID + "," +
+                data.WALLETS_21_ALL_VALID
+        )).isInstanceOf(InvalidAddressException.class);
     }
 
     @Test

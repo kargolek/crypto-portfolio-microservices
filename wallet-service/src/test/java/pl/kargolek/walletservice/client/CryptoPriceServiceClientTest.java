@@ -4,18 +4,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import pl.kargolek.walletservice.dto.TokenDTO;
 import pl.kargolek.walletservice.dto.TokenPriceDTO;
+import pl.kargolek.walletservice.testutils.BaseParamTest;
 import pl.kargolek.walletservice.testutils.config.ConfigCryptoPriceMockServer;
 import pl.kargolek.walletservice.testutils.config.InitializerCryptoPriceMockWebServer;
-import pl.kargolek.walletservice.testutils.extension.ExtCryptoPriceResponseResolver;
-import pl.kargolek.walletservice.testutils.extension.ExtCryptocurrencyResolver;
-import pl.kargolek.walletservice.testutils.fixture.ResponseCryptoPriceService;
 import pl.kargolek.walletservice.testutils.fixture.DataCryptocurrency;
+import pl.kargolek.walletservice.testutils.fixture.ResponseCryptoPriceService;
 
 import java.util.List;
 
@@ -25,12 +23,10 @@ import static org.assertj.core.groups.Tuple.tuple;
 /**
  * @author Karol Kuta-Orlowicz
  */
-@ExtendWith(ExtCryptoPriceResponseResolver.class)
-@ExtendWith(ExtCryptocurrencyResolver.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = {InitializerCryptoPriceMockWebServer.class}, classes = {ConfigCryptoPriceMockServer.class})
 @Tag("IntegrationTest")
-class CryptoPriceServiceClientTest {
+class CryptoPriceServiceClientTest extends BaseParamTest {
 
     @Autowired
     private CryptoPriceServiceClient underTest;

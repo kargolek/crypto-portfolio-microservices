@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @WebMvcTest(EthereumWalletController.class)
 @Tag("UnitTest")
-class EthereumWalletControllerParamTest extends BaseParamTest {
+class EthereumWalletControllerTest extends BaseParamTest {
 
     @Autowired
     MockMvc mockMvc;
