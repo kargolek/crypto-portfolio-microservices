@@ -7,7 +7,6 @@ import pl.kargolek.walletservice.dto.UserWallet;
 import pl.kargolek.walletservice.dto.WalletMultiBalance;
 import pl.kargolek.walletservice.mapper.UserWalletMapper;
 import pl.kargolek.walletservice.util.CryptoType;
-import pl.kargolek.walletservice.util.CryptoUnitConvert;
 import pl.kargolek.walletservice.validation.MultiWalletAddressValidator;
 
 import java.util.List;
@@ -17,12 +16,6 @@ import java.util.List;
  */
 @Service
 public class EthereumBalanceCalculationService extends BalanceCalculationService<WalletMultiBalance> {
-
-    @Autowired
-    private WalletBalanceService<WalletMultiBalance> walletBalanceService;
-
-    @Autowired
-    private CryptoUnitConvert cryptoUnitConvert;
 
     @Autowired
     private MultiWalletAddressValidator walletsValidator;
@@ -40,7 +33,7 @@ public class EthereumBalanceCalculationService extends BalanceCalculationService
     public List<UserWallet> callWalletsBalanceCalculation(String wallets) {
         walletsValidator.isValidAddresses(wallets);
         var tokenDTO = this.getCryptoPrice(CryptoType.ETHEREUM);
-        return this.walletSubListsStream(wallets, Integer.parseInt(maxWalletsPerRequest))
+        var userWallets = this.walletSubListsStream(wallets, Integer.parseInt(maxWalletsPerRequest))
                 .parallel()
                 .map(this::getWalletsBalances)
                 .flatMap(List::stream)
@@ -48,6 +41,7 @@ public class EthereumBalanceCalculationService extends BalanceCalculationService
                 .map(userWallet -> this.calculateUserBalances(userWallet, tokenDTO, CryptoType.ETHEREUM))
                 .map(userWallet -> mapper.updateUserWallet(userWallet, tokenDTO))
                 .toList();
+        return this.mergeUserWallet(userWallets);
     }
 
 }

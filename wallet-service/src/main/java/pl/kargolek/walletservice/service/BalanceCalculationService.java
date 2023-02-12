@@ -36,13 +36,13 @@ public abstract class BalanceCalculationService<T> {
         this.walletBalanceService = walletBalanceService;
     }
 
+    protected abstract List<UserWallet> callWalletsBalanceCalculation(String wallets);
+
     protected Stream<List<String>> walletSubListsStream(String wallets, int maxWalletsPerRequest) {
         var walletsList = Arrays.asList(wallets.trim().split(","));
         return Streams.stream(Iterables.partition(walletsList, maxWalletsPerRequest))
                 .map(mapped -> List.of(String.join(",", mapped)));
     }
-
-    protected abstract List<UserWallet> callWalletsBalanceCalculation(String wallets);
 
     protected List<T> getWalletsBalances(List<String> wallets) {
         return wallets.stream()
@@ -57,6 +57,18 @@ public abstract class BalanceCalculationService<T> {
                 .filter(tokenDTO -> tokenDTO.getName().equalsIgnoreCase(name))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchCryptoPriceDataException(name));
+    }
+
+    protected List<UserWallet> mergeUserWallet(List<UserWallet> userWallets){
+        return userWallets.stream()
+                .collect(Collectors.groupingBy(UserWallet::getName))
+                .values().stream()
+                .map(group -> group.stream().reduce((o1, o2) -> new UserWallet(o1.getName(), o1.getSymbol(),
+                        Stream.concat(o1.getBalance().stream(), o2.getBalance().stream())
+                                .collect(Collectors.toList()))))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
 
     protected UserWallet calculateUserBalances(UserWallet userWallet, TokenDTO tokenDTO, CryptoType cryptoType) {
@@ -107,4 +119,5 @@ public abstract class BalanceCalculationService<T> {
         var balance_change = balance.add(diff);
         return balance_change.setScale(2, RoundingMode.HALF_EVEN);
     }
+
 }
