@@ -16,6 +16,13 @@ public class ResponseEtherscanService {
                 .setBody(ResponseEtherscanData.ETHERSCAN_MULTI_WALLET_RES_200_AS_EXPECTED);
     }
 
+    public MockResponse getMockedResStatus200Valid20Addresses() {
+        return new MockResponse()
+                .setResponseCode(200)
+                .addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .setBody(ResponseEtherscanData.ETHERSCAN_20_MULTI_WALLET_RES_200_AS_EXPECTED);
+    }
+
     public MockResponse getMockedResStatus200ResultEmptyArray() {
         return new MockResponse()
                 .setResponseCode(200)

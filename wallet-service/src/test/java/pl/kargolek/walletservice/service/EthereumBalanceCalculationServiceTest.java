@@ -133,4 +133,30 @@ class EthereumBalanceCalculationServiceTest extends BaseParamTest {
                 .isInstanceOf(InvalidAddressException.class)
                 .hasMessageContaining("Address is invalid for crypto ETH and address 0x8123, message: address is invalid");
     }
+
+    @Test
+    void whenWalletsMoreThan20_thenReturnOneUserWallet(ResponseEtherscanService ethMockResponse,
+                                                       ResponseCryptoPriceService cryptoMockResponse) throws JsonProcessingException {
+
+        cryptoPriceMockWebServer.enqueue(cryptoMockResponse.getAllCryptocurrenciesHttpStatusOK());
+        etherscanMockWebServer.enqueue(ethMockResponse.getMockedResStatus200Valid20Addresses());
+        etherscanMockWebServer.enqueue(ethMockResponse.getMockedResStatus200());
+
+        var wallets = WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2 + "," +
+                WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2 + "," +
+                WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2 + "," +
+                WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2 + "," +
+                WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2 + "," +
+                WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2 + "," +
+                WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2 + "," +
+                WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2 + "," +
+                WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2 + "," +
+                WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2 + "," +
+                WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2;
+
+        var expected = ethereumBalanceCalculationService.callWalletsBalanceCalculation(wallets);
+
+        assertThat(expected)
+                .hasSize(1);
+    }
 }
