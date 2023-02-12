@@ -9,6 +9,7 @@
         <module>crypto-price-service</module>
         <module>wallet-service</module>
         <module>discovery-server</module>
+        <module>gateway-service</module>
     </modules>
 
     <parent>
