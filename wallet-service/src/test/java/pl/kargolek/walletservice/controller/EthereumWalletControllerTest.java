@@ -142,4 +142,16 @@ class EthereumWalletControllerTest extends BaseParamTest {
                 .andExpect(jsonPath("$.message")
                         .value("Unable to make conversion for cryptocurrency for given crypto type: Ethereum"));
     }
+
+    @Test
+    void whenEthBalanceCalcNoSuchWalletDataExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
+        when(ethereumBalanceCalculationService.callWalletsBalanceCalculation(dataEthereumWallets.WALLETS_1_VALID))
+                .thenThrow(new NoSuchWalletDataException());
+
+        mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
+                        .param("wallets", dataEthereumWallets.WALLETS_1_VALID))
+                .andExpect(status().isInternalServerError())
+                .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
+                .andExpect(jsonPath("$.status").value("INTERNAL_SERVER_ERROR"));
+    }
 }
