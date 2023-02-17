@@ -11,8 +11,6 @@ import pl.kargolek.walletservice.exception.NoSuchCryptoPriceDataException;
 import pl.kargolek.walletservice.util.CryptoType;
 import pl.kargolek.walletservice.util.CryptoUnitConvert;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +27,9 @@ public abstract class BalanceCalculationService<T> {
 
     @Autowired
     private CryptoUnitConvert convertUnit;
+
+    @Autowired
+    private QuotaCalculatorService quotaCalculatorService;
 
     private final WalletBalanceService<T> walletBalanceService;
 
@@ -89,13 +90,14 @@ public abstract class BalanceCalculationService<T> {
         var quantity = userBalance.getQuantity();
         var priceDTO = tokenDTO.getPrice();
 
-        var balance = this.calculateBalance(quantity, priceDTO.getPriceCurrent());
-        var balance1h = this.calcBalancePercentChange(balance, priceDTO.getPercentChange1h());
-        var balance24h = this.calcBalancePercentChange(balance, priceDTO.getPercentChange24h());
-        var balance7d = this.calcBalancePercentChange(balance, priceDTO.getPercentChange7d());
-        var balance30d = this.calcBalancePercentChange(balance, priceDTO.getPercentChange30d());
-        var balance60d = this.calcBalancePercentChange(balance, priceDTO.getPercentChange60d());
-        var balance90d = this.calcBalancePercentChange(balance, priceDTO.getPercentChange90d());
+        var balance = quotaCalculatorService.calcBalanceFromPrice(quantity, priceDTO.getPriceCurrent());
+
+        var balance1h = quotaCalculatorService.calcBalancePercentChange(balance, priceDTO.getPercentChange1h());
+        var balance24h = quotaCalculatorService.calcBalancePercentChange(balance, priceDTO.getPercentChange24h());
+        var balance7d = quotaCalculatorService.calcBalancePercentChange(balance, priceDTO.getPercentChange7d());
+        var balance30d = quotaCalculatorService.calcBalancePercentChange(balance, priceDTO.getPercentChange30d());
+        var balance60d = quotaCalculatorService.calcBalancePercentChange(balance, priceDTO.getPercentChange60d());
+        var balance90d = quotaCalculatorService.calcBalancePercentChange(balance, priceDTO.getPercentChange90d());
 
         return userBalance
                 .setBalance(balance)
@@ -106,18 +108,4 @@ public abstract class BalanceCalculationService<T> {
                 .setBalance60d(balance60d)
                 .setBalance90d(balance90d);
     }
-
-    private BigDecimal calculateBalance(BigDecimal walletBalance, BigDecimal currentPrice) {
-        var currentPriceOptional = Optional.ofNullable(currentPrice).orElseThrow(NoSuchCryptoPriceDataException::new);
-        var balance = walletBalance.multiply(currentPriceOptional);
-        return balance.setScale(2, RoundingMode.HALF_EVEN);
-    }
-
-    private BigDecimal calcBalancePercentChange(BigDecimal balance, BigDecimal percent) {
-        var percentOptional = Optional.ofNullable(percent).orElseThrow(NoSuchCryptoPriceDataException::new);
-        var diff = balance.multiply(percentOptional.divide(new BigDecimal("100")));
-        var balance_change = balance.add(diff);
-        return balance_change.setScale(2, RoundingMode.HALF_EVEN);
-    }
-
 }

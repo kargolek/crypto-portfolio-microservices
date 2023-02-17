@@ -82,22 +82,22 @@ class EthereumBalanceCalculationServiceTest extends BaseParamTest {
                         tuple(WALLET_ADDRESS_1,
                                 new BigDecimal("10"),
                                 new BigDecimal("18005.00"),
-                                new BigDecimal("19895.52"),
-                                new BigDecimal("19985.55"),
-                                new BigDecimal("20075.58"),
-                                new BigDecimal("20165.60"),
-                                new BigDecimal("20255.62"),
-                                new BigDecimal("20345.65")
+                                new BigDecimal("16114.48"),
+                                new BigDecimal("16024.45"),
+                                new BigDecimal("15934.42"),
+                                new BigDecimal("15844.40"),
+                                new BigDecimal("15754.38"),
+                                new BigDecimal("15664.35")
                         ),
                         tuple(WALLET_ADDRESS_2,
                                 new BigDecimal("20"),
                                 new BigDecimal("36010.00"),
-                                new BigDecimal("39791.05"),
-                                new BigDecimal("39971.10"),
-                                new BigDecimal("40151.15"),
-                                new BigDecimal("40331.20"),
-                                new BigDecimal("40511.25"),
-                                new BigDecimal("40691.30")
+                                new BigDecimal("32228.95"),
+                                new BigDecimal("32048.90"),
+                                new BigDecimal("31868.85"),
+                                new BigDecimal("31688.80"),
+                                new BigDecimal("31508.75"),
+                                new BigDecimal("31328.70")
                         )
                 );
     }

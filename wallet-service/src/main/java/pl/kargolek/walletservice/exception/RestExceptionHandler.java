@@ -86,6 +86,19 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(jsonApiError, jsonApiError.getStatus());
     }
 
+    @ExceptionHandler(NoSuchWalletDataException.class)
+    public ResponseEntity<?> handleException(NoSuchWalletDataException ex) {
+        var jsonApiError = JsonApiErrorDTO.builder()
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .timestamp(LocalDateTime.now(ZoneOffset.UTC))
+                .message(ex.getMessage())
+                .build();
+        log.info(String.format("Status: %s Message: %s",
+                jsonApiError.getStatus(),
+                jsonApiError.getMessage()));
+        return new ResponseEntity<>(jsonApiError, jsonApiError.getStatus());
+    }
+
     @ExceptionHandler(InvalidAddressException.class)
     public ResponseEntity<?> handleException(InvalidAddressException ex) {
         var jsonApiError = JsonApiErrorDTO.builder()
