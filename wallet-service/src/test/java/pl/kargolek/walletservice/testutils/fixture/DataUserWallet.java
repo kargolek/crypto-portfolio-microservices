@@ -1,6 +1,7 @@
 package pl.kargolek.walletservice.testutils.fixture;
 
 import pl.kargolek.walletservice.dto.UserBalance;
+import pl.kargolek.walletservice.dto.UserTotalBalance;
 import pl.kargolek.walletservice.dto.UserWallet;
 
 import java.math.BigDecimal;
@@ -26,7 +27,7 @@ public class DataUserWallet {
                 .setBalance90d(new BigDecimal("2800.82"));
     }
 
-    public UserBalance getUserBalance2(){
+    public UserBalance getUserBalance2() {
         return new UserBalance()
                 .setWalletAddress(wallets.WALLETS_ANOTHER_1_VALID)
                 .setQuantity(new BigDecimal("22.222222222"))
@@ -39,11 +40,86 @@ public class DataUserWallet {
                 .setBalance90d(new BigDecimal("5000.02"));
     }
 
-    public UserWallet getUserWalletOne(){
+    public UserBalance getUserBalance1Zero() {
+        return new UserBalance()
+                .setWalletAddress(wallets.WALLETS_1_VALID)
+                .setQuantity(BigDecimal.ZERO)
+                .setBalance(BigDecimal.ZERO)
+                .setBalance1h(BigDecimal.ZERO)
+                .setBalance24h(BigDecimal.ZERO)
+                .setBalance7d(BigDecimal.ZERO)
+                .setBalance30d(BigDecimal.ZERO)
+                .setBalance60d(BigDecimal.ZERO)
+                .setBalance90d(BigDecimal.ZERO);
+    }
+
+    public UserBalance getUserBalance2Zero() {
+        return new UserBalance()
+                .setWalletAddress(wallets.WALLETS_ANOTHER_1_VALID)
+                .setQuantity(BigDecimal.ZERO)
+                .setBalance(BigDecimal.ZERO)
+                .setBalance1h(BigDecimal.ZERO)
+                .setBalance24h(BigDecimal.ZERO)
+                .setBalance7d(BigDecimal.ZERO)
+                .setBalance30d(BigDecimal.ZERO)
+                .setBalance60d(BigDecimal.ZERO)
+                .setBalance90d(BigDecimal.ZERO);
+    }
+
+    public UserBalance getUserBalance1Null() {
+        return new UserBalance()
+                .setWalletAddress(null)
+                .setQuantity(null)
+                .setBalance(null)
+                .setBalance1h(null)
+                .setBalance24h(null)
+                .setBalance7d(null)
+                .setBalance30d(null)
+                .setBalance60d(null)
+                .setBalance90d(null);
+    }
+
+    public UserBalance getUserBalance2Null() {
+        return new UserBalance()
+                .setWalletAddress(null)
+                .setQuantity(null)
+                .setBalance(null)
+                .setBalance1h(null)
+                .setBalance24h(null)
+                .setBalance7d(null)
+                .setBalance30d(null)
+                .setBalance60d(null)
+                .setBalance90d(null);
+    }
+
+    public UserTotalBalance getUserTotalBalance1And2(){
+        return new UserTotalBalance()
+                .setTotalQuantity(
+                        getUserBalance1().getQuantity().add(getUserBalance2().getQuantity()))
+                .setTotalBalance(getUserBalance1().getBalance().add(getUserBalance2().getBalance()));
+    }
+
+
+    public UserWallet getUserWalletOne() {
         return new UserWallet()
                 .setName("Ethereum")
                 .setSymbol("ETH")
-                .setBalance(List.of(getUserBalance1(), getUserBalance2()));
+                .setBalance(List.of(getUserBalance1(), getUserBalance2()))
+                .setTotal(getUserTotalBalance1And2());
+    }
+
+    public UserWallet getUserWalletBalanceZero() {
+        return new UserWallet()
+                .setName("Ethereum")
+                .setSymbol("ETH")
+                .setBalance(List.of(getUserBalance1Zero(), getUserBalance2Zero()));
+    }
+
+    public UserWallet getUserWalletBalanceNull() {
+        return new UserWallet()
+                .setName("Ethereum")
+                .setSymbol("ETH")
+                .setBalance(List.of(getUserBalance1Null(), getUserBalance2Null()));
     }
 
 }

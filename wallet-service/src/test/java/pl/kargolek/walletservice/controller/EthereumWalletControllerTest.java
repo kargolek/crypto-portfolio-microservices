@@ -16,8 +16,6 @@ import pl.kargolek.walletservice.testutils.BaseParamTest;
 import pl.kargolek.walletservice.testutils.fixture.DataEthereumWallets;
 import pl.kargolek.walletservice.testutils.fixture.DataUserWallet;
 
-import java.util.List;
-
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -40,25 +38,28 @@ class EthereumWalletControllerTest extends BaseParamTest {
     void whenEthBalanceCalcReturnUserWallet_thenReturn200AndBody(DataUserWallet dataUserWallet, DataEthereumWallets dataEthereumWallets) throws Exception {
         var userWallet = dataUserWallet.getUserWalletOne();
         var userBalance = userWallet.getBalance().get(0);
+        var total = userWallet.getTotal();
 
         when(ethereumBalanceCalculationService.callWalletsBalanceCalculation(dataEthereumWallets.WALLETS_1_VALID))
-                .thenReturn(List.of(userWallet));
+                .thenReturn(userWallet);
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
                         .param("wallets", dataEthereumWallets.WALLETS_1_VALID))
                 .andExpect(status().isOk())
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
-                .andExpect(jsonPath("[0].name").value(userWallet.getName()))
-                .andExpect(jsonPath("[0].symbol").value(userWallet.getSymbol()))
-                .andExpect(jsonPath("[0].balance[0].walletAddress").value(userBalance.getWalletAddress()))
-                .andExpect(jsonPath("[0].balance[0].quantity").value(userBalance.getQuantity()))
-                .andExpect(jsonPath("[0].balance[0].balance").value(userBalance.getBalance()))
-                .andExpect(jsonPath("[0].balance[0].balance1h").value(userBalance.getBalance1h()))
-                .andExpect(jsonPath("[0].balance[0].balance24h").value(userBalance.getBalance24h()))
-                .andExpect(jsonPath("[0].balance[0].balance7d").value(userBalance.getBalance7d()))
-                .andExpect(jsonPath("[0].balance[0].balance30d").value(userBalance.getBalance30d()))
-                .andExpect(jsonPath("[0].balance[0].balance60d").value(userBalance.getBalance60d()))
-                .andExpect(jsonPath("[0].balance[0].balance90d").value(userBalance.getBalance90d()));
+                .andExpect(jsonPath("$.name").value(userWallet.getName()))
+                .andExpect(jsonPath("$.symbol").value(userWallet.getSymbol()))
+                .andExpect(jsonPath("$.balance[0].walletAddress").value(userBalance.getWalletAddress()))
+                .andExpect(jsonPath("$.balance[0].quantity").value(userBalance.getQuantity()))
+                .andExpect(jsonPath("$.balance[0].balance").value(userBalance.getBalance()))
+                .andExpect(jsonPath("$.balance[0].balance1h").value(userBalance.getBalance1h()))
+                .andExpect(jsonPath("$.balance[0].balance24h").value(userBalance.getBalance24h()))
+                .andExpect(jsonPath("$.balance[0].balance7d").value(userBalance.getBalance7d()))
+                .andExpect(jsonPath("$.balance[0].balance30d").value(userBalance.getBalance30d()))
+                .andExpect(jsonPath("$.balance[0].balance60d").value(userBalance.getBalance60d()))
+                .andExpect(jsonPath("$.balance[0].balance90d").value(userBalance.getBalance90d()))
+                .andExpect(jsonPath("$.total.totalQuantity").value(total.getTotalQuantity()))
+                .andExpect(jsonPath("$.total.totalBalance").value(total.getTotalBalance()));
     }
 
     @Test

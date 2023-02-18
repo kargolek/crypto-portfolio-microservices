@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 /**
  * @author Karol Kuta-Orlowicz
@@ -14,9 +14,7 @@ import java.util.List;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserWallet {
-    private String name;
-    private String symbol;
-    private UserTotalBalance total;
-    private List<UserBalance> balance;
+public class UserTotalBalance {
+    private BigDecimal totalQuantity;
+    private BigDecimal totalBalance;
 }

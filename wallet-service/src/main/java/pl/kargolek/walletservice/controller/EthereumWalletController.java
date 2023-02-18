@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.kargolek.walletservice.dto.UserWallet;
 import pl.kargolek.walletservice.service.EthereumBalanceCalculationService;
 
-import java.util.List;
-
 /**
  * @author Karol Kuta-Orlowicz
  */
@@ -23,7 +21,7 @@ public class EthereumWalletController {
     private EthereumBalanceCalculationService ethereumBalanceCalculationService;
 
     @GetMapping("/balance")
-    public ResponseEntity<List<UserWallet>> getEthWalletsBalance(@RequestParam(name = "wallets") String wallets){
+    public ResponseEntity<UserWallet> getEthWalletsBalance(@RequestParam(name = "wallets") String wallets){
         var userWallets = ethereumBalanceCalculationService.callWalletsBalanceCalculation(wallets);
         return new ResponseEntity<>(userWallets, HttpStatus.OK);
     }
