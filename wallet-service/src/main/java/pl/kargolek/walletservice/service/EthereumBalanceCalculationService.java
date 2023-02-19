@@ -30,7 +30,7 @@ public class EthereumBalanceCalculationService extends BalanceCalculationService
     }
 
     @Override
-    public List<UserWallet> callWalletsBalanceCalculation(String wallets) {
+    public UserWallet callWalletsBalanceCalculation(String wallets) {
         walletsValidator.isValidAddresses(wallets);
         var tokenDTO = this.getCryptoPrice(CryptoType.ETHEREUM);
         var userWallets = this.walletSubListsStream(wallets, Integer.parseInt(maxWalletsPerRequest))
@@ -41,7 +41,8 @@ public class EthereumBalanceCalculationService extends BalanceCalculationService
                 .map(userWallet -> this.calculateUserBalances(userWallet, tokenDTO, CryptoType.ETHEREUM))
                 .map(userWallet -> mapper.updateUserWallet(userWallet, tokenDTO))
                 .toList();
-        return this.mergeUserWallet(userWallets);
+        var mergedUserWallet = this.mergeUserWallet(userWallets);
+        return this.calculateTotal(mergedUserWallet);
     }
 
 }

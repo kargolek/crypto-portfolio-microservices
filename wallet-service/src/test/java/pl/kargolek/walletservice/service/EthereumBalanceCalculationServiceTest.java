@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import pl.kargolek.walletservice.dto.UserBalance;
+import pl.kargolek.walletservice.dto.UserTotalBalance;
 import pl.kargolek.walletservice.dto.UserWallet;
 import pl.kargolek.walletservice.exception.ExternalServiceCallException;
 import pl.kargolek.walletservice.exception.InvalidAddressException;
@@ -55,7 +56,7 @@ class EthereumBalanceCalculationServiceTest extends BaseParamTest {
     }
 
     @Test
-    void whenCallBalanceCalcEthMultiWallet_thenReturnListUserWallet(ResponseEtherscanService ethMockResponse,
+    void whenCallBalanceCalcEthMultiWallet_thenReturnUserWallet(ResponseEtherscanService ethMockResponse,
                                                                     ResponseCryptoPriceService cryptoMockResponse) throws JsonProcessingException {
 
         cryptoPriceMockWebServer.enqueue(cryptoMockResponse.getAllCryptocurrenciesHttpStatusOK());
@@ -65,9 +66,9 @@ class EthereumBalanceCalculationServiceTest extends BaseParamTest {
 
         assertThat(expected)
                 .extracting(UserWallet::getName, UserWallet::getSymbol)
-                .contains(tuple("Ethereum", "ETH"));
+                .contains("Ethereum", "ETH");
 
-        assertThat(expected.get(0).getBalance())
+        assertThat(expected.getBalance())
                 .extracting(
                         UserBalance::getWalletAddress,
                         UserBalance::getQuantity,
@@ -100,6 +101,10 @@ class EthereumBalanceCalculationServiceTest extends BaseParamTest {
                                 new BigDecimal("31328.70")
                         )
                 );
+
+        assertThat(expected.getTotal())
+                .extracting(UserTotalBalance::getTotalQuantity, UserTotalBalance::getTotalBalance)
+                .contains(new BigDecimal("30"), new BigDecimal("54015.00"));
     }
 
     @Test
@@ -135,7 +140,7 @@ class EthereumBalanceCalculationServiceTest extends BaseParamTest {
     }
 
     @Test
-    void whenWalletsMoreThan20_thenReturnOneUserWallet(ResponseEtherscanService ethMockResponse,
+    void whenWalletsMoreThan20_thenReturnOneUserWalletWithMergedBalances(ResponseEtherscanService ethMockResponse,
                                                        ResponseCryptoPriceService cryptoMockResponse) throws JsonProcessingException {
 
         cryptoPriceMockWebServer.enqueue(cryptoMockResponse.getAllCryptocurrenciesHttpStatusOK());
@@ -156,7 +161,9 @@ class EthereumBalanceCalculationServiceTest extends BaseParamTest {
 
         var expected = ethereumBalanceCalculationService.callWalletsBalanceCalculation(wallets);
 
-        assertThat(expected)
-                .hasSize(1);
+        var walletsCount = wallets.split(",").length;
+
+        assertThat(expected.getBalance())
+                .hasSize(walletsCount);
     }
 }

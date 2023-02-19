@@ -11,9 +11,10 @@ import pl.kargolek.walletservice.exception.NoSuchCryptoPriceDataException;
 import pl.kargolek.walletservice.util.CryptoType;
 import pl.kargolek.walletservice.util.CryptoUnitConvert;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -31,13 +32,16 @@ public abstract class BalanceCalculationService<T> {
     @Autowired
     private QuotaCalculatorService quotaCalculatorService;
 
+    @Autowired
+    TotalCalculatorService totalCalculatorService;
+
     private final WalletBalanceService<T> walletBalanceService;
 
     public BalanceCalculationService(WalletBalanceService<T> walletBalanceService) {
         this.walletBalanceService = walletBalanceService;
     }
 
-    protected abstract List<UserWallet> callWalletsBalanceCalculation(String wallets);
+    protected abstract UserWallet callWalletsBalanceCalculation(String wallets);
 
     protected Stream<List<String>> walletSubListsStream(String wallets, int maxWalletsPerRequest) {
         var walletsList = Arrays.asList(wallets.trim().split(","));
@@ -60,18 +64,6 @@ public abstract class BalanceCalculationService<T> {
                 .orElseThrow(() -> new NoSuchCryptoPriceDataException(name));
     }
 
-    protected List<UserWallet> mergeUserWallet(List<UserWallet> userWallets){
-        return userWallets.stream()
-                .collect(Collectors.groupingBy(UserWallet::getName))
-                .values().stream()
-                .map(group -> group.stream().reduce((o1, o2) -> new UserWallet(o1.getName(), o1.getSymbol(),
-                        Stream.concat(o1.getBalance().stream(), o2.getBalance().stream())
-                                .collect(Collectors.toList()))))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
-    }
-
     protected UserWallet calculateUserBalances(UserWallet userWallet, TokenDTO tokenDTO, CryptoType cryptoType) {
         var userBalances = userWallet.getBalance()
                 .stream()
@@ -79,6 +71,23 @@ public abstract class BalanceCalculationService<T> {
                 .map(userBalance -> calculateUserBalance(userBalance, tokenDTO))
                 .toList();
         return userWallet.setBalance(userBalances);
+    }
+
+    protected UserWallet mergeUserWallet(List<UserWallet> userWallets) {
+        return userWallets.stream()
+                .collect(Collectors.toMap(UserWallet::getName, Function.identity(), (w1, w2) -> {
+                            List<UserBalance> mergedBalances = new ArrayList<>(w1.getBalance());
+                            mergedBalances.addAll(w2.getBalance());
+                            return new UserWallet(w1.getName(), w1.getSymbol(), w1.getTotal(), mergedBalances);
+                        }
+                )).values().stream().reduce((w1, w2) -> new UserWallet(w1.getName(), w1.getSymbol(), w1.getTotal(),
+                        Stream.concat(w1.getBalance().stream(), w2.getBalance().stream()).toList())
+                ).orElse(new UserWallet());
+    }
+
+    protected UserWallet calculateTotal(UserWallet userWallet) {
+        var userTotalBalance = this.totalCalculatorService.calcQuantityBalance(userWallet);
+        return userWallet.setTotal(userTotalBalance);
     }
 
     private UserBalance convertUnit(UserBalance userBalance, CryptoType cryptoType) {
