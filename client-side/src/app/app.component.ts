@@ -18,5 +18,4 @@ export class AppComponent {
   public invokeParticles(): void {
     particlesJS('particles-js', ParticlesConfig, function () { });
   }
-
 }
