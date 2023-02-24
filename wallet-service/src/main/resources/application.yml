@@ -16,6 +16,9 @@ feign:
   circuitbreaker:
     enabled: true
 
+cors:
+  allowedOrigin: http://localhost:4200
+
 api:
   etherscan:
     baseUrl: "https://api.etherscan.io/api"
