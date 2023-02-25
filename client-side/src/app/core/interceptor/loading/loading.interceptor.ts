@@ -12,20 +12,19 @@ import { LoadingService } from '../../service/loading/loading.service';
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
 
-  constructor(private loadingService: LoadingService) {}
+  constructor(private loadingService: LoadingService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     this.loadingService.show();
     return next.handle(request).pipe(tap({
       next: event => {
         if (event instanceof HttpResponse) {
-          this.loadingService.hide(); // Hide the loading spinner when the request is complete
+          this.loadingService.hide();
         }
       },
       error: error => {
-        this.loadingService.hide(); // Hide the loading spinner when an error occurs
+        this.loadingService.hide();
       }
-    })
-  );
+    }));
   }
 }
