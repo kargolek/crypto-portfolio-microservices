@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { BrowserModule } from '@angular/platform-browser';
 import { ToastContainerModule } from 'ngx-toastr';
 import { ToastrModule } from 'ngx-toastr';
@@ -19,13 +19,16 @@ import { BalanceTableComponent } from './balance/component/balance-table/balance
 import { BalanceService } from './balance/service/balance.service';
 import { ErrorHandlerService } from './balance/service/error-handler.service';
 import { NavbarComponent } from './core/component/navbar/navbar.component';
+import { LoadingComponent } from './core/component/loading/loading.component';
+import { LoadingInterceptor } from './core/interceptor/loading/loading.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     InputWalletsComponent,
     BalanceTableComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,9 @@ import { NavbarComponent } from './core/component/navbar/navbar.component';
     MatToolbarModule,
     MatIconModule
   ],
-  providers: [ToastMessageService, ToastrService, BalanceService, ErrorHandlerService],
+  providers: [ToastMessageService, ToastrService, BalanceService, ErrorHandlerService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
