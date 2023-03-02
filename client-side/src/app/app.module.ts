@@ -5,10 +5,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ToastContainerModule } from 'ngx-toastr';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { SatPopoverModule } from '@ncstate/sat-popover';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +21,9 @@ import { ErrorHandlerService } from './balance/service/error-handler.service';
 import { NavbarComponent } from './core/component/navbar/navbar.component';
 import { LoadingComponent } from './core/component/loading/loading.component';
 import { LoadingInterceptor } from './core/interceptor/loading/loading.interceptor';
+import { PriceService } from './price/service/price.service';
+import { PriceBarComponent } from './price/component/price-bar/price-bar.component';
+import { CryptoIconComponent } from './shared/component/crypto-icon-text/crypto-icon.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,9 @@ import { LoadingInterceptor } from './core/interceptor/loading/loading.intercept
     InputWalletsComponent,
     BalanceTableComponent,
     NavbarComponent,
-    LoadingComponent
+    LoadingComponent,
+    PriceBarComponent,
+    CryptoIconComponent
   ],
   imports: [
     BrowserModule,
@@ -37,13 +42,18 @@ import { LoadingInterceptor } from './core/interceptor/loading/loading.intercept
     HttpClientModule,
     ToastrModule.forRoot(),
     ToastContainerModule,
-    NoopAnimationsModule,
     BrowserAnimationsModule,
     MatListModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    SatPopoverModule
   ],
-  providers: [ToastMessageService, ToastrService, BalanceService, ErrorHandlerService,
+  providers: [
+    ToastMessageService,
+    ToastrService,
+    BalanceService,
+    ErrorHandlerService,
+    PriceService,
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

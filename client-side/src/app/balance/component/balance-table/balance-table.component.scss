@@ -27,13 +27,26 @@
     justify-content: center;
 }
 
+app-crypto-icon ::ng-deep img {
+    width: 2rem;
+    height: 2rem;
+    margin-top: 0.8rem;
+    align-items: center;
+}
+
+.icon-item{
+    width: 20%;
+    margin-left: 1.4rem;
+}
+
 .symbol-item {
-    width: 30%;
-    margin-left: 10px;
+    width: 1.6rem;
+    margin-left: 0.5rem;
 }
 
 .amount-item {
     width: 100%;
+    margin-left: 0.2rem;
 }
 
 .horizontal-amount-list h2,
