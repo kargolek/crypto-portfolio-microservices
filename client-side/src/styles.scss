@@ -1,6 +1,7 @@
 $base-color: #1d2448;
 $base-color-lighter: #273162;
-$base-color-lighter-2: #2e3a7a;
+$base-color-lighter-2: rgb(63, 75, 138);
+$base-color-lighter-2-opacity: rgb(63, 75, 138, 0.7);
 $base-color-darker: #1a1f3d;
 $base-color-lighter-input: #262c4a;
 $border-color: #414974;
@@ -9,9 +10,6 @@ $text-color: #dddddd;
 body {
     background-color: $base-color;
     font-family: monospace;
-    display: block;
-    justify-content: center;
-    align-items: center;
 }
 
 .particles-js-canvas-el {
@@ -20,6 +18,14 @@ body {
     z-index: -1;
 }
 
+.tooltip-wrapper {
+    padding: 8px;
+    background: $base-color-lighter-2-opacity;
+    color: $text-color;
+    border-radius: 15px;
+    margin: 0.8rem;
+    font-size: 0.8rem;
+}
 
 #toast-container {
     opacity: 70%;
@@ -57,7 +63,6 @@ body {
 .toast-top-full-width {
     margin-top: 4.3rem;
 }
-
 
 ::-webkit-scrollbar {
     width: 20px;

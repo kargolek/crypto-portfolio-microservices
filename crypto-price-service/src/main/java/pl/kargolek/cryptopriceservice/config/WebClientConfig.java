@@ -16,7 +16,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @EntityScan(basePackages = "pl.kargolek.cryptopriceservice")
 @EnableJpaRepositories(basePackages = "pl.kargolek.cryptopriceservice")
 @EnableScheduling
-public class AppConfig {
+public class WebClientConfig {
     @Value("${api.coin.market.cap.baseUrl}")
     private String baseUrl;
     @Value("${api.coin.market.cap.key.header.name}")

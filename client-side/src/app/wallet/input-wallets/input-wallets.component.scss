@@ -4,12 +4,12 @@
     display: grid;
     justify-content: center;
     align-items: center;
-    height: 75vh;
+    height: 65vh;
 }
 
 h1 {
     color: $text-color;
-    margin-left: 0.15rem;
+    margin-left: 0.1rem;
     overflow: hidden;
     white-space: nowrap;
     letter-spacing: .15em;
@@ -19,12 +19,13 @@ h1 {
     font-size: 1.5rem;
     text-align: center;
     margin-bottom: 2.2rem;
-    animation: typing 5s steps(120) 1;
+    animation: typing 3s steps(160) 1;
 }
 
 .crypto_type_title {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
     animation: typing 8s steps(100) 1;
+    margin-left: 0.4rem;
 }
 
 @keyframes typing {

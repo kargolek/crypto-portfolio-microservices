@@ -38,7 +38,6 @@ export class BalanceTableComponent implements OnInit {
     );
 
     this.toggleView();
-
   }
 
   toggleView() {
