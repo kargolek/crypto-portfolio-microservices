@@ -13,6 +13,7 @@ import java.util.List;
 public class DataUserWallet {
 
     private final DataEthereumWallets wallets = new DataEthereumWallets();
+    private final String explorerAddress = "https://etherscan.io/address/";
 
     public UserBalance getUserBalance1(){
         return new UserBalance()
@@ -24,7 +25,8 @@ public class DataUserWallet {
                 .setBalance7d(new BigDecimal("2500.52"))
                 .setBalance30d(new BigDecimal("2600.62"))
                 .setBalance60d(new BigDecimal("2700.72"))
-                .setBalance90d(new BigDecimal("2800.82"));
+                .setBalance90d(new BigDecimal("2800.82"))
+                .setWalletExplorer(explorerAddress + wallets.WALLETS_1_VALID);
     }
 
     public UserBalance getUserBalance2() {
@@ -37,7 +39,8 @@ public class DataUserWallet {
                 .setBalance7d(new BigDecimal("4700.72"))
                 .setBalance30d(new BigDecimal("4800.82"))
                 .setBalance60d(new BigDecimal("4900.92"))
-                .setBalance90d(new BigDecimal("5000.02"));
+                .setBalance90d(new BigDecimal("5000.02"))
+                .setWalletExplorer(explorerAddress + wallets.WALLETS_ANOTHER_1_VALID);
     }
 
     public UserBalance getUserBalance1Zero() {
@@ -50,7 +53,8 @@ public class DataUserWallet {
                 .setBalance7d(BigDecimal.ZERO)
                 .setBalance30d(BigDecimal.ZERO)
                 .setBalance60d(BigDecimal.ZERO)
-                .setBalance90d(BigDecimal.ZERO);
+                .setBalance90d(BigDecimal.ZERO)
+                .setWalletExplorer(explorerAddress + wallets.WALLETS_1_VALID);
     }
 
     public UserBalance getUserBalance2Zero() {
@@ -76,7 +80,8 @@ public class DataUserWallet {
                 .setBalance7d(null)
                 .setBalance30d(null)
                 .setBalance60d(null)
-                .setBalance90d(null);
+                .setBalance90d(null)
+                .setWalletExplorer(null);
     }
 
     public UserBalance getUserBalance2Null() {
@@ -89,7 +94,8 @@ public class DataUserWallet {
                 .setBalance7d(null)
                 .setBalance30d(null)
                 .setBalance60d(null)
-                .setBalance90d(null);
+                .setBalance90d(null)
+                .setWalletExplorer(null);
     }
 
     public UserTotalBalance getUserTotalBalance1And2(){

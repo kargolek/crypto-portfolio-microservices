@@ -58,6 +58,7 @@ class EthereumWalletControllerTest extends BaseParamTest {
                 .andExpect(jsonPath("$.balance[0].balance30d").value(userBalance.getBalance30d()))
                 .andExpect(jsonPath("$.balance[0].balance60d").value(userBalance.getBalance60d()))
                 .andExpect(jsonPath("$.balance[0].balance90d").value(userBalance.getBalance90d()))
+                .andExpect(jsonPath("$.balance[0].walletExplorer").value(userBalance.getWalletExplorer()))
                 .andExpect(jsonPath("$.total.totalQuantity").value(total.getTotalQuantity()))
                 .andExpect(jsonPath("$.total.totalBalance").value(total.getTotalBalance()));
     }

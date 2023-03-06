@@ -37,6 +37,7 @@
                         <div *ngIf="showDetails === 3" class="table-header-cell">30d</div>
                         <div *ngIf="showDetails === 3" class="table-header-cell">60d</div>
                         <div *ngIf="showDetails === 3" class="table-header-cell">90d</div>
+                        <div class="table-header-cell-explorer"></div>
                     </div>
                     <ng-container *ngFor="let userBalance of rows">
                         <div class="table-row">
@@ -61,6 +62,9 @@
                             <div *ngIf="showDetails === 3" class="table-cell"
                                 [ngStyle]="{'color': getColor(userBalance.balance, userBalance.balance90d)}">{{
                                 userBalance.balance90d }}</div>
+                            <a class="table-cell-explorer" target="_blank" [href]="userBalance.walletExplorer">
+                                <mat-icon class="icon-open-explorer">open_in_new</mat-icon>
+                            </a>
                         </div>
                         <br class="row-divider" />
                     </ng-container>

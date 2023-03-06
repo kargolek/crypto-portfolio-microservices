@@ -33,7 +33,10 @@ public abstract class BalanceCalculationService<T> {
     private QuotaCalculatorService quotaCalculatorService;
 
     @Autowired
-    TotalCalculatorService totalCalculatorService;
+    private TotalCalculatorService totalCalculatorService;
+
+    @Autowired
+    private WalletExplorerService walletExplorerService;
 
     private final WalletBalanceService<T> walletBalanceService;
 
@@ -69,6 +72,7 @@ public abstract class BalanceCalculationService<T> {
                 .stream()
                 .map(userBalance -> this.convertUnit(userBalance, cryptoType))
                 .map(userBalance -> calculateUserBalance(userBalance, tokenDTO))
+                .map(userBalance -> this.setWalletAddressExplorer(userBalance, cryptoType))
                 .toList();
         return userWallet.setBalance(userBalances);
     }
@@ -116,5 +120,10 @@ public abstract class BalanceCalculationService<T> {
                 .setBalance30d(balance30d)
                 .setBalance60d(balance60d)
                 .setBalance90d(balance90d);
+    }
+
+    private UserBalance setWalletAddressExplorer(UserBalance userBalance, CryptoType cryptoType){
+        var walletAddress = userBalance.getWalletAddress();
+        return userBalance.setWalletExplorer(this.walletExplorerService.getWalletExplorerAddress(walletAddress, cryptoType));
     }
 }

@@ -49,6 +49,8 @@ class EthereumBalanceCalculationServiceTest extends BaseParamTest {
     private static final String WALLET_ADDRESS_1 = "0x8111111111111111111111111111111111111111";
     private static final String WALLET_ADDRESS_2 = "0x8222222222222222222222222222222222222222";
 
+    private static final String WALLET_EXPLORER_ADDRESS = "https://etherscan.io/address/";
+
     @DynamicPropertySource
     public static void registerProperty(DynamicPropertyRegistry registry) {
         registry.add("api.etherscan.baseUrl", () -> etherscanMockWebServer.url("/").toString());
@@ -78,7 +80,8 @@ class EthereumBalanceCalculationServiceTest extends BaseParamTest {
                         UserBalance::getBalance7d,
                         UserBalance::getBalance30d,
                         UserBalance::getBalance60d,
-                        UserBalance::getBalance90d
+                        UserBalance::getBalance90d,
+                        UserBalance::getWalletExplorer
                 ).containsExactlyInAnyOrder(
                         tuple(WALLET_ADDRESS_1,
                                 new BigDecimal("10"),
@@ -88,7 +91,8 @@ class EthereumBalanceCalculationServiceTest extends BaseParamTest {
                                 new BigDecimal("15934.42"),
                                 new BigDecimal("15844.40"),
                                 new BigDecimal("15754.38"),
-                                new BigDecimal("15664.35")
+                                new BigDecimal("15664.35"),
+                                WALLET_EXPLORER_ADDRESS + WALLET_ADDRESS_1
                         ),
                         tuple(WALLET_ADDRESS_2,
                                 new BigDecimal("20"),
@@ -98,7 +102,8 @@ class EthereumBalanceCalculationServiceTest extends BaseParamTest {
                                 new BigDecimal("31868.85"),
                                 new BigDecimal("31688.80"),
                                 new BigDecimal("31508.75"),
-                                new BigDecimal("31328.70")
+                                new BigDecimal("31328.70"),
+                                WALLET_EXPLORER_ADDRESS + WALLET_ADDRESS_2
                         )
                 );
 
