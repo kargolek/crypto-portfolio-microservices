@@ -34,7 +34,7 @@ app-crypto-icon ::ng-deep img {
     align-items: center;
 }
 
-.icon-item{
+.icon-item {
     width: 20%;
     margin-left: 1.4rem;
 }
@@ -136,6 +136,16 @@ i.material-icons:active {
     width: 100%;
 }
 
+.table-header-cell-explorer {
+    padding: 5px;
+    color: $text-color;
+    font-size: .8rem;
+    text-align: center;
+    vertical-align: auto;
+    width: 20%;
+    margin-right: 0.2rem;
+}
+
 .table-row {
     display: flex;
     flex-direction: row;
@@ -160,6 +170,34 @@ i.material-icons:active {
     color: $text-color;
     border-radius: 15px;
     width: 100%;
+}
+
+.table-cell-explorer {
+    margin-right: 0.2rem;
+    padding: 5px;
+    display: flex;
+    color: $text-color;
+    width: 20%;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-cell-explorer {
+    text-decoration: none;
+}
+
+.icon-open-explorer {
+    margin-right: 0.2rem;
+    display: flex;
+    font-size: 0.9rem;
+    vertical-align: middle;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 [class*="col-"] {

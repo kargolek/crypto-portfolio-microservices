@@ -29,3 +29,7 @@ api:
     validationValue: 1
     maxWalletsPerRequest: 20
     maxWalletsCheck: 120
+
+explorer:
+  wallet:
+    etherscan: "https://etherscan.io/address/"

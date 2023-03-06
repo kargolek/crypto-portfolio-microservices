@@ -20,4 +20,5 @@ public class UserBalance {
     private BigDecimal balance30d;
     private BigDecimal balance60d;
     private BigDecimal balance90d;
+    private String walletExplorer;
 }

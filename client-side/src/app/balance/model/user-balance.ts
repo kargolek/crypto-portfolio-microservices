@@ -8,4 +8,5 @@ export interface UserBalance {
     balance30d: number;
     balance60d: number;
     balance90d: number;
+    walletExplorer: string;
 }
