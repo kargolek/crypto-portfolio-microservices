@@ -1,0 +1,122 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: crypto_price
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    healthcheck:
+      test: "/usr/bin/mysql --user=$MYSQL_USER --password=$MYSQL_PASSWORD --execute \"SHOW DATABASES;\""
+      interval: 5s
+      timeout: 60s
+      retries: 10
+    networks:
+      - service-network
+
+  client-side:
+    container_name: client-side
+    build:
+      context: client-side
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    volumes:
+      - ./client-side/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./client-side/dist/client-side:/usr/share/nginx/html:ro
+    networks:
+      - service-network
+
+  discovery-server:
+    container_name: discovery-server
+    build:
+      context: discovery-server
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    volumes:
+      - /tmp
+    networks:
+      - service-network
+
+  gateway-service:
+    container_name: gateway-service
+    build:
+      context: gateway-service
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - /tmp
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      discovery-server:
+        condition: service_started
+    networks:
+      - service-network
+
+  crypto-price-service:
+    container_name: crypto-price-service
+    build:
+      context: crypto-price-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    volumes:
+      - /tmp
+    depends_on:
+      mysql:
+        condition: service_healthy
+      discovery-server:
+        condition: service_started
+      gateway-service:
+        condition: service_started
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      COIN_MARKET_CAP_API_KEY: ${COIN_MARKET_CAP_API_KEY}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      ETHERSCAN_API_KEY: ${ETHERSCAN_API_KEY}
+    networks:
+      - service-network
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --fail http://localhost:8081/actuator/health || exit 1" ]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+
+  wallet-service:
+    container_name: wallet-service
+    build:
+      context: wallet-service
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    volumes:
+      - /tmp
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      COIN_MARKET_CAP_API_KEY: ${COIN_MARKET_CAP_API_KEY}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      ETHERSCAN_API_KEY: ${ETHERSCAN_API_KEY}
+    depends_on:
+      discovery-server:
+        condition: service_started
+      gateway-service:
+        condition: service_started
+    networks:
+      - service-network
+networks:
+  service-network:
+    driver: bridge
+

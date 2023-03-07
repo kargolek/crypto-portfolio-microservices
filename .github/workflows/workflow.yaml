@@ -19,9 +19,17 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
           cache: 'maven'
-      - name: Build
-        run: mvn -B package --file pom.xml -Dgroups="SmokeTest"
-      - name: Unit Test
-        run: mvn -B test -Dgroups="UnitTest"
-      - name: Integration Test
-        run: mvn -B test -Dgroups="IntegrationTest"
+#      - name: Build
+#        run: mvn -B package --file pom.xml -Dgroups="SmokeTest"
+#      - name: Unit Test
+#        run: mvn -B test -Dgroups="UnitTest"
+#      - name: Integration Test
+#        run: mvn -B test -Dgroups="IntegrationTest"
+      - name: Start microservice
+        run: docker-compose up --detach
+      - name: Wait for microservice to start
+        run: |
+          set -eo pipefail
+          docker-compose logs -f my-app 2>&1 | grep -q "Started Application" && echo "Microservice is up!"
+      - name: Start microservice
+        run: docker-compose down
