@@ -25,6 +25,18 @@ jobs:
 #        run: mvn -B test -Dgroups="UnitTest"
 #      - name: Integration Test
 #        run: mvn -B test -Dgroups="IntegrationTest"
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.x'
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./client-side
+      - name: Build project
+        run: npm run build -- --prod
+        working-directory: ./client-side
+      - name: Build microservices
+        run: mvn -B package --file pom.xml -DskipTests
       - name: Start microservice
         run: docker-compose up --detach
       - name: Wait for microservice to start
