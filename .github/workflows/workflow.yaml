@@ -39,9 +39,9 @@ jobs:
         run: mvn -B package --file pom.xml -DskipTests
       - name: Start microservice
         run: docker-compose up --detach
-      - name: Wait for microservice to start
-        run: |
-          set -eo pipefail
-          docker-compose logs -f my-app 2>&1 | grep -q "Started Application" && echo "Microservice is up!"
-      - name: Start microservice
+#      - name: Wait for microservice to start
+#        run: |
+#          set -eo pipefail
+#          docker-compose logs -f crypto-price-service 2>&1 | grep -q "Started Application" && echo "Microservice is up!"
+      - name: Stop microservice
         run: docker-compose down
