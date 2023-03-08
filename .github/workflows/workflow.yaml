@@ -39,7 +39,7 @@ jobs:
         run: mvn -B package --file pom.xml -DskipTests
       - name: Start microservice
         run: | 
-          docker-compose up --detach --abort-on-container-exit --exit-code-from crypto-price-service
+          docker-compose up --abort-on-container-exit --exit-code-from crypto-price-service
       - name: Check service health
         run: |
           docker inspect --format='{{.State.Health.Status}}' container-name | grep -q 'healthy'
