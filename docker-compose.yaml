@@ -13,6 +13,7 @@ services:
       MYSQL_DATABASE: crypto_price
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: "root"
     healthcheck:
       test: "/usr/bin/mysql --user=$MYSQL_USER --password=$MYSQL_PASSWORD --execute \"SHOW DATABASES;\""
       interval: 5s
