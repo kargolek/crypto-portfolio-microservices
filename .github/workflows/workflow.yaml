@@ -46,10 +46,8 @@ jobs:
           docker inspect --format='{{.State.Health.Status}}' container-name | grep -q 'healthy'
         env:
           container-name: crypto-price-service
-      - name: Wait for microservice to start
+      - name: Get logs
         if: always()
-        run: |
-          set -eo pipefail
-          docker-compose logs -f crypto-price-service
+        run: docker compose logs
       - name: Stop microservice
         run: docker-compose down
