@@ -39,15 +39,17 @@ jobs:
         run: mvn -B package --file pom.xml -DskipTests
       - name: Start microservice
         run: | 
-          docker-compose up --abort-on-container-exit --exit-code-from crypto-price-service
+          docker-compose up -d
       - name: Check service health
+        if: always()
         run: |
           docker inspect --format='{{.State.Health.Status}}' container-name | grep -q 'healthy'
         env:
           container-name: crypto-price-service
-#      - name: Wait for microservice to start
-#        run: |
-#          set -eo pipefail
-#          docker-compose logs -f crypto-price-service 2>&1 | grep -q "Started Application" && echo "Microservice is up!"
+      - name: Wait for microservice to start
+        if: always()
+        run: |
+          set -eo pipefail
+          docker-compose logs -f crypto-price-service
       - name: Stop microservice
         run: docker-compose down
