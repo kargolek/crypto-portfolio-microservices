@@ -39,8 +39,12 @@ jobs:
         run: mvn -B package --file pom.xml -DskipTests
       - name: Start microservice
         run: | 
-          docker-compose up --detach --name ci_output
-          docker logs ci_output
+          docker-compose up --detach --abort-on-container-exit --exit-code-from crypto-price-service
+      - name: Check service health
+        run: |
+          docker inspect --format='{{.State.Health.Status}}' container-name | grep -q 'healthy'
+        env:
+          container-name: crypto-price-service
 #      - name: Wait for microservice to start
 #        run: |
 #          set -eo pipefail
