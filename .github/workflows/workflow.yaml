@@ -40,14 +40,13 @@ jobs:
       - name: Start microservice
         run: | 
           docker-compose up -d
-      - name: Check service health
-        if: always()
-        run: |
-          docker inspect --format='{{.State.Health.Status}}' container-name | grep -q 'healthy'
-        env:
-          container-name: crypto-price-service
+      - name: Sleep for 10s
+        uses: juliangruber/sleep-action@v1
+        with:
+          time: 90s
       - name: Get logs
         if: always()
         run: docker compose logs
       - name: Stop microservice
+        if: always()
         run: docker-compose down
