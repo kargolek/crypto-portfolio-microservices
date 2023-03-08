@@ -38,7 +38,9 @@ jobs:
       - name: Build microservices
         run: mvn -B package --file pom.xml -DskipTests
       - name: Start microservice
-        run: docker-compose up --detach
+        run: | 
+          docker-compose up --detach --name ci_output
+          docker logs ci_output
 #      - name: Wait for microservice to start
 #        run: |
 #          set -eo pipefail
