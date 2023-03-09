@@ -1,4 +1,4 @@
-name: Java CI
+name: "Build and unit/integration tests"
 
 env:
   COIN_MARKET_CAP_API_KEY: ${{ secrets.COIN_MARKET_CAP_API_KEY }}
