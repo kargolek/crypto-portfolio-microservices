@@ -6,7 +6,9 @@ env:
   MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
   ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
 
-on: [push]
+on:
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build_test:
