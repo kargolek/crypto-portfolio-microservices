@@ -88,11 +88,6 @@ services:
       ETHERSCAN_API_KEY: ${ETHERSCAN_API_KEY}
     networks:
       - service-network
-#    healthcheck:
-#      test: [ "CMD-SHELL", "curl --fail http://localhost:8081/actuator/health || exit 1" ]
-#      interval: 30s
-#      timeout: 20s
-#      retries: 15
 
   wallet-service:
     container_name: wallet-service

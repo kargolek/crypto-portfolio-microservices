@@ -1,4 +1,4 @@
-name: Java CI
+name: "Quality Assurance"
 
 env:
   COIN_MARKET_CAP_API_KEY: ${{ secrets.COIN_MARKET_CAP_API_KEY }}
@@ -19,12 +19,6 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
           cache: 'maven'
-#      - name: Build
-#        run: mvn -B package --file pom.xml -Dgroups="SmokeTest"
-#      - name: Unit Test
-#        run: mvn -B test -Dgroups="UnitTest"
-#      - name: Integration Test
-#        run: mvn -B test -Dgroups="IntegrationTest"
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
@@ -38,7 +32,7 @@ jobs:
       - name: Build microservices
         run: mvn -B package --file pom.xml -DskipTests
       - name: Start microservice
-        run: | 
+        run: |
           docker-compose up -d
       - name: Sleep for 10s
         uses: juliangruber/sleep-action@v1
