@@ -60,6 +60,9 @@ h3 {
 }
 
 .table-action-container {
+    display: flex;
+    flex-flow: row;
+    align-items: stretch;
     background-color: $base-color;
     border: 1px solid $border-color;
     border-radius: 15px;
@@ -101,6 +104,15 @@ i.material-icons:hover {
 
 i.material-icons:active {
     transform: scale(0.8);
+}
+
+.number-wallets{
+    vertical-align: middle;
+    color: $text-color;
+    font-size: 0.8rem;
+    text-align: right;
+    margin: 15px;
+    width: 100%;
 }
 
 
