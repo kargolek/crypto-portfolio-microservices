@@ -52,4 +52,8 @@ export class BalanceTableComponent implements OnInit {
     return previousBalance < currentBalance ? '#FF4D00' : '#07F36B';
   }
 
+  getNumberWallets(): number {
+    return this.rows.length;
+  }
+
 }
