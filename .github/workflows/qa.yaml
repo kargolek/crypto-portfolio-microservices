@@ -48,6 +48,9 @@ jobs:
       - name: Check docker containers
         run: docker ps
         working-directory: ./quality-assurance
+      - name: Start selenium test
+        run: mvn test
+        working-directory: ./quality-assurance
       - name: Stop backend and fronted
         if: always()
         run: docker-compose down
