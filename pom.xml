@@ -10,6 +10,7 @@
         <module>wallet-service</module>
         <module>discovery-server</module>
         <module>gateway-service</module>
+        <module>quality-assurance</module>
     </modules>
 
     <parent>
