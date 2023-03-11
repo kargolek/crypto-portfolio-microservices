@@ -30,7 +30,7 @@ jobs:
         working-directory: ./client-side
 
       - name: Build project
-        run: npm run build
+        run: npm run build -- --configuration=docker
         working-directory: ./client-side
 
       - name: Build microservices
@@ -39,11 +39,6 @@ jobs:
       - name: Start backend and frontend
         run: |
           docker-compose up -d
-
-      - name: Sleep for 15s
-        uses: juliangruber/sleep-action@v1
-        with:
-          time: 15s
 
       - name: Restore DB
         run: cat backup.sql | docker exec -i mysql /usr/bin/mysql -u root --password=root crypto_price
@@ -57,10 +52,6 @@ jobs:
         uses: juliangruber/sleep-action@v1
         with:
           time: 15s
-
-      - name: Check docker containers
-        run: docker ps
-        working-directory: ./quality-assurance
 
       - name: Start selenium test
         run: mvn test

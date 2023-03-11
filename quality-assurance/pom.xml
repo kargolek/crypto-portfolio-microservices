@@ -19,6 +19,7 @@
         <selenium.version>4.8.1</selenium.version>
         <junit.jupiter.version>5.9.1</junit.jupiter.version>
         <surefile.version>3.0.0-M8</surefile.version>
+        <slf4j-api.version>2.0.6</slf4j-api.version>
     </properties>
 
     <dependencies>
@@ -45,6 +46,22 @@
             <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j-api.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -52,11 +69,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefile.version}</version>
-<!--                <configuration>-->
-<!--                    <includes>-->
-<!--                        <include>**/*Test.java</include>-->
-<!--                    </includes>-->
-<!--                </configuration>-->
                 <dependencies>
                     <dependency>
                         <groupId>org.junit.jupiter</groupId>

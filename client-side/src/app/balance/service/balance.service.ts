@@ -2,8 +2,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, tap } from 'rxjs';
 import { InputWalletsDataService } from 'src/app/shared/services/input-wallets-data.service';
+import { environment } from 'src/environments/environment';
 import { UserWallet } from '../model/user-wallet';
 import { ErrorHandlerService } from './error-handler.service';
+
+const apiGatewayURL = environment.apiGatewayURL;
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +22,7 @@ export class BalanceService {
     private inputWalletsData: InputWalletsDataService
   ) { }
 
-  private getWalletBalancesURL = 'http://localhost:8080/api/v1/wallet/eth/balance?wallets=';
+  private getWalletBalancesURL = apiGatewayURL + '/api/v1/wallet/eth/balance?wallets=';
 
   getWalletsBalance(): Observable<UserWallet> {
     const wallets = this.inputWalletsData.getDataFromSessionStorage();
