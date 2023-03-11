@@ -51,6 +51,8 @@ jobs:
       - name: Start selenium test
         run: mvn test
         working-directory: ./quality-assurance
+      - name: Inspect network
+        run: docker network inspect crypto-portfolio-microservices_test-env-network
       - name: Stop backend and fronted
         if: always()
         run: docker-compose down
