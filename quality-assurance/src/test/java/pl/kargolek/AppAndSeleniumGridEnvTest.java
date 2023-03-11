@@ -25,7 +25,7 @@ public class AppAndSeleniumGridEnvTest {
         chromeOptions.setCapability("browserVersion", "110.0");
         chromeOptions.setCapability("platformName", "LINUX");
         driver = new RemoteWebDriver(new URL(GRID_URL), chromeOptions);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     }
 
     @AfterEach
@@ -35,7 +35,7 @@ public class AppAndSeleniumGridEnvTest {
 
     @Test
     void whenOpenCryptoPortfolioApp_thenTitleCryptoPortfolio() {
-        driver.get("http://0.0.0.0:4200");
+        driver.get("http://host.docker.internal:4200");
         var title = driver.findElement(By.cssSelector(".title"));
         var titleText = title.getAttribute("innerText");
         assertTrue(title.isDisplayed());
