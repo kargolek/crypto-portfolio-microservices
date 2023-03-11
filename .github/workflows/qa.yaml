@@ -52,6 +52,7 @@ jobs:
         run: mvn test
         working-directory: ./quality-assurance
       - name: Inspect network
+        if: always()
         run: docker network inspect crypto-portfolio-microservices_test-env-network
       - name: Stop backend and fronted
         if: always()
