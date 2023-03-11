@@ -35,7 +35,7 @@ public class AppAndSeleniumGridEnvTest {
 
     @Test
     void whenOpenCryptoPortfolioApp_thenTitleCryptoPortfolio() {
-        driver.get("http://host.docker.internal:4200");
+        driver.get("http://172.18.0.1:4200");
         var title = driver.findElement(By.cssSelector(".title"));
         var titleText = title.getAttribute("innerText");
         assertTrue(title.isDisplayed());
