@@ -40,10 +40,14 @@ jobs:
         run: |
           docker-compose up -d
 
-      - name: Sleep for 30s
+      - name: Sleep for 15s
         uses: juliangruber/sleep-action@v1
         with:
-          time: 30s
+          time: 15s
+
+      - name: Restore DB
+        run: cat backup.sql | docker exec -i mysql /usr/bin/mysql -u root --password=root crypto_price
+        working-directory: ./quality-assurance
 
       - name: Start selenium grid
         run: docker-compose -f selenium-compose.yml up -d

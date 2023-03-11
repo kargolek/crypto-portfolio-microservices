@@ -34,12 +34,16 @@ public class AppAndSeleniumGridEnvTest {
     }
 
     @Test
-    void whenOpenCryptoPortfolioApp_thenTitleCryptoPortfolio() {
+    void whenOpenCryptoPortfolioApp_thenTitleCryptoPortfolio() throws InterruptedException {
         driver.get("http://172.18.0.1:4200");
+
         var title = driver.findElement(By.cssSelector(".title"));
         var titleText = title.getAttribute("innerText");
+
         assertTrue(title.isDisplayed());
         assertTrue(titleText.equalsIgnoreCase("crypto portfolio"));
+
+        Thread.sleep(5000);
     }
 
 }
