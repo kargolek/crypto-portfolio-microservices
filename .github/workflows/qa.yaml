@@ -64,7 +64,7 @@ jobs:
 
       - name: Save video artifact
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: chrome_video
           path: quality-assurance/target/chrome_video.mp4
