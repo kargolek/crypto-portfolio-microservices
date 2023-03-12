@@ -40,10 +40,6 @@ jobs:
         run: |
           docker-compose up -d
 
-      - name: Restore DB
-        run: cat backup.sql | docker exec -i mysql /usr/bin/mysql -u root --password=root crypto_price
-        working-directory: ./quality-assurance
-
       - name: Start selenium grid
         run: docker-compose -f selenium-compose.yml up -d
         working-directory: ./quality-assurance
