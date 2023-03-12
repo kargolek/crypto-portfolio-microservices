@@ -9,7 +9,7 @@ env:
 on: [push]
 
 jobs:
-  build_test:
+  quality-assurance-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,9 +21,9 @@ jobs:
           cache: 'maven'
 
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '18.4.0'
 
       - name: Install dependencies
         run: npm ci
@@ -53,10 +53,6 @@ jobs:
         run: mvn test
         working-directory: ./quality-assurance
 
-      - name: Inspect network
-        if: always()
-        run: docker network inspect crypto-portfolio-microservices_test-env-network
-
       - name: Stop test env
         if: always()
         run: docker-compose -f selenium-compose.yml down
@@ -65,11 +61,6 @@ jobs:
       - name: Stop backend and fronted
         if: always()
         run: docker-compose down
-
-      - name: Sleep for 5s
-        uses: juliangruber/sleep-action@v1
-        with:
-          time: 5s
 
       - name: Save video artifact
         if: always()
