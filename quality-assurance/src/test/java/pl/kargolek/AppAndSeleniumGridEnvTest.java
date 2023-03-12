@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LogType;
@@ -59,6 +60,23 @@ public class AppAndSeleniumGridEnvTest {
         logs.getAll()
                 .forEach(System.out::println);
 
-        Thread.sleep(30000);
+        Thread.sleep(10000);
+    }
+
+    @Test
+    void whenTypeWalletAddressAndPressEnter_thenBalanceViewShouldBeOpen() throws InterruptedException {
+        var input = driver.findElement(By.cssSelector(".wallet-input-container input"));
+        input.sendKeys("0xcA8Fa8f0b631EcdB18Cda619C4Fc9d197c8aFfCa");
+        input.sendKeys(Keys.ENTER);
+
+        var container = driver.findElement(By.cssSelector(".inline-container"));
+
+        assertTrue(container.isDisplayed());
+
+        var logs = driver.manage().logs().get(LogType.BROWSER);
+        logs.getAll()
+                .forEach(System.out::println);
+
+        Thread.sleep(10000);
     }
 }

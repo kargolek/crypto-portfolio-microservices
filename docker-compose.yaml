@@ -28,7 +28,7 @@ services:
       context: client-side
       dockerfile: Dockerfile
     ports:
-      - "4200:80"
+      - "4201:80"
     volumes:
       - ./client-side/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./client-side/dist/client-side:/usr/share/nginx/html:ro
