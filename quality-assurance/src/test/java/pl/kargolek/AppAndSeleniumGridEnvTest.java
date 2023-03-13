@@ -59,8 +59,6 @@ public class AppAndSeleniumGridEnvTest {
         var logs = driver.manage().logs().get(LogType.BROWSER);
         logs.getAll()
                 .forEach(System.out::println);
-
-        Thread.sleep(10000);
     }
 
     @Test
@@ -76,7 +74,5 @@ public class AppAndSeleniumGridEnvTest {
         var logs = driver.manage().logs().get(LogType.BROWSER);
         logs.getAll()
                 .forEach(System.out::println);
-
-        Thread.sleep(10000);
     }
 }
