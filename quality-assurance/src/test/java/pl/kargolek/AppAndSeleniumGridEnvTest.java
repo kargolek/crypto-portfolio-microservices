@@ -1,5 +1,7 @@
 package pl.kargolek;
 
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,7 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Feature("An example feature")
 public class AppAndSeleniumGridEnvTest {
 
     private String hubURL;
@@ -49,6 +52,7 @@ public class AppAndSeleniumGridEnvTest {
     }
 
     @Test
+    @Story("An example story 2")
     void whenOpenCryptoPortfolioApp_thenTitleCryptoPortfolio() throws InterruptedException {
         var title = driver.findElement(By.cssSelector(".title"));
         var titleText = title.getAttribute("innerText");
@@ -62,6 +66,7 @@ public class AppAndSeleniumGridEnvTest {
     }
 
     @Test
+    @Story("An example story 1")
     void whenTypeWalletAddressAndPressEnter_thenBalanceViewShouldBeOpen() throws InterruptedException {
         var input = driver.findElement(By.cssSelector(".wallet-input-container input"));
         input.sendKeys("0xcA8Fa8f0b631EcdB18Cda619C4Fc9d197c8aFfCa");
