@@ -3,6 +3,7 @@ package pl.kargolek;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -12,6 +13,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import pl.kargolek.utils.PropertiesLoader;
+import pl.kargolek.utils.PropertiesWriter;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -30,6 +32,18 @@ public class AppAndSeleniumGridEnvTest {
             Thread.currentThread().getContextClassLoader().getResource("").getPath(),
             "conf.properties"
     );
+
+    @BeforeAll
+    public static void setupAll() {
+        var propertyWriter = new PropertiesWriter(System.getProperty("user.dir") + "/target/allure-results",
+                "environment.properties");
+
+        var branchName = System.getenv("github.ref");
+        if (branchName == null) {
+            branchName = "local";
+        }
+        propertyWriter.writeProperty("BranchName", branchName);
+    }
 
     @BeforeEach
     public void setUp() throws MalformedURLException {
