@@ -8,7 +8,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./init:/docker-entrypoint-initdb.d
+      - ./quality-assurance/db_dump/backup.sql:/docker-entrypoint-initdb.d/backup.sql
     environment:
       MYSQL_DATABASE: crypto_price
       MYSQL_USER: ${MYSQL_USER}
@@ -20,7 +20,7 @@ services:
       timeout: 60s
       retries: 10
     networks:
-      - service-network
+      - test-env-network
 
   client-side:
     container_name: client-side
@@ -28,12 +28,12 @@ services:
       context: client-side
       dockerfile: Dockerfile
     ports:
-      - "4200:80"
+      - "4201:80"
     volumes:
       - ./client-side/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./client-side/dist/client-side:/usr/share/nginx/html:ro
     networks:
-      - service-network
+      - test-env-network
 
   discovery-server:
     container_name: discovery-server
@@ -45,7 +45,7 @@ services:
     volumes:
       - /tmp
     networks:
-      - service-network
+      - test-env-network
 
   gateway-service:
     container_name: gateway-service
@@ -62,7 +62,7 @@ services:
       discovery-server:
         condition: service_started
     networks:
-      - service-network
+      - test-env-network
 
   crypto-price-service:
     container_name: crypto-price-service
@@ -87,7 +87,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       ETHERSCAN_API_KEY: ${ETHERSCAN_API_KEY}
     networks:
-      - service-network
+      - test-env-network
 
   wallet-service:
     container_name: wallet-service
@@ -110,8 +110,8 @@ services:
       gateway-service:
         condition: service_started
     networks:
-      - service-network
+      - test-env-network
 networks:
-  service-network:
+  test-env-network:
     driver: bridge
 

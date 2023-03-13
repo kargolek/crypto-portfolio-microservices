@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, tap } from 'rxjs';
+import { catchError, Observable, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { TokenCrypto } from '../model/token-crypto';
+
+const apiGatewayURL = environment.apiGatewayURL;
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,7 @@ export class PriceService {
 
   constructor(private http: HttpClient) { }
 
-  private getPriceURL = 'http://localhost:8080/api/v1/cryptocurrency';
+  private getPriceURL = apiGatewayURL + '/api/v1/cryptocurrency';
 
   getPrice(): Observable<TokenCrypto[]> {
     const data = this.http.get<TokenCrypto[]>(this.getPriceURL).pipe(

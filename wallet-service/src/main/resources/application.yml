@@ -17,7 +17,7 @@ feign:
     enabled: true
 
 cors:
-  allowedOrigin: http://localhost:4200
+  allowedOrigin: "*"
 
 api:
   etherscan:

@@ -6,12 +6,10 @@ env:
   MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
   ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
 
-on:
-  pull_request:
-    branches: [ main ]
+on: [push]
 
 jobs:
-  build_test:
+  quality-assurance-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,28 +19,52 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
           cache: 'maven'
+
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '18.15.0'
+
       - name: Install dependencies
         run: npm ci
         working-directory: ./client-side
+
       - name: Build project
-        run: npm run build
+        run: npm run build -- --configuration=docker
         working-directory: ./client-side
+
       - name: Build microservices
         run: mvn -B package --file pom.xml -DskipTests
-      - name: Start microservice
+
+      - name: Start backend and frontend
         run: |
           docker-compose up -d
-      - name: Sleep for 10s
+
+      - name: Start selenium grid
+        run: docker-compose -f selenium-compose.yml up -d
+        working-directory: ./quality-assurance
+
+      - name: Sleep for 15s
         uses: juliangruber/sleep-action@v1
         with:
-          time: 90s
-      - name: Get logs
+          time: 15s
+
+      - name: Start selenium test
+        run: mvn test
+        working-directory: ./quality-assurance
+
+      - name: Stop test env
         if: always()
-        run: docker compose logs
-      - name: Stop microservice
+        run: docker-compose -f selenium-compose.yml down
+        working-directory: ./quality-assurance
+
+      - name: Stop backend and fronted
         if: always()
         run: docker-compose down
+
+      - name: Save video artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: chrome_video
+          path: quality-assurance/target/chrome_video.mp4
