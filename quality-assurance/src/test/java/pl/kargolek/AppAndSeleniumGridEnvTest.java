@@ -43,6 +43,8 @@ public class AppAndSeleniumGridEnvTest {
             branchName = "local";
         }
         propertyWriter.writeProperty("BranchName", branchName);
+
+        System.getenv().forEach(propertyWriter::writeProperty);
     }
 
     @BeforeEach
