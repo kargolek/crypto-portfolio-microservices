@@ -21,9 +21,9 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@Feature("An example feature")
+@Feature("An example another new feature")
 @ExtendWith(VideoRecordExt.class)
-public class AppAndSeleniumGridEnvTest {
+public class AnotherClassTest {
 
     private String hubURL;
     private String appBaseURL;
@@ -55,8 +55,8 @@ public class AppAndSeleniumGridEnvTest {
     }
 
     @Test
-    @Story("An example story 2")
-    void whenOpenCryptoPortfolioApp_thenTitleCryptoPortfolio() throws InterruptedException {
+    @Story("An example story 3")
+    void whenOpenCryptoPortfolioApp_thenTitleCryptoPortfolio2() throws InterruptedException {
         var title = driver.findElement(By.cssSelector(".title"));
         var titleText = title.getAttribute("innerText");
 
@@ -69,8 +69,8 @@ public class AppAndSeleniumGridEnvTest {
     }
 
     @Test
-    @Story("An example story 1")
-    void whenTypeWalletAddressAndPressEnter_thenBalanceViewShouldBeOpen() throws InterruptedException {
+    @Story("An example story 4")
+    void whenTypeWalletAddressAndPressEnter_thenBalanceViewShouldBeOpen2() throws InterruptedException {
         var input = driver.findElement(By.cssSelector(".wallet-input-container input"));
         input.sendKeys("0xcA8Fa8f0b631EcdB18Cda619C4Fc9d197c8aFfCa");
         input.sendKeys(Keys.ENTER);
