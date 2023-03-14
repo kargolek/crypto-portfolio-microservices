@@ -44,15 +44,7 @@ jobs:
         run: docker-compose -f selenium-compose.yml up -d
         working-directory: ./quality-assurance
 
-      - name: ps
-        run: docker ps
-        working-directory: ./quality-assurance
-
-      - name: ps
-        run: docker stop quality-assurance-chrome_video-1
-        working-directory: ./quality-assurance
-
-      - name: ps
+      - name: List containers
         run: docker ps
         working-directory: ./quality-assurance
 
