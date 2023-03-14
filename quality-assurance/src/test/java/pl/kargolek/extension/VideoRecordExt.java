@@ -21,13 +21,13 @@ public class VideoRecordExt implements BeforeEachCallback, AfterEachCallback {
 
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
-        startDockerContainer("quality-assurance_chrome_video-1");
+        startDockerContainer("quality-assurance_chrome_video_1");
         Thread.sleep(1200);
     }
 
     @Override
     public void afterEach(ExtensionContext extensionContext) throws Exception {
-        stopDockerContainer("quality-assurance_chrome_video-1");
+        stopDockerContainer("quality-assurance_chrome_video_1");
 
         if(!tempVideo.exists()){
             throw new RuntimeException("Unable to locate temp video");
