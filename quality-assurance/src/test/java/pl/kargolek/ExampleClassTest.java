@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.logging.LogType;
 import pl.kargolek.extension.BaseTestConfig;
 import pl.kargolek.util.DevToolsDriver;
 import pl.kargolek.util.PropertiesLoader;
@@ -47,10 +46,6 @@ public class ExampleClassTest {
 
         assertTrue(title.isDisplayed());
         assertTrue(titleText.equalsIgnoreCase("crypto portfolio"));
-
-        var logs = driver.manage().logs().get(LogType.BROWSER);
-        logs.getAll()
-                .forEach(System.out::println);
     }
 
     @Test
@@ -68,29 +63,6 @@ public class ExampleClassTest {
         var container = driver.findElement(By.cssSelector(".inline-container"));
 
         assertTrue(container.isDisplayed());
-
-        var logs = driver.manage().logs().get(LogType.BROWSER);
-        logs.getAll()
-                .forEach(System.out::println);
-    }
-
-    @Test
-    @Story("Example story 3")
-    @Description("Example description 3 - test for receive browser log")
-    @Link(name = "Trello task 1", url = "https://trello.com/c/jJ9wxTTR/53-cpa-53-as-test-developer-i-can-get-allure-test-report-after-execute-qa-tests-and-i-can-view-it-via-gh-pages")
-    @Severity(SeverityLevel.BLOCKER)
-    public void exampleTestWithBrowserLogAttachedToReport() {
-        driver.get("https://the-internet.herokuapp.com/broken_images");
-    }
-
-    @Test
-    @Story("Example story 4")
-    @Description("Example description 4 - test for receive browser log")
-    @Link(name = "Trello task 1", url = "https://trello.com/c/jJ9wxTTR/53-cpa-53-as-test-developer-i-can-get-allure-test-report-after-execute-qa-tests-and-i-can-view-it-via-gh-pages")
-    @Severity(SeverityLevel.NORMAL)
-    public void exampleTestForFailedTestScenario() {
-        driver.get("https://the-internet.herokuapp.com/broken_images");
-        assertTrue(false);
     }
 
 }
