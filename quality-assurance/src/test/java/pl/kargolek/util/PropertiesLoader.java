@@ -1,4 +1,4 @@
-package pl.kargolek.utils;
+package pl.kargolek.util;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +14,6 @@ public class PropertiesLoader {
 
     private final String path;
     private final String fileName;
-
     private Properties properties;
 
     public PropertiesLoader(String path, String fileName) {
