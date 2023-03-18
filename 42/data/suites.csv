@@ -1,0 +1,3 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Sat Mar 18 03:03:08 GMT 2023","Sat Mar 18 03:03:15 GMT 2023","6724","","pl.kargolek.ExampleClassTest","","pl.kargolek.ExampleClassTest","whenTypeWalletAddressAndPressEnter_thenBalanceViewShouldBeOpen","whenTypeWalletAddressAndPressEnter_thenBalanceViewShouldBeOpen()","Example description 2"
+"passed","Sat Mar 18 03:03:15 GMT 2023","Sat Mar 18 03:03:19 GMT 2023","4269","","pl.kargolek.ExampleClassTest","","pl.kargolek.ExampleClassTest","whenOpenCryptoPortfolioApp_thenTitleCryptoPortfolio","whenOpenCryptoPortfolioApp_thenTitleCryptoPortfolio()","Test description 1"
