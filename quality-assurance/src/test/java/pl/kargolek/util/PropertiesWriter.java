@@ -1,4 +1,4 @@
-package pl.kargolek.utils;
+package pl.kargolek.util;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,8 +13,7 @@ public class PropertiesWriter {
 
     private final String path;
     private final String fileName;
-
-    private File propertyFile;
+    private final File propertyFile;
     private Properties properties;
 
     public PropertiesWriter(String path, String fileName) {
