@@ -1,0 +1,201 @@
+[REQUESTS DATA]:
+
+Request:[2023-03-18T02:05:04.271995762]
+GET URL:https://the-internet.herokuapp.com/broken_images
+Header:{Upgrade-Insecure-Requests=1, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", sec-ch-ua-mobile=?0, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-03-18T02:05:04.271537774]
+GET URL:https://the-internet.herokuapp.com/js/vendor/298279967.js
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=https://the-internet.herokuapp.com/broken_images, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-03-18T02:05:04.271589875]
+GET URL:https://the-internet.herokuapp.com/css/app.css
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=https://the-internet.herokuapp.com/broken_images, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-03-18T02:05:04.271627576]
+GET URL:https://the-internet.herokuapp.com/css/font-awesome.css
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=https://the-internet.herokuapp.com/broken_images, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-03-18T02:05:04.271663876]
+GET URL:https://the-internet.herokuapp.com/js/vendor/jquery-1.11.3.min.js
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=https://the-internet.herokuapp.com/broken_images, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-03-18T02:05:04.271698877]
+GET URL:https://the-internet.herokuapp.com/js/vendor/jquery-ui-1.11.4/jquery-ui.js
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=https://the-internet.herokuapp.com/broken_images, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-03-18T02:05:04.271734378]
+GET URL:https://the-internet.herokuapp.com/js/foundation/foundation.js
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=https://the-internet.herokuapp.com/broken_images, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-03-18T02:05:04.271768779]
+GET URL:https://the-internet.herokuapp.com/js/foundation/foundation.alerts.js
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=https://the-internet.herokuapp.com/broken_images, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-03-18T02:05:04.271805979]
+GET URL:https://the-internet.herokuapp.com/img/forkme_right_green_007200.png
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=https://the-internet.herokuapp.com/broken_images, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-03-18T02:05:04.271846980]
+GET URL:https://the-internet.herokuapp.com/asdf.jpg
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=https://the-internet.herokuapp.com/broken_images, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-03-18T02:05:04.271882181]
+GET URL:https://the-internet.herokuapp.com/hjkl.jpg
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=https://the-internet.herokuapp.com/broken_images, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-03-18T02:05:04.271916982]
+GET URL:https://the-internet.herokuapp.com/img/avatar-blank.jpg
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=https://the-internet.herokuapp.com/broken_images, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-03-18T02:05:04.271960183]
+GET URL:https://298279967.log.optimizely.com/event?a=298279967&d=298279967&y=false&n=https%3A%2F%2Fthe-internet.herokuapp.com%2Fbroken_images&u=oeu1679105102864r0.8915130515207059&wxhr=true&t=1679105102917&f=298349752,318188263
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=https://the-internet.herokuapp.com/, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-03-18T02:05:04.270990583]
+GET URL:https://the-internet.herokuapp.com/favicon.ico
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=https://the-internet.herokuapp.com/broken_images, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+[RESPONSE DATA]:
+
+Response: [2023-03-18T02:05:04.272711098]
+URL:https://the-internet.herokuapp.com/broken_images
+Status:200 OK
+Header:{Connection=keep-alive, Content-Length=1727, Content-Type=text/html;charset=utf-8, Date=Sat, 18 Mar 2023 02:05:02 GMT, Server=WEBrick/1.6.0 (Ruby/2.7.2/2020-10-01), Via=1.1 vegur, X-Content-Type-Options=nosniff, X-Frame-Options=SAMEORIGIN, X-Xss-Protection=1; mode=block}
+Body:<!DOCTYPE html>
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if g
+
+
+Response: [2023-03-18T02:05:04.272785700]
+URL:https://the-internet.herokuapp.com/js/vendor/298279967.js
+Status:200 OK
+Header:{Date=Sat, 18 Mar 2023 02:05:02 GMT, Via=1.1 vegur, X-Content-Type-Options=nosniff, Last-Modified=Mon, 15 Feb 2021 17:29:38 GMT, Server=WEBrick/1.6.0 (Ruby/2.7.2/2020-10-01), Content-Type=application/javascript;charset=utf-8, Connection=keep-alive, Content-Length=132435}
+Body:
+
+
+
+
+
+
+
+optimizelyCode = function(){
+var DATA={"log_host":"log.optimizely.com","goal_expressions":{"
+
+
+Response: [2023-03-18T02:05:04.272824701]
+URL:https://the-internet.herokuapp.com/css/app.css
+Status:200 OK
+Header:{Date=Sat, 18 Mar 2023 02:05:02 GMT, Via=1.1 vegur, X-Content-Type-Options=nosniff, Last-Modified=Mon, 15 Feb 2021 17:29:38 GMT, Server=WEBrick/1.6.0 (Ruby/2.7.2/2020-10-01), Content-Type=text/css;charset=utf-8, Connection=keep-alive, Content-Length=353394}
+Body:/*! normalize.css v2.1.2 | MIT License | git.io/normalize */
+/* ====================================
+
+
+Response: [2023-03-18T02:05:04.272862102]
+URL:https://the-internet.herokuapp.com/js/vendor/jquery-1.11.3.min.js
+Status:200 OK
+Header:{Date=Sat, 18 Mar 2023 02:05:02 GMT, Via=1.1 vegur, X-Content-Type-Options=nosniff, Last-Modified=Mon, 15 Feb 2021 17:29:38 GMT, Server=WEBrick/1.6.0 (Ruby/2.7.2/2020-10-01), Content-Type=application/javascript;charset=utf-8, Connection=keep-alive, Content-Length=95957}
+Body:/*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
+!function(a,b){"
+
+
+Response: [2023-03-18T02:05:04.273004405]
+URL:https://the-internet.herokuapp.com/js/foundation/foundation.js
+Status:200 OK
+Header:{Date=Sat, 18 Mar 2023 02:05:02 GMT, Via=1.1 vegur, X-Content-Type-Options=nosniff, Last-Modified=Mon, 15 Feb 2021 17:29:38 GMT, Server=WEBrick/1.6.0 (Ruby/2.7.2/2020-10-01), Content-Type=application/javascript;charset=utf-8, Connection=keep-alive, Content-Length=12715}
+Body:/*
+ * Foundation Responsive Library
+ * http://foundation.zurb.com
+ * Copyright 2013, ZURB
+ * Free to
+
+
+Response: [2023-03-18T02:05:04.273037105]
+URL:https://the-internet.herokuapp.com/css/font-awesome.css
+Status:200 OK
+Header:{Date=Sat, 18 Mar 2023 02:05:02 GMT, Via=1.1 vegur, X-Content-Type-Options=nosniff, Last-Modified=Mon, 15 Feb 2021 17:29:38 GMT, Server=WEBrick/1.6.0 (Ruby/2.7.2/2020-10-01), Content-Type=text/css;charset=utf-8, Connection=keep-alive, Content-Length=28747}
+Body:/*!
+ *  Font Awesome 4.3.0 by @davegandy - http://fontawesome.io - @fontawesome
+ *  License - http:/
+
+
+Response: [2023-03-18T02:05:04.273069406]
+URL:https://the-internet.herokuapp.com/js/foundation/foundation.alerts.js
+Status:200 OK
+Header:{Date=Sat, 18 Mar 2023 02:05:02 GMT, Via=1.1 vegur, X-Content-Type-Options=nosniff, Last-Modified=Mon, 15 Feb 2021 17:29:38 GMT, Server=WEBrick/1.6.0 (Ruby/2.7.2/2020-10-01), Content-Type=application/javascript;charset=utf-8, Connection=keep-alive, Content-Length=1392}
+Body:/*jslint unparam: true, browser: true, indent: 2 */
+
+;(function ($, window, document, undefined) {
+ 
+
+
+Response: [2023-03-18T02:05:04.273101207]
+URL:https://the-internet.herokuapp.com/js/vendor/jquery-ui-1.11.4/jquery-ui.js
+Status:200 OK
+Header:{Date=Sat, 18 Mar 2023 02:05:02 GMT, Via=1.1 vegur, X-Content-Type-Options=nosniff, Last-Modified=Mon, 15 Feb 2021 17:29:38 GMT, Server=WEBrick/1.6.0 (Ruby/2.7.2/2020-10-01), Content-Type=application/javascript;charset=utf-8, Connection=keep-alive, Content-Length=470596}
+Body:/*! jQuery UI - v1.11.4 - 2015-03-11
+* http://jqueryui.com
+* Includes: core.js, widget.js, mouse.js,
+
+
+Response: [2023-03-18T02:05:04.272131907]
+URL:https://the-internet.herokuapp.com/img/forkme_right_green_007200.png
+Status:200 OK
+Header:{Date=Sat, 18 Mar 2023 02:05:03 GMT, Via=1.1 vegur, X-Content-Type-Options=nosniff, Last-Modified=Mon, 15 Feb 2021 17:29:38 GMT, Server=WEBrick/1.6.0 (Ruby/2.7.2/2020-10-01), Content-Type=image/png, Connection=keep-alive, Content-Length=7660}
+Body:iVBORw0KGgoAAAANSUhEUgAAAJUAAACVCAYAAABRorhPAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAHY5J
+
+
+Response: [2023-03-18T02:05:04.272163508]
+URL:https://the-internet.herokuapp.com/asdf.jpg
+Status:404 Not Found
+Header:{Date=Sat, 18 Mar 2023 02:05:03 GMT, Via=1.1 vegur, X-Content-Type-Options=nosniff, Server=WEBrick/1.6.0 (Ruby/2.7.2/2020-10-01), X-Frame-Options=SAMEORIGIN, Content-Type=text/html;charset=utf-8, X-Cascade=pass, Connection=keep-alive, Content-Length=18, X-Xss-Protection=1; mode=block}
+Body:<h1>Not Found</h1>
+
+
+Response: [2023-03-18T02:05:04.272196209]
+URL:https://the-internet.herokuapp.com/img/avatar-blank.jpg
+Status:200 OK
+Header:{Date=Sat, 18 Mar 2023 02:05:03 GMT, Via=1.1 vegur, X-Content-Type-Options=nosniff, Last-Modified=Mon, 15 Feb 2021 17:29:38 GMT, Server=WEBrick/1.6.0 (Ruby/2.7.2/2020-10-01), Content-Type=image/jpeg, Connection=keep-alive, Content-Length=2464}
+Body:/9j/4AAQSkZJRgABAgAAZABkAAD/7AARRHVja3kAAQAEAAAAZAAA/+4ADkFkb2JlAGTAAAAAAf/bAIQAAQEBAQEBAQEBAQEBAQEB
+
+
+Response: [2023-03-18T02:05:04.272227709]
+URL:https://the-internet.herokuapp.com/hjkl.jpg
+Status:404 Not Found
+Header:{Date=Sat, 18 Mar 2023 02:05:03 GMT, Via=1.1 vegur, X-Content-Type-Options=nosniff, Server=WEBrick/1.6.0 (Ruby/2.7.2/2020-10-01), X-Frame-Options=SAMEORIGIN, Content-Type=text/html;charset=utf-8, X-Cascade=pass, Connection=keep-alive, Content-Length=18, X-Xss-Protection=1; mode=block}
+Body:<h1>Not Found</h1>
+
+
+Response: [2023-03-18T02:05:04.272259510]
+URL:https://the-internet.herokuapp.com/favicon.ico
+Status:404 Not Found
+Header:{Date=Sat, 18 Mar 2023 02:05:03 GMT, Via=1.1 vegur, X-Content-Type-Options=nosniff, Server=WEBrick/1.6.0 (Ruby/2.7.2/2020-10-01), X-Frame-Options=SAMEORIGIN, Content-Type=text/html;charset=utf-8, X-Cascade=pass, Connection=keep-alive, Content-Length=18, X-Xss-Protection=1; mode=block}
+Body:<h1>Not Found</h1>

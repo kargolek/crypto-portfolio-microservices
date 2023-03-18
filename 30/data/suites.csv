@@ -1,3 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Mon Mar 13 22:25:47 GMT 2023","Mon Mar 13 22:25:54 GMT 2023","6934","","pl.kargolek.AppAndSeleniumGridEnvTest","","pl.kargolek.AppAndSeleniumGridEnvTest","whenTypeWalletAddressAndPressEnter_thenBalanceViewShouldBeOpen","whenTypeWalletAddressAndPressEnter_thenBalanceViewShouldBeOpen()",""
-"passed","Mon Mar 13 22:25:54 GMT 2023","Mon Mar 13 22:25:57 GMT 2023","2385","","pl.kargolek.AppAndSeleniumGridEnvTest","","pl.kargolek.AppAndSeleniumGridEnvTest","whenOpenCryptoPortfolioApp_thenTitleCryptoPortfolio","whenOpenCryptoPortfolioApp_thenTitleCryptoPortfolio()",""
