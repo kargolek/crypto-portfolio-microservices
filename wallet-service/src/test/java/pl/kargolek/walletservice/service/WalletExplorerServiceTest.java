@@ -15,10 +15,12 @@ class WalletExplorerServiceTest {
 
     private WalletExplorerService underTest;
     private final String etherscanExplorerBaseUrl = "https://etherscan.io/address/";
+    private final String polygonExplorerBaseUrl = "https://etherscan.io/address/";
+
 
     @BeforeEach
     void setUp() {
-        underTest = new WalletExplorerService(etherscanExplorerBaseUrl);
+        underTest = new WalletExplorerService(etherscanExplorerBaseUrl, polygonExplorerBaseUrl);
     }
 
     @Test
@@ -28,6 +30,15 @@ class WalletExplorerServiceTest {
         var expected = underTest.getWalletExplorerAddress(walletAddress, CryptoType.ETHEREUM);
 
         assertThat(expected).isEqualTo(etherscanExplorerBaseUrl + walletAddress);
+    }
+
+    @Test
+    void whenWalletAddress_thenReturnWalletPolygonscanExplorerHref() {
+        var walletAddress = "0x0";
+
+        var expected = underTest.getWalletExplorerAddress(walletAddress, CryptoType.POLYGON);
+
+        assertThat(expected).isEqualTo(polygonExplorerBaseUrl + walletAddress);
     }
 
     @Test

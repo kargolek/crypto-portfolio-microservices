@@ -58,7 +58,29 @@ public class DataCryptocurrency {
                 ).setLastUpdate(localDateTime);
     }
 
+    public TokenDTO getCryptocurrencyMatic() {
+        return new TokenDTO()
+                .setId(2L)
+                .setName("Polygon")
+                .setSymbol("MATIC")
+                .setCoinMarketId(3890L)
+                .setPlatform(new TokenPlatformDTO()
+                        .setPlatform("platform_eth")
+                        .setTokenAddress("token_address_eth"))
+                .setPrice(new TokenPriceDTO()
+                        .setId(2L)
+                        .setPriceCurrent(new BigDecimal("1800.5"))
+                        .setPercentChange1h(new BigDecimal("10.5"))
+                        .setPercentChange24h(new BigDecimal("11.0"))
+                        .setPercentChange7d(new BigDecimal("11.5"))
+                        .setPercentChange30d(new BigDecimal("12.0"))
+                        .setPercentChange60d(new BigDecimal("12.5"))
+                        .setPercentChange90d(new BigDecimal("13.0"))
+                        .setLastUpdate(localDateTime)
+                ).setLastUpdate(localDateTime);
+    }
+
     public TokenDTO[] getCryptocurrencies() {
-        return new TokenDTO[]{getCryptocurrencyBTC(), getCryptocurrencyETH()};
+        return new TokenDTO[]{getCryptocurrencyBTC(), getCryptocurrencyETH(), getCryptocurrencyMatic()};
     }
 }

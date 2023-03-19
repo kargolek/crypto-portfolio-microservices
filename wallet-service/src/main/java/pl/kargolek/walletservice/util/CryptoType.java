@@ -6,6 +6,7 @@ package pl.kargolek.walletservice.util;
 public enum CryptoType {
 
     ETHEREUM("Ethereum", "ETH"),
+    POLYGON("Polygon", "MATIC"),
     UNKNOWN("Unknown", "UNKNOWN");
 
     CryptoType(String name, String symbol) {

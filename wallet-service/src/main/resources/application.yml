@@ -29,7 +29,18 @@ api:
     validationValue: 1
     maxWalletsPerRequest: 20
     maxWalletsCheck: 120
+  polygonscan:
+    baseUrl: "https://api.polygonscan.com/api"
+    apiKey: ${POLYGON_API_KEY}
+    fixedDelayMillis: 1200
+    maxRetryAttempts: 10
+    validateBodyFieldName: status
+    validationValue: 1
+    maxWalletsPerRequest: 20
+    maxWalletsCheck: 120
+
 
 explorer:
   wallet:
     etherscan: "https://etherscan.io/address/"
+    polygonscan: "https://polygonscan.com/address/"
