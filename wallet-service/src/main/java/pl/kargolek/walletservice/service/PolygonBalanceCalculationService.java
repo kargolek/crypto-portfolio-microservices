@@ -15,7 +15,7 @@ import java.util.List;
  * @author Karol Kuta-Orlowicz
  */
 @Service
-public class EthereumBalanceCalculationService extends BalanceCalculationService<WalletMultiBalance> {
+public class PolygonBalanceCalculationService extends BalanceCalculationService<WalletMultiBalance> {
 
     @Autowired
     private MultiWalletAddressValidator walletsValidator;
@@ -25,24 +25,23 @@ public class EthereumBalanceCalculationService extends BalanceCalculationService
     @Value("${api.etherscan.maxWalletsPerRequest}")
     private String maxWalletsPerRequest;
 
-    public EthereumBalanceCalculationService(@Autowired EthereumMultiWalletService ethereumMultiWalletService) {
-        super(ethereumMultiWalletService);
+    public PolygonBalanceCalculationService(@Autowired PolygonMultiWalletService polygonMultiWalletService) {
+        super(polygonMultiWalletService);
     }
 
     @Override
     public UserWallet callWalletsBalanceCalculation(String wallets) {
         walletsValidator.isValidAddresses(wallets);
-        var tokenDTO = this.getCryptoPrice(CryptoType.ETHEREUM);
+        var tokenDTO = this.getCryptoPrice(CryptoType.POLYGON);
         var userWallets = this.walletSubListsStream(wallets, Integer.parseInt(maxWalletsPerRequest))
                 .parallel()
                 .map(this::getWalletsBalances)
                 .flatMap(List::stream)
                 .map(mapper::toUserWallet)
-                .map(userWallet -> this.calculateUserBalances(userWallet, tokenDTO, CryptoType.ETHEREUM))
+                .map(userWallet -> this.calculateUserBalances(userWallet, tokenDTO, CryptoType.POLYGON))
                 .map(userWallet -> mapper.updateUserWallet(userWallet, tokenDTO))
                 .toList();
         var mergedUserWallet = this.mergeUserWallet(userWallets);
         return this.calculateTotal(mergedUserWallet);
     }
-
 }

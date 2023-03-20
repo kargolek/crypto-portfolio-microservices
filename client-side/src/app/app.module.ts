@@ -24,6 +24,9 @@ import { LoadingInterceptor } from './core/interceptor/loading/loading.intercept
 import { PriceService } from './price/service/price.service';
 import { PriceBarComponent } from './price/component/price-bar/price-bar.component';
 import { CryptoIconComponent } from './shared/component/crypto-icon-text/crypto-icon.component';
+import { EthereumBalanceComponent } from './balance/component/ethereum-balance/ethereum-balance.component';
+import { PolygonBalanceComponent } from './balance/component/polygon-balance/polygon-balance.component';
+import { AbstractBalanceComponent } from './balance/component/abstract-balance/abstract-balance.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { CryptoIconComponent } from './shared/component/crypto-icon-text/crypto-
     NavbarComponent,
     LoadingComponent,
     PriceBarComponent,
-    CryptoIconComponent
+    CryptoIconComponent,
+    EthereumBalanceComponent,
+    PolygonBalanceComponent,
+    AbstractBalanceComponent
   ],
   imports: [
     BrowserModule,

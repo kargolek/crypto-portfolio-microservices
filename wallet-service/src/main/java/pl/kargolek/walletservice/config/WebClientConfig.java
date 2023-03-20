@@ -20,6 +20,9 @@ public class WebClientConfig {
     @Value("${api.etherscan.baseUrl}")
     private String etherscanURL;
 
+    @Value("${api.polygonscan.baseUrl}")
+    private String polygonURL;
+
     @Value("${api.etherscan.maxRetryAttempts}")
     private String maxRetryAttempts;
 
@@ -32,11 +35,17 @@ public class WebClientConfig {
     @Value("${api.etherscan.validationValue}")
     private String validationValue;
 
-
     @Bean("etherscanWebClient")
     public WebClient etherscanWebClient() {
         return WebClient.builder()
                 .baseUrl(etherscanURL)
+                .build();
+    }
+
+    @Bean("polygonscanWebClient")
+    public WebClient polygonWebClient() {
+        return WebClient.builder()
+                .baseUrl(polygonURL)
                 .build();
     }
 

@@ -26,17 +26,17 @@ import static pl.kargolek.walletservice.testutils.extension.ExtMockEtherscanServ
 @ExtendWith(ExtMockEtherscanServer.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Tag("IntegrationTest")
-class MultiEthereumWalletServiceTest extends BaseParamTest {
+class PolygonMultiWalletServiceTest extends BaseParamTest {
 
     private static final int MOCK_SERVER_RES_NUM = 11;
     @Autowired
-    private WalletBalanceService<WalletMultiBalance> underTestService;
+    private PolygonMultiWalletService underTestService;
     private final String wallet1 = "0x8111111111111111111111111111111111111111";
     private final String wallet2 = "0x8222222222222222222222222222222222222222";
 
     @DynamicPropertySource
     public static void registerProperty(DynamicPropertyRegistry registry) {
-        registry.add("api.etherscan.baseUrl", () -> etherscanMockWebServer.url("/").toString());
+        registry.add("api.polygonscan.baseUrl", () -> etherscanMockWebServer.url("/").toString());
         registry.add("api.etherscan.fixedDelayMillis", () -> "1");
     }
 

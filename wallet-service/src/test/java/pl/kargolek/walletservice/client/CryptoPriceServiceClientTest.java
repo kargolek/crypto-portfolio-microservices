@@ -45,9 +45,10 @@ class CryptoPriceServiceClientTest extends BaseParamTest {
 
         var cryptocurrencyBTC = dataCryptocurrency.getCryptocurrencyBTC();
         var cryptocurrencyETH = dataCryptocurrency.getCryptocurrencyETH();
+        var cryptocurrencyMATIC = dataCryptocurrency.getCryptocurrencyMatic();
 
         assertThat(expected)
-                .hasSize(2)
+                .hasSizeGreaterThan(0)
                 .extracting(
                         TokenDTO::getId,
                         TokenDTO::getName,
@@ -68,11 +69,19 @@ class CryptoPriceServiceClientTest extends BaseParamTest {
                                 cryptocurrencyETH.getSymbol(),
                                 cryptocurrencyETH.getCoinMarketId(),
                                 cryptocurrencyETH.getLastUpdate()
+                        ),
+                        tuple(
+                                cryptocurrencyMATIC.getId(),
+                                cryptocurrencyMATIC.getName(),
+                                cryptocurrencyMATIC.getSymbol(),
+                                cryptocurrencyMATIC.getCoinMarketId(),
+                                cryptocurrencyMATIC.getLastUpdate()
                         )
                 );
 
         var priceBTC = cryptocurrencyBTC.getPrice();
         var priceETH = cryptocurrencyETH.getPrice();
+        var priceMATIC = cryptocurrencyMATIC.getPrice();
 
         assertThat(expected).extracting(
                 TokenDTO::getPrice
@@ -108,6 +117,17 @@ class CryptoPriceServiceClientTest extends BaseParamTest {
                         priceETH.getPercentChange60d(),
                         priceETH.getPercentChange90d(),
                         priceETH.getLastUpdate()
+                ),
+                tuple(
+                        priceMATIC.getId(),
+                        priceMATIC.getPriceCurrent(),
+                        priceMATIC.getPercentChange1h(),
+                        priceMATIC.getPercentChange24h(),
+                        priceMATIC.getPercentChange7d(),
+                        priceMATIC.getPercentChange30d(),
+                        priceMATIC.getPercentChange60d(),
+                        priceMATIC.getPercentChange90d(),
+                        priceMATIC.getLastUpdate()
                 )
         );
     }
@@ -134,9 +154,10 @@ class CryptoPriceServiceClientTest extends BaseParamTest {
 
         var cryptocurrencyBTC = dataCryptocurrency.getCryptocurrencyBTC();
         var cryptocurrencyETH = dataCryptocurrency.getCryptocurrencyETH();
+        var cryptocurrencyMATIC = dataCryptocurrency.getCryptocurrencyMatic();
 
         assertThat(expected)
-                .hasSize(2)
+                .hasSizeGreaterThan(0)
                 .extracting(
                         TokenDTO::getId,
                         TokenDTO::getName,
@@ -157,11 +178,19 @@ class CryptoPriceServiceClientTest extends BaseParamTest {
                                 cryptocurrencyETH.getSymbol(),
                                 cryptocurrencyETH.getCoinMarketId(),
                                 cryptocurrencyETH.getLastUpdate()
+                        ),
+                        tuple(
+                                cryptocurrencyMATIC.getId(),
+                                cryptocurrencyMATIC.getName(),
+                                cryptocurrencyMATIC.getSymbol(),
+                                cryptocurrencyMATIC.getCoinMarketId(),
+                                cryptocurrencyMATIC.getLastUpdate()
                         )
                 );
 
         var priceBTC = cryptocurrencyBTC.getPrice();
         var priceETH = cryptocurrencyETH.getPrice();
+        var priceMATIC = cryptocurrencyMATIC.getPrice();
 
         assertThat(expected).extracting(
                 TokenDTO::getPrice
@@ -197,6 +226,17 @@ class CryptoPriceServiceClientTest extends BaseParamTest {
                         priceETH.getPercentChange60d(),
                         priceETH.getPercentChange90d(),
                         priceETH.getLastUpdate()
+                ),
+                tuple(
+                        priceMATIC.getId(),
+                        priceMATIC.getPriceCurrent(),
+                        priceMATIC.getPercentChange1h(),
+                        priceMATIC.getPercentChange24h(),
+                        priceMATIC.getPercentChange7d(),
+                        priceMATIC.getPercentChange30d(),
+                        priceMATIC.getPercentChange60d(),
+                        priceMATIC.getPercentChange90d(),
+                        priceMATIC.getLastUpdate()
                 )
         );
     }

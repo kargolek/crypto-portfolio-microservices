@@ -86,6 +86,7 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       ETHERSCAN_API_KEY: ${ETHERSCAN_API_KEY}
+      POLYGON_API_KEY: ${POLYGON_API_KEY}
     networks:
       - test-env-network
 
@@ -104,6 +105,7 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       ETHERSCAN_API_KEY: ${ETHERSCAN_API_KEY}
+      POLYGON_API_KEY: ${POLYGON_API_KEY}
     depends_on:
       discovery-server:
         condition: service_started

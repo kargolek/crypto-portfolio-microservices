@@ -15,15 +15,15 @@ import reactor.util.retry.RetryBackoffSpec;
  * @author Karol Kuta-Orlowicz
  */
 @Component
-public class EthereumMultiWalletService extends WalletBalanceService<WalletMultiBalance> {
+public class PolygonMultiWalletService extends WalletBalanceService<WalletMultiBalance>{
 
-    @Value("${api.etherscan.apiKey}")
+    @Value("${api.polygonscan.apiKey}")
     private String apiKey;
 
-    public EthereumMultiWalletService(@Qualifier("etherscanWebClient") WebClient webClient,
-                                      @Qualifier("etherscanRetrySpec") RetryBackoffSpec etherscanRetrySpec,
-                                      @Qualifier("etherscanValidateBody") RequestBodyValidator requestBodyValidator) {
-        super(webClient, etherscanRetrySpec, requestBodyValidator);
+    public PolygonMultiWalletService(@Qualifier("polygonscanWebClient") WebClient webClient,
+                                     @Qualifier("etherscanRetrySpec") RetryBackoffSpec retrySpec,
+                                     @Qualifier("etherscanValidateBody") RequestBodyValidator requestBodyValidator) {
+        super(webClient, retrySpec, requestBodyValidator);
     }
 
     @Override
@@ -32,6 +32,7 @@ public class EthereumMultiWalletService extends WalletBalanceService<WalletMulti
         return this.getMultiBalanceMono(wallets)
                 .subscribeOn(scheduler)
                 .block();
+
     }
 
     @Override
@@ -48,5 +49,4 @@ public class EthereumMultiWalletService extends WalletBalanceService<WalletMulti
                 .queryParam("apiKey", this.apiKey)
                 .build();
     }
-
 }

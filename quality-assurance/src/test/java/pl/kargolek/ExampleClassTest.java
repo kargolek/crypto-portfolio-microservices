@@ -60,7 +60,7 @@ public class ExampleClassTest {
         input.sendKeys("0xcA8Fa8f0b631EcdB18Cda619C4Fc9d197c8aFfCa");
         input.sendKeys(Keys.ENTER);
 
-        var container = driver.findElement(By.cssSelector(".inline-container"));
+        var container = driver.findElement(By.cssSelector(".amount-container"));
 
         assertTrue(container.isDisplayed());
     }
