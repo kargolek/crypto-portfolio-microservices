@@ -14,19 +14,21 @@ const apiGatewayURL = environment.apiGatewayURL;
 export class BalanceService {
 
   private dataSubject = new BehaviorSubject<UserWallet>({ name: '', symbol: '', total: { totalQuantity: 0, totalBalance: 0 }, balance: [] });
-  data$ = this.dataSubject.asObservable();
-
+  private data$ = this.dataSubject.asObservable();
+  
+  public getEthereumWalletBalancesURL = apiGatewayURL + '/api/v1/wallet/eth/balance?wallets=';
+  public getPolygonWalletBalancesURL = apiGatewayURL + '/api/v1/wallet/matic/balance?wallets=';
+  
   constructor(
     private http: HttpClient,
     private errorHandler: ErrorHandlerService,
     private inputWalletsData: InputWalletsDataService
   ) { }
 
-  private getWalletBalancesURL = apiGatewayURL + '/api/v1/wallet/eth/balance?wallets=';
-
-  getWalletsBalance(): Observable<UserWallet> {
+  
+  getWalletsBalance(url: string): Observable<UserWallet> {
     const wallets = this.inputWalletsData.getDataFromSessionStorage();
-    const data = this.http.get<UserWallet>(this.getWalletBalancesURL + wallets).pipe(
+    const data = this.http.get<UserWallet>(url + wallets).pipe(
       tap(data => {
         data.balance.forEach(wallet => {
           wallet.walletAddress = this.trimAddress(wallet.walletAddress);
@@ -40,6 +42,10 @@ export class BalanceService {
 
   trimAddress(address: string): string {
     return address.slice(0, 10);
+  }
+
+  getDataSource(): Observable<UserWallet> {
+    return this.data$;
   }
 
 }
