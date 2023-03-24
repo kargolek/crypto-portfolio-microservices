@@ -1,4 +1,4 @@
-package pl.kargolek.extension.driver;
+package pl.kargolek.extension.pages;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -10,10 +10,8 @@ import java.lang.annotation.Target;
 /**
  * @author Karol Kuta-Orlowicz
  */
-
-@Target({ElementType.TYPE})
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@ExtendWith(WebDriverExtension.class)
-public @interface SeleniumWebDriver {
-    boolean isBeforeAll() default true;
+@ExtendWith(PageObjectExtension.class)
+public @interface InitPageObject {
 }

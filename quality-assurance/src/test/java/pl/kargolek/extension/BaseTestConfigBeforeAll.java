@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@SeleniumWebDriver(isBeforeAll = false)
+@SeleniumWebDriver
 @BrowserLogs
 @TestProperties
 @VideoRecording
@@ -28,5 +28,5 @@ import java.lang.annotation.Target;
 @DevTools
 @InitPageObject
 @MySqlScript
-public @interface BaseTestConfig {
+public @interface BaseTestConfigBeforeAll {
 }
