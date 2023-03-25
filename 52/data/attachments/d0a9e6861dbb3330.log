@@ -1,0 +1,122 @@
+[REQUESTS DATA]:
+
+Request:[2023-03-25T23:42:51.618076395]
+GET URL:http://172.18.0.1:4201/
+Header:{Upgrade-Insecure-Requests=1, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-25T23:42:51.618132495]
+GET URL:http://172.18.0.1:4201/runtime.js
+Header:{Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-25T23:42:51.618183995]
+GET URL:http://172.18.0.1:4201/polyfills.js
+Header:{Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-25T23:42:51.618210095]
+GET URL:http://172.18.0.1:4201/main.js
+Header:{Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-25T23:42:51.618234794]
+GET URL:http://172.18.0.1:4201/scripts.js
+Header:{Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-25T23:42:51.618256994]
+GET URL:http://172.18.0.1:4201/styles.css
+Header:{Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-25T23:42:51.618278394]
+GET URL:https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-03-25T23:42:51.618303494]
+GET URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-25T23:42:51.617326894]
+GET URL:http://172.18.0.1:4201/favicon.ico
+Header:{Referer=http://172.18.0.1:4201/wallet, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+[RESPONSE DATA]:
+
+Response: [2023-03-25T23:42:51.618367794]
+URL:http://172.18.0.1:4201/
+Status:200 OK
+Header:{Accept-Ranges=bytes, Connection=keep-alive, Content-Length=7247, Content-Type=text/html, Date=Sat, 25 Mar 2023 23:42:50 GMT, ETag="641f8607-1c4f", Last-Modified=Sat, 25 Mar 2023 23:38:47 GMT, Server=nginx/1.21.5}
+Body:<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <title>CryptoPortfolioApp</title>
+ 
+
+
+Response: [2023-03-25T23:42:51.618396294]
+URL:http://172.18.0.1:4201/runtime.js
+Status:200 OK
+Header:{Date=Sat, 25 Mar 2023 23:42:50 GMT, Last-Modified=Sat, 25 Mar 2023 23:38:47 GMT, Server=nginx/1.21.5, ETag="641f8607-384", Content-Type=application/javascript, Connection=keep-alive, Accept-Ranges=bytes, Content-Length=900}
+Body:(()=>{"use strict";var e,v={},_={};function a(e){var f=_[e];if(void 0!==f)return f.exports;var r=_[e
+
+
+Response: [2023-03-25T23:42:51.618454794]
+URL:http://172.18.0.1:4201/styles.css
+Status:200 OK
+Header:{Date=Sat, 25 Mar 2023 23:42:50 GMT, Last-Modified=Sat, 25 Mar 2023 23:38:47 GMT, Server=nginx/1.21.5, ETag="641f8607-199c", Content-Type=text/css, Connection=keep-alive, Accept-Ranges=bytes, Content-Length=6556}
+Body:body{background-color:#1d2448;font-family:monospace}.particles-js-canvas-el{position:fixed;top:0;z-i
+
+
+Response: [2023-03-25T23:42:51.618497694]
+URL:http://172.18.0.1:4201/polyfills.js
+Status:200 OK
+Header:{Date=Sat, 25 Mar 2023 23:42:50 GMT, Last-Modified=Sat, 25 Mar 2023 23:38:47 GMT, Server=nginx/1.21.5, ETag="641f8607-8443", Content-Type=application/javascript, Connection=keep-alive, Accept-Ranges=bytes, Content-Length=33859}
+Body:"use strict";(self.webpackChunkclient_side=self.webpackChunkclient_side||[]).push([[429],{583:()=>{!
+
+
+Response: [2023-03-25T23:42:51.618523594]
+URL:http://172.18.0.1:4201/scripts.js
+Status:200 OK
+Header:{Date=Sat, 25 Mar 2023 23:42:50 GMT, Last-Modified=Sat, 25 Mar 2023 23:38:47 GMT, Server=nginx/1.21.5, ETag="641f8607-589c", Content-Type=application/javascript, Connection=keep-alive, Accept-Ranges=bytes, Content-Length=22684}
+Body:var pJS=function(c,d){var l=document.querySelector("#"+c+" > .particles-js-canvas-el");this.pJS={can
+
+
+Response: [2023-03-25T23:42:51.618548194]
+URL:http://172.18.0.1:4201/main.js
+Status:200 OK
+Header:{Date=Sat, 25 Mar 2023 23:42:50 GMT, Last-Modified=Sat, 25 Mar 2023 23:38:47 GMT, Server=nginx/1.21.5, ETag="641f8607-7aa1a", Content-Type=application/javascript, Connection=keep-alive, Accept-Ranges=bytes, Content-Length=502298}
+Body:"use strict";(self.webpackChunkclient_side=self.webpackChunkclient_side||[]).push([[179],{882:()=>{f
+
+
+Response: [2023-03-25T23:42:51.618572994]
+URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Status:200 OK
+Header:{Access-Control-Allow-Origin=*, Date=Sat, 25 Mar 2023 23:42:50 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:[]
+
+
+Response: [2023-03-25T23:42:51.617597394]
+URL:https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2
+Status:200 
+Header:{date=Fri, 24 Mar 2023 16:56:29 GMT, x-content-type-options=nosniff, age=110781, content-security-policy-report-only=require-trusted-types-for 'script'; report-uri https://csp.withgoogle.com/csp/apps-themes, cross-origin-resource-policy=cross-origin, alt-svc=h3=":443"; ma=2592000,h3-29=":443"; ma=2592000, content-length=128616, x-xss-protection=0, last-modified=Tue, 07 Mar 2023 19:52:07 GMT, server=sffe, cross-origin-opener-policy=same-origin; report-to="apps-themes", report-to={"group":"apps-themes","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/apps-themes"}]}, content-type=font/woff2, access-control-allow-origin=*, cache-control=public, max-age=31536000, accept-ranges=bytes, timing-allow-origin=*, expires=Sat, 23 Mar 2024 16:56:29 GMT}
+Body:
+
+
+Response: [2023-03-25T23:42:51.617641594]
+URL:http://172.18.0.1:4201/favicon.ico
+Status:200 OK
+Header:{Date=Sat, 25 Mar 2023 23:42:50 GMT, Last-Modified=Sat, 25 Mar 2023 23:38:47 GMT, Server=nginx/1.21.5, ETag="641f8607-3b4", Content-Type=image/x-icon, Connection=keep-alive, Accept-Ranges=bytes, Content-Length=948}
+Body:iVBORw0KGgoAAAANSUhEUgAAABwAAAAeCAYAAAA/xX6fAAAACXBIWXMAAAsSAAALEgHS3X78AAADZklEQVRIiZVXS0wTURS98+nM
