@@ -58,7 +58,7 @@ public class DevToolsDriver {
                                 )
                         );
                     } catch (InterruptedException e) {
-                        log.error("Error in parse request data");
+                        log.error("Error in parse dev tools request data");
                     }
                 });
         return this;

@@ -4,18 +4,20 @@ import org.junit.jupiter.api.extension.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import pl.kargolek.extension.util.AnnotationResolver;
 import pl.kargolek.util.PropertiesLoader;
 
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.time.Duration;
 
 /**
  * @author Karol Kuta-Orlowicz
  */
-public class WebDriverExtension implements BeforeAllCallback, AfterAllCallback, ParameterResolver {
+public class WebDriverExtension implements BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback, ParameterResolver {
 
     private WebDriver driver;
     private final String STORE_WEBDRIVER_KEY = "webDriver";
+    private final AnnotationResolver annotationResolver = new AnnotationResolver();
 
     private final PropertiesLoader confProperties = new PropertiesLoader(
             Thread.currentThread().getContextClassLoader().getResource("").getPath(),
@@ -23,23 +25,31 @@ public class WebDriverExtension implements BeforeAllCallback, AfterAllCallback, 
     );
 
     @Override
-    public void beforeAll(ExtensionContext extensionContext) throws Exception {
-        var hubURL = confProperties.getPropertyValue("selenium.hub.url");
-
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setCapability("browserVersion", "110.0");
-        chromeOptions.setCapability("platformName", "LINUX");
-
-        driver = new RemoteWebDriver(new URL(hubURL), chromeOptions, false);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-
-        extensionContext.getStore(ExtensionContext.Namespace.GLOBAL).put(STORE_WEBDRIVER_KEY, driver);
+    public void beforeAll(ExtensionContext context) throws Exception {
+        if (annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()){
+            this.initWebDriver(context);
+        }
     }
 
     @Override
-    public void afterAll(ExtensionContext extensionContext) {
-        driver.quit();
-        extensionContext.getStore(ExtensionContext.Namespace.GLOBAL).remove(STORE_WEBDRIVER_KEY);
+    public void beforeEach(ExtensionContext context) throws Exception {
+        if (!annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()){
+            initWebDriver(context);
+        }
+    }
+
+    @Override
+    public void afterEach(ExtensionContext context) {
+        if (!annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()){
+            this.tearDownDriver(context);
+        }
+    }
+
+    @Override
+    public void afterAll(ExtensionContext context) {
+        if (annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()){
+            this.tearDownDriver(context);
+        }
     }
 
     @Override
@@ -50,5 +60,22 @@ public class WebDriverExtension implements BeforeAllCallback, AfterAllCallback, 
     @Override
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
         return this.driver;
+    }
+
+    private void initWebDriver(ExtensionContext context) throws MalformedURLException {
+        var hubURL = confProperties.getPropertyValue("selenium.hub.url");
+
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setCapability("browserVersion", "110.0");
+        chromeOptions.setCapability("platformName", "LINUX");
+
+        driver = new RemoteWebDriver(new URL(hubURL), chromeOptions, false);
+
+        context.getStore(ExtensionContext.Namespace.GLOBAL).put(STORE_WEBDRIVER_KEY, driver);
+    }
+
+    private void tearDownDriver(ExtensionContext context){
+        driver.quit();
+        context.getStore(ExtensionContext.Namespace.GLOBAL).remove(STORE_WEBDRIVER_KEY);
     }
 }

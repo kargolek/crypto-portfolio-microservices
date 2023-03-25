@@ -1,0 +1,64 @@
+package pl.kargolek.data;
+
+import lombok.Getter;
+import pl.kargolek.data.model.Cryptocurrency;
+import pl.kargolek.data.model.Price;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
+/**
+ * @author Karol Kuta-Orlowicz
+ */
+@Getter
+public class TestData {
+
+    private final Cryptocurrency ethereum = Cryptocurrency.builder()
+            .id(1L)
+            .name("Ethereum")
+            .symbol("ETH")
+            .coinMarketId(1027L)
+            .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
+            .build();
+
+    private final Cryptocurrency polygon = Cryptocurrency.builder()
+            .id(2L)
+            .name("Polygon")
+            .symbol("MATIC")
+            .coinMarketId(3890L)
+            .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
+            .build();
+
+    private final Price ethereumPrice = Price.builder()
+            .id(1L)
+            .cryptocurrencyId(1L)
+            .priceCurrent(new BigDecimal("1000.54321"))
+            .percentChange1h(new BigDecimal("10.0"))
+            .percentChange24h(new BigDecimal("10.0"))
+            .percentChange7d(new BigDecimal("10.0"))
+            .percentChange30d(new BigDecimal("10.0"))
+            .percentChange60d(new BigDecimal("10.0"))
+            .percentChange90d(new BigDecimal("10.0"))
+            .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
+            .build();
+
+    private final Price polygonPrice = Price.builder()
+            .id(2L)
+            .cryptocurrencyId(2L)
+            .priceCurrent(new BigDecimal("1000.54321"))
+            .percentChange1h(new BigDecimal("10.0"))
+            .percentChange24h(new BigDecimal("10.0"))
+            .percentChange7d(new BigDecimal("10.0"))
+            .percentChange30d(new BigDecimal("10.0"))
+            .percentChange60d(new BigDecimal("10.0"))
+            .percentChange90d(new BigDecimal("10.0"))
+            .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
+            .build();
+
+    private final String walletAddressToShort = "0x189B9cBd4AfF470aF2C0102f365FC1823d85796";
+    private final String walletAddressValid = "0x189B9cBd4AfF470aF2C0102f365FC1823d857965";
+    private final String walletAddressToLong = "0x189B9cBd4AfF470aF2C0102f365FC1823d8579650";
+    private final String walletAddressInvalid = "0xZB6eD29A95753C3Ad948348e3e7b1A251080Ffb9";
+    private final String walletAddressIllegalChar = "0x0a4c79cE84202b03e95B7a692E5D728d83C44c7!";
+}
