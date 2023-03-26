@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kargolek.walletservice.dto.UserWallet;
-import pl.kargolek.walletservice.service.PolygonBalanceCalculationService;
+import pl.kargolek.walletservice.service.balance.polygon.PolygonBalanceService;
 
 /**
  * @author Karol Kuta-Orlowicz
@@ -20,11 +20,11 @@ import pl.kargolek.walletservice.service.PolygonBalanceCalculationService;
 public class PolygonWalletController {
 
     @Autowired
-    private PolygonBalanceCalculationService polygonBalanceCalculationService;
+    private PolygonBalanceService polygonBalanceService;
 
     @GetMapping("/balance")
     public ResponseEntity<UserWallet> getEthWalletsBalance(@RequestParam(name = "wallets") String wallets){
-        var userWallets = polygonBalanceCalculationService.callWalletsBalanceCalculation(wallets);
+        var userWallets = polygonBalanceService.getMultiBalance(wallets);
         return new ResponseEntity<>(userWallets, HttpStatus.OK);
     }
 

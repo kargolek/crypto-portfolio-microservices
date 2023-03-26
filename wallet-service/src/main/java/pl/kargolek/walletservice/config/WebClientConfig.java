@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
-import pl.kargolek.walletservice.validation.impl.RequestBodyValidatorImpl;
 import pl.kargolek.walletservice.exception.ExternalServiceCallException;
+import pl.kargolek.walletservice.validation.impl.RequestBodyValidatorImpl;
 import reactor.util.retry.RetryBackoffSpec;
 import reactor.util.retry.RetrySpec;
 
 import java.time.Duration;
+import java.util.Map;
 
 /**
  * @author Karol Kuta-Orlowicz
@@ -20,8 +21,14 @@ public class WebClientConfig {
     @Value("${api.etherscan.baseUrl}")
     private String etherscanURL;
 
+    @Value("${api.etherscan.apiKey}")
+    String etherscanApiKey;
+
     @Value("${api.polygonscan.baseUrl}")
     private String polygonURL;
+
+    @Value("${api.polygonscan.apiKey}")
+    String polygonscanApiKey;
 
     @Value("${api.etherscan.maxRetryAttempts}")
     private String maxRetryAttempts;
@@ -39,6 +46,7 @@ public class WebClientConfig {
     public WebClient etherscanWebClient() {
         return WebClient.builder()
                 .baseUrl(etherscanURL)
+                .defaultUriVariables(Map.of("apiKey", this.etherscanApiKey))
                 .build();
     }
 
@@ -46,6 +54,7 @@ public class WebClientConfig {
     public WebClient polygonWebClient() {
         return WebClient.builder()
                 .baseUrl(polygonURL)
+                .defaultUriVariables(Map.of("apiKey", this.polygonscanApiKey))
                 .build();
     }
 
