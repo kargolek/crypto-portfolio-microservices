@@ -1,0 +1,144 @@
+[REQUESTS DATA]:
+
+Request:[2023-03-26T22:19:04.736374578]
+GET URL:http://172.18.0.1:4201/
+Header:{Upgrade-Insecure-Requests=1, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-26T22:19:04.736435879]
+GET URL:http://172.18.0.1:4201/runtime.js
+Header:{Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-26T22:19:04.736465680]
+GET URL:http://172.18.0.1:4201/polyfills.js
+Header:{Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-26T22:19:04.736493980]
+GET URL:http://172.18.0.1:4201/scripts.js
+Header:{Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-26T22:19:04.736519981]
+GET URL:http://172.18.0.1:4201/main.js
+Header:{Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-26T22:19:04.736546081]
+GET URL:http://172.18.0.1:4201/styles.css
+Header:{Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-26T22:19:04.736571882]
+GET URL:https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-03-26T22:19:04.736599482]
+GET URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-26T22:19:04.735628683]
+GET URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-26T22:19:04.735656483]
+GET URL:http://172.18.0.1:8080/api/v1/wallet/eth/balance?wallets=0x189B9cBd4AfF470aF2C0102f365FC1823d857965,%200x189B9cBd4AfF470aF2C0102f365FC1823d857965
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-26T22:19:04.736319596]
+GET URL:http://172.18.0.1:8080/api/v1/wallet/matic/balance?wallets=0x189B9cBd4AfF470aF2C0102f365FC1823d857965,%200x189B9cBd4AfF470aF2C0102f365FC1823d857965
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-03-26T22:19:04.736391397]
+GET URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+[RESPONSE DATA]:
+
+Response: [2023-03-26T22:19:04.737450898]
+URL:http://172.18.0.1:4201/scripts.js
+Status:200 OK
+Header:{Date=Sun, 26 Mar 2023 22:18:57 GMT, Last-Modified=Sun, 26 Mar 2023 22:15:43 GMT, Server=nginx/1.21.5, ETag="6420c40f-589c", Content-Type=application/javascript, Connection=keep-alive, Accept-Ranges=bytes, Content-Length=22684}
+Body:var pJS=function(c,d){var l=document.querySelector("#"+c+" > .particles-js-canvas-el");this.pJS={can
+
+
+Response: [2023-03-26T22:19:04.737485699]
+URL:http://172.18.0.1:4201/styles.css
+Status:200 OK
+Header:{Date=Sun, 26 Mar 2023 22:18:57 GMT, Last-Modified=Sun, 26 Mar 2023 22:15:43 GMT, Server=nginx/1.21.5, ETag="6420c40f-199c", Content-Type=text/css, Connection=keep-alive, Accept-Ranges=bytes, Content-Length=6556}
+Body:body{background-color:#1d2448;font-family:monospace}.particles-js-canvas-el{position:fixed;top:0;z-i
+
+
+Response: [2023-03-26T22:19:04.737516100]
+URL:http://172.18.0.1:4201/runtime.js
+Status:200 OK
+Header:{Date=Sun, 26 Mar 2023 22:18:57 GMT, Last-Modified=Sun, 26 Mar 2023 22:15:43 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="6420c40f-384", Content-Length=900, Content-Type=application/javascript}
+Body:(()=>{"use strict";var e,v={},_={};function a(e){var f=_[e];if(void 0!==f)return f.exports;var r=_[e
+
+
+Response: [2023-03-26T22:19:04.737543900]
+URL:http://172.18.0.1:4201/polyfills.js
+Status:200 OK
+Header:{Date=Sun, 26 Mar 2023 22:18:57 GMT, Last-Modified=Sun, 26 Mar 2023 22:15:43 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="6420c40f-8443", Content-Length=33859, Content-Type=application/javascript}
+Body:"use strict";(self.webpackChunkclient_side=self.webpackChunkclient_side||[]).push([[429],{583:()=>{!
+
+
+Response: [2023-03-26T22:19:04.737571801]
+URL:http://172.18.0.1:4201/main.js
+Status:200 OK
+Header:{Date=Sun, 26 Mar 2023 22:18:57 GMT, Last-Modified=Sun, 26 Mar 2023 22:15:43 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="6420c40f-7aa1a", Content-Length=502298, Content-Type=application/javascript}
+Body:"use strict";(self.webpackChunkclient_side=self.webpackChunkclient_side||[]).push([[179],{882:()=>{f
+
+
+Response: [2023-03-26T22:19:04.736599701]
+URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Status:200 OK
+Header:{Access-Control-Allow-Origin=*, Date=Sun, 26 Mar 2023 22:19:02 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:[]
+
+
+Response: [2023-03-26T22:19:04.736627602]
+URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Status:200 OK
+Header:{Access-Control-Allow-Origin=*, Date=Sun, 26 Mar 2023 22:19:02 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:[]
+
+
+Response: [2023-03-26T22:19:04.736846506]
+URL:http://172.18.0.1:8080/api/v1/wallet/eth/balance?wallets=0x189B9cBd4AfF470aF2C0102f365FC1823d857965,%200x189B9cBd4AfF470aF2C0102f365FC1823d857965
+Status:400 Bad Request
+Header:{Access-Control-Allow-Origin=*, Date=Sun, 26 Mar 2023 22:19:03 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:{"status":"BAD_REQUEST","timestamp":"2023-03-26T22:19:03.749353473","message":"Address is invalid fo
+
+
+Response: [2023-03-26T22:19:04.736887706]
+URL:http://172.18.0.1:8080/api/v1/wallet/matic/balance?wallets=0x189B9cBd4AfF470aF2C0102f365FC1823d857965,%200x189B9cBd4AfF470aF2C0102f365FC1823d857965
+Status:400 Bad Request
+Header:{Access-Control-Allow-Origin=*, Date=Sun, 26 Mar 2023 22:19:03 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:{"status":"BAD_REQUEST","timestamp":"2023-03-26T22:19:03.760299477","message":"Address is invalid fo
+
+
+Response: [2023-03-26T22:19:04.736916207]
+URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Status:200 OK
+Header:{Access-Control-Allow-Origin=*, Date=Sun, 26 Mar 2023 22:19:02 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:[]
