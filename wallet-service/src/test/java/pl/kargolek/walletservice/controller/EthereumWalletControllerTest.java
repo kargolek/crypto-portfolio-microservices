@@ -11,7 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import pl.kargolek.walletservice.exception.*;
-import pl.kargolek.walletservice.service.EthereumBalanceCalculationService;
+import pl.kargolek.walletservice.service.balance.ethereum.EthereumBalanceService;
 import pl.kargolek.walletservice.testutils.BaseParamTest;
 import pl.kargolek.walletservice.testutils.fixture.DataEthereumWallets;
 import pl.kargolek.walletservice.testutils.fixture.DataUserWallet;
@@ -30,7 +30,7 @@ class EthereumWalletControllerTest extends BaseParamTest {
     MockMvc mockMvc;
 
     @MockBean
-    private EthereumBalanceCalculationService ethereumBalanceCalculationService;
+    private EthereumBalanceService ethereumBalanceService;
 
     private final String basePath = "/api/v1/wallet/eth";
 
@@ -40,7 +40,7 @@ class EthereumWalletControllerTest extends BaseParamTest {
         var userBalance = userWallet.getBalance().get(0);
         var total = userWallet.getTotal();
 
-        when(ethereumBalanceCalculationService.callWalletsBalanceCalculation(dataEthereumWallets.WALLETS_1_VALID))
+        when(ethereumBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
                 .thenReturn(userWallet);
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
@@ -65,7 +65,7 @@ class EthereumWalletControllerTest extends BaseParamTest {
 
     @Test
     void whenEthBalanceCalcReturnExcInvalidWalletAddress_thenReturn400AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
-        when(ethereumBalanceCalculationService.callWalletsBalanceCalculation(dataEthereumWallets.WALLETS_1_VALID))
+        when(ethereumBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
                 .thenThrow(new InvalidAddressException("Ethereum", dataEthereumWallets.WALLETS_1_VALID, "Invalid"));
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
@@ -79,7 +79,7 @@ class EthereumWalletControllerTest extends BaseParamTest {
 
     @Test
     void whenEthBalanceCalcReturnExcNoSuchCryptoPrice_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
-        when(ethereumBalanceCalculationService.callWalletsBalanceCalculation(dataEthereumWallets.WALLETS_1_VALID))
+        when(ethereumBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
                 .thenThrow(new NoSuchCryptoPriceDataException());
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
@@ -92,7 +92,7 @@ class EthereumWalletControllerTest extends BaseParamTest {
 
     @Test
     void whenEthBalanceCalcReturnResponseFieldExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
-        when(ethereumBalanceCalculationService.callWalletsBalanceCalculation(dataEthereumWallets.WALLETS_1_VALID))
+        when(ethereumBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
                 .thenThrow(new ResponseFieldException("status", "1"));
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
@@ -105,7 +105,7 @@ class EthereumWalletControllerTest extends BaseParamTest {
 
     @Test
     void whenEthBalanceCalcWebClientStatusExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
-        when(ethereumBalanceCalculationService.callWalletsBalanceCalculation(dataEthereumWallets.WALLETS_1_VALID))
+        when(ethereumBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
                 .thenThrow(new WebClientStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
@@ -119,7 +119,7 @@ class EthereumWalletControllerTest extends BaseParamTest {
 
     @Test
     void whenEthBalanceCalcExternalServiceCallExceptionExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
-        when(ethereumBalanceCalculationService.callWalletsBalanceCalculation(dataEthereumWallets.WALLETS_1_VALID))
+        when(ethereumBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
                 .thenThrow(new ExternalServiceCallException("Call external service reached out max retries value"));
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
@@ -133,7 +133,7 @@ class EthereumWalletControllerTest extends BaseParamTest {
 
     @Test
     void whenEthBalanceCalcNoSuchCryptocurrencyExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
-        when(ethereumBalanceCalculationService.callWalletsBalanceCalculation(dataEthereumWallets.WALLETS_1_VALID))
+        when(ethereumBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
                 .thenThrow(new NoSuchCryptocurrencyException("Unable to make conversion for cryptocurrency for given crypto type: Ethereum"));
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
@@ -147,7 +147,7 @@ class EthereumWalletControllerTest extends BaseParamTest {
 
     @Test
     void whenEthBalanceCalcNoSuchWalletDataExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
-        when(ethereumBalanceCalculationService.callWalletsBalanceCalculation(dataEthereumWallets.WALLETS_1_VALID))
+        when(ethereumBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
                 .thenThrow(new NoSuchWalletDataException());
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")

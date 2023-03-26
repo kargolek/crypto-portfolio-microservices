@@ -1,4 +1,4 @@
-package pl.kargolek.walletservice.service;
+package pl.kargolek.walletservice.service.balance.polygon;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import okhttp3.mockwebserver.MockWebServer;
@@ -38,10 +38,10 @@ import static pl.kargolek.walletservice.testutils.extension.ExtMockEtherscanServ
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = {InitializerCryptoPriceMockWebServer.class}, classes = {ConfigCryptoPriceMockServer.class})
 @Tag("IntegrationTest")
-class PolygonBalanceCalculationServiceTest extends BaseParamTest {
+class PolygonBalanceServiceTest extends BaseParamTest {
 
     @Autowired
-    private PolygonBalanceCalculationService polygonBalanceCalculationService;
+    private PolygonBalanceService underTest;
 
     @Autowired
     private MockWebServer cryptoPriceMockWebServer;
@@ -59,12 +59,12 @@ class PolygonBalanceCalculationServiceTest extends BaseParamTest {
 
     @Test
     void whenCallBalanceCalcMaticMultiWallet_thenReturnUserWallet(ResponseEtherscanService ethMockResponse,
-                                                                    ResponseCryptoPriceService cryptoMockResponse) throws JsonProcessingException {
+                                                                  ResponseCryptoPriceService cryptoMockResponse) throws JsonProcessingException {
 
         cryptoPriceMockWebServer.enqueue(cryptoMockResponse.getAllCryptocurrenciesHttpStatusOK());
         etherscanMockWebServer.enqueue(ethMockResponse.getMockedResStatus200());
 
-        var expected = polygonBalanceCalculationService.callWalletsBalanceCalculation(WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2);
+        var expected = underTest.getMultiBalance(WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2);
 
         assertThat(expected)
                 .extracting(UserWallet::getName, UserWallet::getSymbol)
@@ -121,7 +121,20 @@ class PolygonBalanceCalculationServiceTest extends BaseParamTest {
         for (int requestNum = 0; requestNum < 11; requestNum++)
             etherscanMockWebServer.enqueue(ethMockResponse.getMockedResStatus500());
 
-        assertThatThrownBy(() -> polygonBalanceCalculationService.callWalletsBalanceCalculation(WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2))
+        assertThatThrownBy(() -> underTest.getMultiBalance(WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2))
+                .isInstanceOf(ExternalServiceCallException.class);
+    }
+
+    @Test
+    void whenEtherscanServiceReturn400_thenThrowCustomExc(ResponseEtherscanService ethMockResponse,
+                                                   ResponseCryptoPriceService cryptoMockResponse) throws JsonProcessingException {
+
+        cryptoPriceMockWebServer.enqueue(cryptoMockResponse.getAllCryptocurrenciesHttpStatusOK());
+
+        for (int requestNum = 0; requestNum < 11; requestNum++)
+            etherscanMockWebServer.enqueue(ethMockResponse.getMockedResStatus400());
+
+        assertThatThrownBy(() -> underTest.getMultiBalance(WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2))
                 .isInstanceOf(ExternalServiceCallException.class);
     }
 
@@ -130,23 +143,22 @@ class PolygonBalanceCalculationServiceTest extends BaseParamTest {
                                                             ResponseCryptoPriceService cryptoMockResponse) {
 
         cryptoPriceMockWebServer.enqueue(cryptoMockResponse.getAllCryptocurrenciesHttpStatus500());
-        etherscanMockWebServer.enqueue(ethMockResponse.getMockedResStatus200());
 
-        assertThatThrownBy(() -> polygonBalanceCalculationService.callWalletsBalanceCalculation(WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2))
+        assertThatThrownBy(() -> underTest.getMultiBalance(WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2))
                 .isInstanceOf(NoSuchCryptoPriceDataException.class)
                 .hasMessageContaining("Unable to get price for crypto: Polygon");
     }
 
     @Test
     void whenWalletAddressIsInvalid_thenThrowCustomExc() {
-        assertThatThrownBy(() -> polygonBalanceCalculationService.callWalletsBalanceCalculation("0x8123," + WALLET_ADDRESS_2))
+        assertThatThrownBy(() -> underTest.getMultiBalance("0x8123," + WALLET_ADDRESS_2))
                 .isInstanceOf(InvalidAddressException.class)
                 .hasMessageContaining("Address is invalid for crypto ETH and address 0x8123, message: address is invalid");
     }
 
     @Test
     void whenWalletsMoreThan20_thenReturnOneUserWalletWithMergedBalances(ResponseEtherscanService ethMockResponse,
-                                                       ResponseCryptoPriceService cryptoMockResponse) throws JsonProcessingException {
+                                                                         ResponseCryptoPriceService cryptoMockResponse) throws JsonProcessingException {
 
         cryptoPriceMockWebServer.enqueue(cryptoMockResponse.getAllCryptocurrenciesHttpStatusOK());
         etherscanMockWebServer.enqueue(ethMockResponse.getMockedResStatus200Valid20Addresses());
@@ -164,7 +176,7 @@ class PolygonBalanceCalculationServiceTest extends BaseParamTest {
                 WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2 + "," +
                 WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2;
 
-        var expected = polygonBalanceCalculationService.callWalletsBalanceCalculation(wallets);
+        var expected = underTest.getMultiBalance(wallets);
 
         var walletsCount = wallets.split(",").length;
 

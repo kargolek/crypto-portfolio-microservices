@@ -1,18 +1,17 @@
-package pl.kargolek.walletservice.service;
+package pl.kargolek.walletservice.service.balance;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Streams;
 import org.springframework.beans.factory.annotation.Autowired;
-import pl.kargolek.walletservice.client.CryptoPriceServiceClient;
+import org.springframework.stereotype.Component;
 import pl.kargolek.walletservice.dto.TokenDTO;
 import pl.kargolek.walletservice.dto.UserBalance;
 import pl.kargolek.walletservice.dto.UserWallet;
-import pl.kargolek.walletservice.exception.NoSuchCryptoPriceDataException;
+import pl.kargolek.walletservice.service.QuotaCalculatorService;
+import pl.kargolek.walletservice.service.TotalCalculatorService;
+import pl.kargolek.walletservice.service.WalletExplorerService;
 import pl.kargolek.walletservice.util.CryptoType;
 import pl.kargolek.walletservice.util.CryptoUnitConvert;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -21,13 +20,8 @@ import java.util.stream.Stream;
 /**
  * @author Karol Kuta-Orlowicz
  */
-public abstract class BalanceCalculationService<T> {
-
-    @Autowired
-    private CryptoPriceServiceClient cryptoPriceServiceClient;
-
-    @Autowired
-    private CryptoUnitConvert convertUnit;
+@Component
+public class UserWalletService {
 
     @Autowired
     private QuotaCalculatorService quotaCalculatorService;
@@ -36,48 +30,12 @@ public abstract class BalanceCalculationService<T> {
     private TotalCalculatorService totalCalculatorService;
 
     @Autowired
+    private CryptoUnitConvert convertUnit;
+
+    @Autowired
     private WalletExplorerService walletExplorerService;
 
-    private final WalletBalanceService<T> walletBalanceService;
-
-    public BalanceCalculationService(WalletBalanceService<T> walletBalanceService) {
-        this.walletBalanceService = walletBalanceService;
-    }
-
-    protected abstract UserWallet callWalletsBalanceCalculation(String wallets);
-
-    protected Stream<List<String>> walletSubListsStream(String wallets, int maxWalletsPerRequest) {
-        var walletsList = Arrays.asList(wallets.trim().split(","));
-        return Streams.stream(Iterables.partition(walletsList, maxWalletsPerRequest))
-                .map(mapped -> List.of(String.join(",", mapped)));
-    }
-
-    protected List<T> getWalletsBalances(List<String> wallets) {
-        return wallets.stream()
-                .parallel()
-                .map(this.walletBalanceService::getMultiWalletBalance)
-                .collect(Collectors.toList());
-    }
-
-    protected TokenDTO getCryptoPrice(CryptoType cryptoType) {
-        var name = cryptoType.getName();
-        return cryptoPriceServiceClient.getTokensByName(List.of(name)).stream()
-                .filter(tokenDTO -> tokenDTO.getName().equalsIgnoreCase(name))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchCryptoPriceDataException(name));
-    }
-
-    protected UserWallet calculateUserBalances(UserWallet userWallet, TokenDTO tokenDTO, CryptoType cryptoType) {
-        var userBalances = userWallet.getBalance()
-                .stream()
-                .map(userBalance -> this.convertUnit(userBalance, cryptoType))
-                .map(userBalance -> calculateUserBalance(userBalance, tokenDTO))
-                .map(userBalance -> this.setWalletAddressExplorer(userBalance, cryptoType))
-                .toList();
-        return userWallet.setBalance(userBalances);
-    }
-
-    protected UserWallet mergeUserWallet(List<UserWallet> userWallets) {
+    public UserWallet mergeUserWallets(List<UserWallet> userWallets) {
         return userWallets.stream()
                 .collect(Collectors.toMap(UserWallet::getName, Function.identity(), (w1, w2) -> {
                             List<UserBalance> mergedBalances = new ArrayList<>(w1.getBalance());
@@ -89,17 +47,17 @@ public abstract class BalanceCalculationService<T> {
                 ).orElse(new UserWallet());
     }
 
-    protected UserWallet calculateTotal(UserWallet userWallet) {
+    public UserWallet calculateTotal(UserWallet userWallet) {
         var userTotalBalance = this.totalCalculatorService.calcQuantityBalance(userWallet);
         return userWallet.setTotal(userTotalBalance);
     }
 
-    private UserBalance convertUnit(UserBalance userBalance, CryptoType cryptoType) {
+    public UserBalance convertUnit(UserBalance userBalance, CryptoType cryptoType) {
         var convertedQuantity = this.convertUnit.convert(userBalance.getQuantity().toPlainString(), cryptoType);
         return userBalance.setQuantity(convertedQuantity);
     }
 
-    private UserBalance calculateUserBalance(UserBalance userBalance, TokenDTO tokenDTO) {
+    public UserBalance calculateUserBalance(UserBalance userBalance, TokenDTO tokenDTO) {
         var quantity = userBalance.getQuantity();
         var priceDTO = tokenDTO.getPrice();
 
@@ -122,8 +80,9 @@ public abstract class BalanceCalculationService<T> {
                 .setBalance90d(balance90d);
     }
 
-    private UserBalance setWalletAddressExplorer(UserBalance userBalance, CryptoType cryptoType){
+    public UserBalance setWalletAddressExplorer(UserBalance userBalance, CryptoType cryptoType){
         var walletAddress = userBalance.getWalletAddress();
         return userBalance.setWalletExplorer(this.walletExplorerService.getWalletExplorerAddress(walletAddress, cryptoType));
     }
+
 }

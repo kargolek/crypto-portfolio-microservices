@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.kargolek.walletservice.dto.UserWallet;
-import pl.kargolek.walletservice.service.EthereumBalanceCalculationService;
+import pl.kargolek.walletservice.service.balance.ethereum.EthereumBalanceService;
 
 /**
  * @author Karol Kuta-Orlowicz
@@ -18,11 +18,11 @@ import pl.kargolek.walletservice.service.EthereumBalanceCalculationService;
 public class EthereumWalletController {
 
     @Autowired
-    private EthereumBalanceCalculationService ethereumBalanceCalculationService;
+    private EthereumBalanceService ethereumBalanceService;
 
     @GetMapping("/balance")
     public ResponseEntity<UserWallet> getEthWalletsBalance(@RequestParam(name = "wallets") String wallets){
-        var userWallets = ethereumBalanceCalculationService.callWalletsBalanceCalculation(wallets);
+        var userWallets = ethereumBalanceService.getMultiBalance(wallets);
         return new ResponseEntity<>(userWallets, HttpStatus.OK);
     }
 }
