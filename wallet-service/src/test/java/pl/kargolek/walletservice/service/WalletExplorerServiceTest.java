@@ -16,11 +16,11 @@ class WalletExplorerServiceTest {
     private WalletExplorerService underTest;
     private final String etherscanExplorerBaseUrl = "https://etherscan.io/address/";
     private final String polygonExplorerBaseUrl = "https://etherscan.io/address/";
-
+    private final String avalanchescanExplorerBaseUrl = "https://snowtrance.io/address/";
 
     @BeforeEach
     void setUp() {
-        underTest = new WalletExplorerService(etherscanExplorerBaseUrl, polygonExplorerBaseUrl);
+        underTest = new WalletExplorerService(etherscanExplorerBaseUrl, polygonExplorerBaseUrl, avalanchescanExplorerBaseUrl);
     }
 
     @Test
@@ -40,6 +40,16 @@ class WalletExplorerServiceTest {
 
         assertThat(expected).isEqualTo(polygonExplorerBaseUrl + walletAddress);
     }
+
+    @Test
+    void whenWalletAddress_thenReturnWalletAvalanchescanExplorerHref() {
+        var walletAddress = "0x0";
+
+        var expected = underTest.getWalletExplorerAddress(walletAddress, CryptoType.AVALANCHE);
+
+        assertThat(expected).isEqualTo(avalanchescanExplorerBaseUrl + walletAddress);
+    }
+
 
     @Test
     void whenCryptoTypeUnknown_thenReturnUnknown() {

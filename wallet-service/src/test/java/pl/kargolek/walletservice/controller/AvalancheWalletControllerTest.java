@@ -11,7 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import pl.kargolek.walletservice.exception.*;
-import pl.kargolek.walletservice.service.balance.polygon.PolygonBalanceService;
+import pl.kargolek.walletservice.service.balance.avalanche.AvalancheBalanceService;
 import pl.kargolek.walletservice.testutils.BaseParamTest;
 import pl.kargolek.walletservice.testutils.fixture.DataEthereumWallets;
 import pl.kargolek.walletservice.testutils.fixture.DataUserWallet;
@@ -22,25 +22,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Karol Kuta-Orlowicz
  */
-@WebMvcTest(PolygonWalletController.class)
+
+@WebMvcTest(AvalancheWalletController.class)
 @Tag("UnitTest")
-class PolygonWalletControllerTest extends BaseParamTest {
+class AvalancheWalletControllerTest extends BaseParamTest {
 
     @Autowired
     MockMvc mockMvc;
 
     @MockBean
-    private PolygonBalanceService polygonBalanceService;
+    private AvalancheBalanceService avalancheBalanceService;
 
-    private final String basePath = "/api/v1/wallet/matic";
+    private final String basePath = "/api/v1/wallet/avax";
 
     @Test
-    void whenMaticBalanceCalcReturnUserWallet_thenReturn200AndBody(DataUserWallet dataUserWallet, DataEthereumWallets dataEthereumWallets) throws Exception {
-        var userWallet = dataUserWallet.getUserWalletOnePolygon();
+    void whenEthBalanceCalcReturnUserWallet_thenReturn200AndBody(DataUserWallet dataUserWallet, DataEthereumWallets dataEthereumWallets) throws Exception {
+        var userWallet = dataUserWallet.getUserWalletOneAvalanche();
         var userBalance = userWallet.getBalance().get(0);
         var total = userWallet.getTotal();
 
-        when(polygonBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
+        when(avalancheBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
                 .thenReturn(userWallet);
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
@@ -64,9 +65,9 @@ class PolygonWalletControllerTest extends BaseParamTest {
     }
 
     @Test
-    void whenMaticBalanceCalcReturnExcInvalidWalletAddress_thenReturn400AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
-        when(polygonBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
-                .thenThrow(new InvalidAddressException("Polygon", dataEthereumWallets.WALLETS_1_VALID, "Invalid"));
+    void whenEthBalanceCalcReturnExcInvalidWalletAddress_thenReturn400AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
+        when(avalancheBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
+                .thenThrow(new InvalidAddressException("Avalanche", dataEthereumWallets.WALLETS_1_VALID, "Invalid"));
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
                         .param("wallets", dataEthereumWallets.WALLETS_1_VALID))
@@ -74,12 +75,12 @@ class PolygonWalletControllerTest extends BaseParamTest {
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
                 .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.message")
-                        .value("Address is invalid for crypto Polygon and address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e, message: Invalid"));
+                        .value("Address is invalid for crypto Avalanche and address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e, message: Invalid"));
     }
 
     @Test
-    void whenMaticBalanceCalcReturnExcNoSuchCryptoPrice_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
-        when(polygonBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
+    void whenEthBalanceCalcReturnExcNoSuchCryptoPrice_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
+        when(avalancheBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
                 .thenThrow(new NoSuchCryptoPriceDataException());
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
@@ -91,8 +92,8 @@ class PolygonWalletControllerTest extends BaseParamTest {
     }
 
     @Test
-    void whenMaticBalanceCalcReturnResponseFieldExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
-        when(polygonBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
+    void whenEthBalanceCalcReturnResponseFieldExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
+        when(avalancheBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
                 .thenThrow(new ResponseFieldException("status", "1"));
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
@@ -104,8 +105,8 @@ class PolygonWalletControllerTest extends BaseParamTest {
     }
 
     @Test
-    void whenMaticBalanceCalcWebClientStatusExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
-        when(polygonBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
+    void whenEthBalanceCalcWebClientStatusExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
+        when(avalancheBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
                 .thenThrow(new WebClientStatusException(HttpStatus.INTERNAL_SERVER_ERROR));
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
@@ -118,8 +119,8 @@ class PolygonWalletControllerTest extends BaseParamTest {
     }
 
     @Test
-    void whenMaticBalanceCalcExternalServiceCallExceptionExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
-        when(polygonBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
+    void whenEthBalanceCalcExternalServiceCallExceptionExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
+        when(avalancheBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
                 .thenThrow(new ExternalServiceCallException("Call external service reached out max retries value"));
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
@@ -132,9 +133,9 @@ class PolygonWalletControllerTest extends BaseParamTest {
     }
 
     @Test
-    void whenMaticBalanceCalcNoSuchCryptocurrencyExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
-        when(polygonBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
-                .thenThrow(new NoSuchCryptocurrencyException("Unable to make conversion for cryptocurrency for given crypto type: Polygon"));
+    void whenEthBalanceCalcNoSuchCryptocurrencyExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
+        when(avalancheBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
+                .thenThrow(new NoSuchCryptocurrencyException("Unable to make conversion for cryptocurrency for given crypto type: Avalanche"));
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
                         .param("wallets", dataEthereumWallets.WALLETS_1_VALID))
@@ -142,12 +143,12 @@ class PolygonWalletControllerTest extends BaseParamTest {
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
                 .andExpect(jsonPath("$.status").value("INTERNAL_SERVER_ERROR"))
                 .andExpect(jsonPath("$.message")
-                        .value("Unable to make conversion for cryptocurrency for given crypto type: Polygon"));
+                        .value("Unable to make conversion for cryptocurrency for given crypto type: Avalanche"));
     }
 
     @Test
-    void whenMaticBalanceCalcNoSuchWalletDataExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
-        when(polygonBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
+    void whenEthBalanceCalcNoSuchWalletDataExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
+        when(avalancheBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
                 .thenThrow(new NoSuchWalletDataException());
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")

@@ -12,8 +12,16 @@ import java.util.List;
  */
 public class DataUserWallet {
 
+    private static final String ETHEREUM = "Ethereum";
+    private static final String ETH = "ETH";
+    private static final String POLYGON = "Polygon";
+    private static final String MATIC = "MATIC";
+    private static final String AVALANCHE = "Avalanche";
+    private static final String AVAX = "AVAX";
     private final DataEthereumWallets wallets = new DataEthereumWallets();
-    private final String explorerAddress = "https://etherscan.io/address/";
+    private final String explorerAddressEth = "https://etherscan.io/address/";
+    private final String explorerAddressMatic = "https://etherscan.io/address/";
+    private final String explorerAddressAvax = "https://etherscan.io/address/";
 
     public UserBalance getUserBalance1(){
         return new UserBalance()
@@ -26,7 +34,7 @@ public class DataUserWallet {
                 .setBalance30d(new BigDecimal("2600.62"))
                 .setBalance60d(new BigDecimal("2700.72"))
                 .setBalance90d(new BigDecimal("2800.82"))
-                .setWalletExplorer(explorerAddress + wallets.WALLETS_1_VALID);
+                .setWalletExplorer(explorerAddressEth + wallets.WALLETS_1_VALID);
     }
 
     public UserBalance getUserBalance2() {
@@ -40,7 +48,7 @@ public class DataUserWallet {
                 .setBalance30d(new BigDecimal("4800.82"))
                 .setBalance60d(new BigDecimal("4900.92"))
                 .setBalance90d(new BigDecimal("5000.02"))
-                .setWalletExplorer(explorerAddress + wallets.WALLETS_ANOTHER_1_VALID);
+                .setWalletExplorer(explorerAddressEth + wallets.WALLETS_ANOTHER_1_VALID);
     }
 
     public UserBalance getUserBalance1Zero() {
@@ -54,7 +62,7 @@ public class DataUserWallet {
                 .setBalance30d(BigDecimal.ZERO)
                 .setBalance60d(BigDecimal.ZERO)
                 .setBalance90d(BigDecimal.ZERO)
-                .setWalletExplorer(explorerAddress + wallets.WALLETS_1_VALID);
+                .setWalletExplorer(explorerAddressEth + wallets.WALLETS_1_VALID);
     }
 
     public UserBalance getUserBalance2Zero() {
@@ -105,27 +113,69 @@ public class DataUserWallet {
                 .setTotalBalance(getUserBalance1().getBalance().add(getUserBalance2().getBalance()));
     }
 
-
-    public UserWallet getUserWalletOne() {
+    public UserWallet getUserWalletOneEth() {
         return new UserWallet()
-                .setName("Ethereum")
-                .setSymbol("ETH")
+                .setName(ETHEREUM)
+                .setSymbol(ETH)
                 .setBalance(List.of(getUserBalance1(), getUserBalance2()))
                 .setTotal(getUserTotalBalance1And2());
     }
 
-    public UserWallet getUserWalletBalanceZero() {
+    public UserWallet getUserWalletBalanceZeroEth() {
         return new UserWallet()
-                .setName("Ethereum")
-                .setSymbol("ETH")
+                .setName(ETHEREUM)
+                .setSymbol(ETH)
                 .setBalance(List.of(getUserBalance1Zero(), getUserBalance2Zero()));
     }
 
-    public UserWallet getUserWalletBalanceNull() {
+    public UserWallet getUserWalletBalanceNullEth() {
         return new UserWallet()
-                .setName("Ethereum")
-                .setSymbol("ETH")
+                .setName(ETHEREUM)
+                .setSymbol(ETH)
                 .setBalance(List.of(getUserBalance1Null(), getUserBalance2Null()));
     }
 
+    public UserWallet getUserWalletOnePolygon() {
+        return new UserWallet()
+                .setName(POLYGON)
+                .setSymbol(MATIC)
+                .setBalance(List.of(getUserBalance1(), getUserBalance2()))
+                .setTotal(getUserTotalBalance1And2());
+    }
+
+    public UserWallet getUserWalletBalanceZeroPolygon() {
+        return new UserWallet()
+                .setName(POLYGON)
+                .setSymbol(MATIC)
+                .setBalance(List.of(getUserBalance1Zero(), getUserBalance2Zero()));
+    }
+
+    public UserWallet getUserWalletBalanceNullPolygon() {
+        return new UserWallet()
+                .setName(POLYGON)
+                .setSymbol(MATIC)
+                .setBalance(List.of(getUserBalance1Null(), getUserBalance2Null()));
+    }
+
+    public UserWallet getUserWalletOneAvalanche() {
+        return new UserWallet()
+                .setName(AVALANCHE)
+                .setSymbol(AVAX)
+                .setBalance(List.of(getUserBalance1(), getUserBalance2()))
+                .setTotal(getUserTotalBalance1And2());
+    }
+
+    public UserWallet getUserWalletBalanceZeroAvalanche() {
+        return new UserWallet()
+                .setName(AVALANCHE)
+                .setSymbol(AVAX)
+                .setBalance(List.of(getUserBalance1Zero(), getUserBalance2Zero()));
+    }
+
+    public UserWallet getUserWalletBalanceNullAvalanche() {
+        return new UserWallet()
+                .setName(AVALANCHE)
+                .setSymbol(AVAX)
+                .setBalance(List.of(getUserBalance1Null(), getUserBalance2Null()));
+    }
 }

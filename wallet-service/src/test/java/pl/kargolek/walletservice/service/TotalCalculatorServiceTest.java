@@ -26,7 +26,7 @@ class TotalCalculatorServiceTest extends BaseParamTest {
 
     @Test
     void whenQuantityPositiveBalancePositive_thenReturnCorrectValueCount(DataUserWallet data){
-        var userWallet = data.getUserWalletOne();
+        var userWallet = data.getUserWalletOneEth();
 
         var expected = underTest.calcQuantityBalance(userWallet);
 
@@ -41,7 +41,7 @@ class TotalCalculatorServiceTest extends BaseParamTest {
 
     @Test
     void whenQuantityZeroBalanceZero_thenReturnCorrectValueZero(DataUserWallet data){
-        var userWallet = data.getUserWalletBalanceZero();
+        var userWallet = data.getUserWalletBalanceZeroEth();
 
         var expected = underTest.calcQuantityBalance(userWallet);
 
@@ -56,7 +56,7 @@ class TotalCalculatorServiceTest extends BaseParamTest {
 
     @Test
     void whenQuantityNullBalanceNull_thenReturnCorrectValueZero(DataUserWallet data){
-        var userWallet = data.getUserWalletBalanceNull();
+        var userWallet = data.getUserWalletBalanceNullEth();
 
         var expected = underTest.calcQuantityBalance(userWallet);
 

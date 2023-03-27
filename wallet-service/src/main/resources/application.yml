@@ -32,15 +32,14 @@ api:
   polygonscan:
     baseUrl: "https://api.polygonscan.com/api"
     apiKey: ${POLYGON_API_KEY}
-    fixedDelayMillis: 1200
-    maxRetryAttempts: 10
-    validateBodyFieldName: status
-    validationValue: 1
     maxWalletsPerRequest: 20
-    maxWalletsCheck: 120
-
+  snowtrace:
+    baseUrl: "https://api.snowtrace.io"
+    apiKey: ${AVALANCHE_API_KEY}
+    maxWalletsPerRequest: 20
 
 explorer:
   wallet:
     etherscan: "https://etherscan.io/address/"
     polygonscan: "https://polygonscan.com/address/"
+    snowtrace: "https://snowtrace.io/address/"

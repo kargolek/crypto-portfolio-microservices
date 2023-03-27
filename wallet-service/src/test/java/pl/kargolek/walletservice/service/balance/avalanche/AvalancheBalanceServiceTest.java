@@ -1,4 +1,4 @@
-package pl.kargolek.walletservice.service.balance.ethereum;
+package pl.kargolek.walletservice.service.balance.avalanche;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import okhttp3.mockwebserver.MockWebServer;
@@ -33,15 +33,14 @@ import static pl.kargolek.walletservice.testutils.extension.ExtMockEtherscanServ
 /**
  * @author Karol Kuta-Orlowicz
  */
-
 @ExtendWith(ExtMockEtherscanServer.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = {InitializerCryptoPriceMockWebServer.class}, classes = {ConfigCryptoPriceMockServer.class})
 @Tag("IntegrationTest")
-public class EthereumBalanceServiceTest extends BaseParamTest {
+class AvalancheBalanceServiceTest extends BaseParamTest {
 
     @Autowired
-    private EthereumBalanceService underTest;
+    private AvalancheBalanceService underTest;
 
     @Autowired
     private MockWebServer cryptoPriceMockWebServer;
@@ -49,11 +48,12 @@ public class EthereumBalanceServiceTest extends BaseParamTest {
     private static final String WALLET_ADDRESS_1 = "0x8111111111111111111111111111111111111111";
     private static final String WALLET_ADDRESS_2 = "0x8222222222222222222222222222222222222222";
 
-    private static final String WALLET_EXPLORER_ADDRESS = "https://etherscan.io/address/";
+    private static final String WALLET_EXPLORER_ADDRESS = "https://snowtrace.io/address/";
+
 
     @DynamicPropertySource
     public static void registerProperty(DynamicPropertyRegistry registry) {
-        registry.add("api.etherscan.baseUrl", () -> etherscanMockWebServer.url("/").toString());
+        registry.add("api.snowtrace.baseUrl", () -> etherscanMockWebServer.url("/").toString());
         registry.add("api.etherscan.fixedDelayMillis", () -> "1");
     }
 
@@ -68,7 +68,7 @@ public class EthereumBalanceServiceTest extends BaseParamTest {
 
         assertThat(expected)
                 .extracting(UserWallet::getName, UserWallet::getSymbol)
-                .contains("Ethereum", "ETH");
+                .contains("Avalanche", "AVAX");
 
         assertThat(expected.getBalance())
                 .extracting(
@@ -133,7 +133,7 @@ public class EthereumBalanceServiceTest extends BaseParamTest {
 
         assertThatThrownBy(() -> underTest.getMultiBalance(WALLET_ADDRESS_1 + "," + WALLET_ADDRESS_2))
                 .isInstanceOf(NoSuchCryptoPriceDataException.class)
-                .hasMessageContaining("Unable to get price for crypto: Ethereum");
+                .hasMessageContaining("Unable to get price for crypto: Avalanche");
     }
 
     @Test

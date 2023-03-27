@@ -20,11 +20,14 @@ public class WalletExplorerService {
     @Value("${explorer.wallet.polygonscan}")
     private String polygonscanWalletExplorerURL;
 
+    @Value("${explorer.wallet.snowtrace}")
+    private String avalanchescanWalletExplorerURL;
 
     public String getWalletExplorerAddress(String walletAddress, CryptoType cryptoType){
         return switch (cryptoType) {
             case ETHEREUM -> etherscanWalletExplorerURL.concat(walletAddress);
             case POLYGON -> polygonscanWalletExplorerURL.concat(walletAddress);
+            case AVALANCHE -> avalanchescanWalletExplorerURL.concat(walletAddress);
             default -> "unknown";
         };
     }

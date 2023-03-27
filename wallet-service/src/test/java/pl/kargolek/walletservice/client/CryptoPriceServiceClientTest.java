@@ -46,6 +46,7 @@ class CryptoPriceServiceClientTest extends BaseParamTest {
         var cryptocurrencyBTC = dataCryptocurrency.getCryptocurrencyBTC();
         var cryptocurrencyETH = dataCryptocurrency.getCryptocurrencyETH();
         var cryptocurrencyMATIC = dataCryptocurrency.getCryptocurrencyMatic();
+        var cryptocurrencyAVAX = dataCryptocurrency.getCryptocurrencyAvax();
 
         assertThat(expected)
                 .hasSizeGreaterThan(0)
@@ -76,12 +77,20 @@ class CryptoPriceServiceClientTest extends BaseParamTest {
                                 cryptocurrencyMATIC.getSymbol(),
                                 cryptocurrencyMATIC.getCoinMarketId(),
                                 cryptocurrencyMATIC.getLastUpdate()
+                        ),
+                        tuple(
+                                cryptocurrencyAVAX.getId(),
+                                cryptocurrencyAVAX.getName(),
+                                cryptocurrencyAVAX.getSymbol(),
+                                cryptocurrencyAVAX.getCoinMarketId(),
+                                cryptocurrencyAVAX.getLastUpdate()
                         )
                 );
 
         var priceBTC = cryptocurrencyBTC.getPrice();
         var priceETH = cryptocurrencyETH.getPrice();
         var priceMATIC = cryptocurrencyMATIC.getPrice();
+        var priceAVAX = cryptocurrencyAVAX.getPrice();
 
         assertThat(expected).extracting(
                 TokenDTO::getPrice
@@ -128,6 +137,17 @@ class CryptoPriceServiceClientTest extends BaseParamTest {
                         priceMATIC.getPercentChange60d(),
                         priceMATIC.getPercentChange90d(),
                         priceMATIC.getLastUpdate()
+                ),
+                tuple(
+                        priceAVAX.getId(),
+                        priceAVAX.getPriceCurrent(),
+                        priceAVAX.getPercentChange1h(),
+                        priceAVAX.getPercentChange24h(),
+                        priceAVAX.getPercentChange7d(),
+                        priceAVAX.getPercentChange30d(),
+                        priceAVAX.getPercentChange60d(),
+                        priceAVAX.getPercentChange90d(),
+                        priceAVAX.getLastUpdate()
                 )
         );
     }
@@ -155,6 +175,7 @@ class CryptoPriceServiceClientTest extends BaseParamTest {
         var cryptocurrencyBTC = dataCryptocurrency.getCryptocurrencyBTC();
         var cryptocurrencyETH = dataCryptocurrency.getCryptocurrencyETH();
         var cryptocurrencyMATIC = dataCryptocurrency.getCryptocurrencyMatic();
+        var cryptocurrencyAVAX = dataCryptocurrency.getCryptocurrencyAvax();
 
         assertThat(expected)
                 .hasSizeGreaterThan(0)
@@ -185,12 +206,20 @@ class CryptoPriceServiceClientTest extends BaseParamTest {
                                 cryptocurrencyMATIC.getSymbol(),
                                 cryptocurrencyMATIC.getCoinMarketId(),
                                 cryptocurrencyMATIC.getLastUpdate()
+                        ),
+                        tuple(
+                                cryptocurrencyAVAX.getId(),
+                                cryptocurrencyAVAX.getName(),
+                                cryptocurrencyAVAX.getSymbol(),
+                                cryptocurrencyAVAX.getCoinMarketId(),
+                                cryptocurrencyAVAX.getLastUpdate()
                         )
                 );
 
         var priceBTC = cryptocurrencyBTC.getPrice();
         var priceETH = cryptocurrencyETH.getPrice();
         var priceMATIC = cryptocurrencyMATIC.getPrice();
+        var priceAVAX = cryptocurrencyAVAX.getPrice();
 
         assertThat(expected).extracting(
                 TokenDTO::getPrice
@@ -237,6 +266,17 @@ class CryptoPriceServiceClientTest extends BaseParamTest {
                         priceMATIC.getPercentChange60d(),
                         priceMATIC.getPercentChange90d(),
                         priceMATIC.getLastUpdate()
+                ),
+                tuple(
+                        priceAVAX.getId(),
+                        priceAVAX.getPriceCurrent(),
+                        priceAVAX.getPercentChange1h(),
+                        priceAVAX.getPercentChange24h(),
+                        priceAVAX.getPercentChange7d(),
+                        priceAVAX.getPercentChange30d(),
+                        priceAVAX.getPercentChange60d(),
+                        priceAVAX.getPercentChange90d(),
+                        priceAVAX.getLastUpdate()
                 )
         );
     }

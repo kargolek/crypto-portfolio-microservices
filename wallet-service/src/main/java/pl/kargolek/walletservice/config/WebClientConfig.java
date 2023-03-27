@@ -30,6 +30,12 @@ public class WebClientConfig {
     @Value("${api.polygonscan.apiKey}")
     String polygonscanApiKey;
 
+    @Value("${api.snowtrace.baseUrl}")
+    private String avalancheURL;
+
+    @Value("${api.snowtrace.apiKey}")
+    String avalancheApiKey;
+
     @Value("${api.etherscan.maxRetryAttempts}")
     private String maxRetryAttempts;
 
@@ -55,6 +61,14 @@ public class WebClientConfig {
         return WebClient.builder()
                 .baseUrl(polygonURL)
                 .defaultUriVariables(Map.of("apiKey", this.polygonscanApiKey))
+                .build();
+    }
+
+    @Bean("avalanchescanWebClient")
+    public WebClient avalancheWebClient() {
+        return WebClient.builder()
+                .baseUrl(avalancheURL)
+                .defaultUriVariables(Map.of("apiKey", this.avalancheApiKey))
                 .build();
     }
 

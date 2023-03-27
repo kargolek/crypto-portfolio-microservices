@@ -7,6 +7,7 @@ public enum CryptoType {
 
     ETHEREUM("Ethereum", "ETH"),
     POLYGON("Polygon", "MATIC"),
+    AVALANCHE("Avalanche", "AVAX"),
     UNKNOWN("Unknown", "UNKNOWN");
 
     CryptoType(String name, String symbol) {
