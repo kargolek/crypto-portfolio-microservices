@@ -27,6 +27,7 @@ import { CryptoIconComponent } from './shared/component/crypto-icon-text/crypto-
 import { EthereumBalanceComponent } from './balance/component/ethereum-balance/ethereum-balance.component';
 import { PolygonBalanceComponent } from './balance/component/polygon-balance/polygon-balance.component';
 import { AbstractBalanceComponent } from './balance/component/abstract-balance/abstract-balance.component';
+import { AvalancheBalanceComponent } from './balance/component/avalanche-balance/avalanche-balance.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AbstractBalanceComponent } from './balance/component/abstract-balance/a
     CryptoIconComponent,
     EthereumBalanceComponent,
     PolygonBalanceComponent,
-    AbstractBalanceComponent
+    AbstractBalanceComponent,
+    AvalancheBalanceComponent
   ],
   imports: [
     BrowserModule,

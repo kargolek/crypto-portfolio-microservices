@@ -13,7 +13,7 @@ export class AbstractBalanceComponent {
   public dataSource$: Observable<UserBalance[]>;
   public rows: UserBalance[];
   amountData: any;
-  showDetails = 0;;
+  showDetails = 0;
 
   url: string = this.balanceService.getEthereumWalletBalancesURL
 

@@ -18,6 +18,7 @@ export class BalanceService {
   
   public getEthereumWalletBalancesURL = apiGatewayURL + '/api/v1/wallet/eth/balance?wallets=';
   public getPolygonWalletBalancesURL = apiGatewayURL + '/api/v1/wallet/matic/balance?wallets=';
+  public getAvalancheWalletBalancesURL = apiGatewayURL + '/api/v1/wallet/avax/balance?wallets=';
   
   constructor(
     private http: HttpClient,

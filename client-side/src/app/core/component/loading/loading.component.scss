@@ -1,5 +1,12 @@
 @import '../../../../styles.scss';
 
+
+.overlay {
+    position: absolute;
+    z-index: 1002;
+    width: 100%;
+}
+
 .animate {
     display: grid;
     justify-content: center;

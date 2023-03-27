@@ -34,7 +34,7 @@ api:
     apiKey: ${POLYGON_API_KEY}
     maxWalletsPerRequest: 20
   snowtrace:
-    baseUrl: "https://api.snowtrace.io"
+    baseUrl: "https://api.snowtrace.io/api"
     apiKey: ${AVALANCHE_API_KEY}
     maxWalletsPerRequest: 20
 
