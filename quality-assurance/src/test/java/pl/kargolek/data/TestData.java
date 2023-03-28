@@ -65,8 +65,8 @@ public class TestData {
             .build();
 
     private final Price avalanchePrice = Price.builder()
-            .id(2L)
-            .cryptocurrencyId(2L)
+            .id(3L)
+            .cryptocurrencyId(3L)
             .priceCurrent(new BigDecimal("1000.54321"))
             .percentChange1h(new BigDecimal("10.0"))
             .percentChange24h(new BigDecimal("10.0"))
