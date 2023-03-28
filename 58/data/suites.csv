@@ -1,0 +1,4 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"broken","Tue Mar 28 00:28:20 GMT 2023","Tue Mar 28 00:28:20 GMT 2023","1","","pl.kargolek.tests.WalletProviderErrorHandlerTest","","pl.kargolek.tests.WalletProviderErrorHandlerTest","","WalletProviderErrorHandlerTest",""
+"broken","Tue Mar 28 00:28:28 GMT 2023","Tue Mar 28 00:28:28 GMT 2023","0","","pl.kargolek.tests.InputWalletsUITests","","pl.kargolek.tests.InputWalletsUITests","","InputWalletsUITests",""
+"passed","Tue Mar 28 00:28:21 GMT 2023","Tue Mar 28 00:28:28 GMT 2023","7444","","pl.kargolek.tests.HomePageTest","","pl.kargolek.tests.HomePageTest","whenOpenAppBaseURL_thenRedirectToWalletPath","whenOpenAppBaseURL_thenRedirectToWalletPath(WebDriver, InitPages)","Opening main URL app runs routing to /wallet path"
