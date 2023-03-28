@@ -73,4 +73,9 @@ public class TestDataSql {
         this.insertPriceData(this.data.getPolygonPrice());
     }
 
+    public void insertAvalancheData(){
+        this.insertCryptocurrencyData(this.data.getAvalanche());
+        this.insertPriceData(this.data.getAvalanchePrice());
+    }
+
 }

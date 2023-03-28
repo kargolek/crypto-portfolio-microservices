@@ -38,6 +38,7 @@ public class WalletProviderErrorHandlerTest {
         testDataSql.deleteCryptocurrenciesData();
         testDataSql.insertEthereumData();
         testDataSql.insertPolygonData();
+        testDataSql.insertAvalancheData();
     }
 
     @BeforeEach

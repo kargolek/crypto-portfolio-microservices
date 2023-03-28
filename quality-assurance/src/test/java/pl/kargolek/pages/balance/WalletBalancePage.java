@@ -21,7 +21,7 @@ public class WalletBalancePage extends BasePage {
 
     @Step("Get total amounts container of ethereum token")
     public WebElement getEthBalanceAmountContainer(){
-        return this.waitForElementVisibility(ethAmountContainer, Duration.ofSeconds(20));
+        return this.waitForElementVisibility(ethAmountContainer, Duration.ofSeconds(10));
     }
 
 }

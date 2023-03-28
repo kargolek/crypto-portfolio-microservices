@@ -33,19 +33,19 @@ public class InputWalletPage extends BasePage {
 
     @Step("Type wallet addresses: {0}")
     public InputWalletPage inputWallets(String wallets){
-        this.waitForElementVisibility(inputWalletField, Duration.ofSeconds(20)).sendKeys(wallets);
+        this.waitForElementVisibility(inputWalletField, Duration.ofSeconds(15)).sendKeys(wallets);
         return this;
     }
 
     @Step("Clear text in input wallet field")
     public InputWalletPage inputWalletsClearText(){
-        this.waitForElementVisibility(inputWalletField, Duration.ofSeconds(20)).clear();
+        this.waitForElementVisibility(inputWalletField, Duration.ofSeconds(10)).clear();
         return this;
     }
 
     @Step("Click send key button")
     public WalletBalancePage sendWalletsButtonClick(){
-        this.waitForElementVisibility(sendWalletsButton, Duration.ofSeconds(20)).click();
+        this.waitForElementVisibility(sendWalletsButton, Duration.ofSeconds(10)).click();
         return new WalletBalancePage(driver);
     }
 

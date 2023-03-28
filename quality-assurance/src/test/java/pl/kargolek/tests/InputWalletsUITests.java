@@ -30,6 +30,7 @@ public class InputWalletsUITests {
         testDataSql.deleteCryptocurrenciesData();
         testDataSql.insertEthereumData();
         testDataSql.insertPolygonData();
+        testDataSql.insertAvalancheData();
     }
 
     @BeforeEach
