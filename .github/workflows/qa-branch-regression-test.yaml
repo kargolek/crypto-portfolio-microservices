@@ -94,4 +94,4 @@ jobs:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
-          DESTINATION_DIR: ./{{ github.head_ref }}
+          keepFiles: true
