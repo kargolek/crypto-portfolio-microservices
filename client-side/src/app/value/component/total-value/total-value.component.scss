@@ -1,0 +1,25 @@
+@import '../../../../styles.scss';
+
+.total-value-container {
+
+    background-color: $base-color;
+    border: 1px solid $border-color;
+    border-radius: 15px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+    .total-value-data {
+        color: $text-value-base-color;
+        font-weight: bold;
+        margin-left: 2rem;
+
+        .total-value-label {
+            color: $text-color;
+            font-weight: normal;
+            font-size: 0.7rem;
+        }
+    }
+
+}
