@@ -8,7 +8,10 @@ env:
   POLYGON_API_KEY: ${{ secrets.POLYGON_API_KEY }}
   AVALANCHE_API_KEY: ${{ secrets.AVALANCHE_API_KEY }}
 
-on: [push]
+on:
+  push:
+    branches:
+      - 'main'
 
 jobs:
   qa-test-main:

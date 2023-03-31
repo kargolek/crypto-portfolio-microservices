@@ -11,9 +11,9 @@ env:
 on:
   push:
     branches:
-      - 'main'
+      - '!main'
     if: >
-      github.event_name == 'push'
+      github.event_name == 'push' && github.event.pull_request == null 
 
 jobs:
   qa-tests-regression:
