@@ -1,4 +1,0 @@
-"Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
-"Wallet provider","Error handler","","0","1","0","0","0"
-"Wallet provider","Input wallet UI","","0","1","0","0","0"
-"Home page","Routing app","As normal user, when I open base app URL, then app redirect to URL path '/wallet'","0","0","1","0","0"
