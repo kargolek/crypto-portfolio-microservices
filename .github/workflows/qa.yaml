@@ -9,9 +9,9 @@ env:
   AVALANCHE_API_KEY: ${{ secrets.AVALANCHE_API_KEY }}
 
 on:
-  push:
+  pull_request:
     branches:
-      - 'main'
+      - main
 
 jobs:
   qa-test-main:
