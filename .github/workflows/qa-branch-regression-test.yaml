@@ -96,3 +96,4 @@ jobs:
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
           keepFiles: true
+          destination_dir: ./branch_name
