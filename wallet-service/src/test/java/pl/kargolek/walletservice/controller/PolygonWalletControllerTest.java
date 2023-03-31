@@ -36,7 +36,7 @@ class PolygonWalletControllerTest extends BaseParamTest {
 
     @Test
     void whenMaticBalanceCalcReturnUserWallet_thenReturn200AndBody(DataUserWallet dataUserWallet, DataEthereumWallets dataEthereumWallets) throws Exception {
-        var userWallet = dataUserWallet.getUserWalletOne();
+        var userWallet = dataUserWallet.getUserWalletOnePolygon();
         var userBalance = userWallet.getBalance().get(0);
         var total = userWallet.getTotal();
 
@@ -66,7 +66,7 @@ class PolygonWalletControllerTest extends BaseParamTest {
     @Test
     void whenMaticBalanceCalcReturnExcInvalidWalletAddress_thenReturn400AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
         when(polygonBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
-                .thenThrow(new InvalidAddressException("Ethereum", dataEthereumWallets.WALLETS_1_VALID, "Invalid"));
+                .thenThrow(new InvalidAddressException("Polygon", dataEthereumWallets.WALLETS_1_VALID, "Invalid"));
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
                         .param("wallets", dataEthereumWallets.WALLETS_1_VALID))
@@ -74,7 +74,7 @@ class PolygonWalletControllerTest extends BaseParamTest {
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
                 .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.message")
-                        .value("Address is invalid for crypto Ethereum and address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e, message: Invalid"));
+                        .value("Address is invalid for crypto Polygon and address 0x742d35Cc6634C0532925a3b844Bc454e4438f44e, message: Invalid"));
     }
 
     @Test
@@ -134,7 +134,7 @@ class PolygonWalletControllerTest extends BaseParamTest {
     @Test
     void whenMaticBalanceCalcNoSuchCryptocurrencyExc_thenReturn500AndBody(DataEthereumWallets dataEthereumWallets) throws Exception {
         when(polygonBalanceService.getMultiBalance(dataEthereumWallets.WALLETS_1_VALID))
-                .thenThrow(new NoSuchCryptocurrencyException("Unable to make conversion for cryptocurrency for given crypto type: Ethereum"));
+                .thenThrow(new NoSuchCryptocurrencyException("Unable to make conversion for cryptocurrency for given crypto type: Polygon"));
 
         mockMvc.perform(MockMvcRequestBuilders.get(basePath + "/balance")
                         .param("wallets", dataEthereumWallets.WALLETS_1_VALID))
@@ -142,7 +142,7 @@ class PolygonWalletControllerTest extends BaseParamTest {
                 .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON.toString()))
                 .andExpect(jsonPath("$.status").value("INTERNAL_SERVER_ERROR"))
                 .andExpect(jsonPath("$.message")
-                        .value("Unable to make conversion for cryptocurrency for given crypto type: Ethereum"));
+                        .value("Unable to make conversion for cryptocurrency for given crypto type: Polygon"));
     }
 
     @Test

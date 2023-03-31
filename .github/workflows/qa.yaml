@@ -6,6 +6,7 @@ env:
   MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
   ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
   POLYGON_API_KEY: ${{ secrets.POLYGON_API_KEY }}
+  AVALANCHE_API_KEY: ${{ secrets.AVALANCHE_API_KEY }}
 
 on: [push]
 

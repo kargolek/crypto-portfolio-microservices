@@ -36,7 +36,7 @@ class EthereumWalletControllerTest extends BaseParamTest {
 
     @Test
     void whenEthBalanceCalcReturnUserWallet_thenReturn200AndBody(DataUserWallet dataUserWallet, DataEthereumWallets dataEthereumWallets) throws Exception {
-        var userWallet = dataUserWallet.getUserWalletOne();
+        var userWallet = dataUserWallet.getUserWalletOneEth();
         var userBalance = userWallet.getBalance().get(0);
         var total = userWallet.getTotal();
 

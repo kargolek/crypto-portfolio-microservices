@@ -68,9 +68,19 @@ public class TestDataSql {
         this.insertPriceData(this.data.getEthereumPrice());
     }
 
+    public void insertEthereumDataPricePastNegative(){
+        this.insertCryptocurrencyData(this.data.getEthereum());
+        this.insertPriceData(this.data.getEthereumPricePastNegative());
+    }
+
     public void insertPolygonData(){
         this.insertCryptocurrencyData(this.data.getPolygon());
         this.insertPriceData(this.data.getPolygonPrice());
+    }
+
+    public void insertAvalancheData(){
+        this.insertCryptocurrencyData(this.data.getAvalanche());
+        this.insertPriceData(this.data.getAvalanchePrice());
     }
 
 }

@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class CryptoUnitConvert {
 
     public BigDecimal convert(String value, CryptoType cryptoType) {
-        if (cryptoType == CryptoType.ETHEREUM || cryptoType == CryptoType.POLYGON) {
+        if (cryptoType == CryptoType.ETHEREUM || cryptoType == CryptoType.POLYGON || cryptoType == CryptoType.AVALANCHE) {
             return convertWeiToEther(value);
         }
         throw new NoSuchCryptocurrencyException("Unable to make conversion for cryptocurrency for given crypto type: "

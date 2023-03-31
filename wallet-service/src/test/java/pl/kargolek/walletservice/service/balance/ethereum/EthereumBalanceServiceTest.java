@@ -38,7 +38,7 @@ import static pl.kargolek.walletservice.testutils.extension.ExtMockEtherscanServ
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = {InitializerCryptoPriceMockWebServer.class}, classes = {ConfigCryptoPriceMockServer.class})
 @Tag("IntegrationTest")
-class EthereumBalanceServiceTest extends BaseParamTest {
+public class EthereumBalanceServiceTest extends BaseParamTest {
 
     @Autowired
     private EthereumBalanceService underTest;

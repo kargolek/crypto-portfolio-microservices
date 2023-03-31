@@ -14,9 +14,4 @@ This test framework is built with Selenium, JUnit5, and Allure. It is designed t
 - Detailed test reports with Allure
 - Easy test configuration using annotation
 
-## Usage
-
-To run the tests on local, navigate to the project root directory and run the following command:
-
-
-
+... to be continued
