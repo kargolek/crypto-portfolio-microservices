@@ -7,6 +7,7 @@ env:
   ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
   POLYGON_API_KEY: ${{ secrets.POLYGON_API_KEY }}
   AVALANCHE_API_KEY: ${{ secrets.AVALANCHE_API_KEY }}
+  BRANCH_NAME: ${{ github.ref_name }}
 
 on: [push]
 
@@ -82,7 +83,7 @@ jobs:
         id: allure-report
         with:
           allure_results: quality-assurance/target/allure-results
-          gh_pages: gh-pages
+          gh_pages: gh-pages/branch_name
           allure_report: allure-report
           allure_history: allure-history
           keep_reports: 10
