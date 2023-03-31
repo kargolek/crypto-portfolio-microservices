@@ -34,6 +34,7 @@ services:
       - ./client-side/dist/client-side:/usr/share/nginx/html:ro
     networks:
       - test-env-network
+    restart: always
 
   discovery-server:
     container_name: discovery-server

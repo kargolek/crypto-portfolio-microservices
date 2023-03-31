@@ -1,6 +1,7 @@
 package pl.kargolek.pages;
 
 import org.openqa.selenium.WebDriver;
+import pl.kargolek.pages.balance.WalletBalancePage;
 import pl.kargolek.pages.landpage.HomePage;
 import pl.kargolek.pages.navbar.NavigationBarPage;
 import pl.kargolek.pages.pricebanner.PriceBannerPage;
@@ -36,5 +37,9 @@ public class InitPages {
 
     public PriceBannerPage getPriceBannerPage() {
         return new PriceBannerPage(this.driver);
+    }
+
+    public WalletBalancePage getWalletBalancePage() {
+        return new WalletBalancePage(this.driver);
     }
 }

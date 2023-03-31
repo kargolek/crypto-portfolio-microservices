@@ -1,6 +1,7 @@
 package pl.kargolek.tests;
 
 import io.qameta.allure.*;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -8,8 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import pl.kargolek.data.script.TestDataSql;
 import pl.kargolek.extension.BaseTestConfig;
+import pl.kargolek.extension.assertion.SoftAssertion;
 import pl.kargolek.pages.InitPages;
 import pl.kargolek.util.TestProperty;
+import pl.kargolek.util.WebDriverUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Epic("Wallet provider")
 @Feature("Input wallet UI")
 @BaseTestConfig
+@SoftAssertion
 public class InputWalletsUITests {
 
     private String appBaseURL;
@@ -55,13 +59,16 @@ public class InputWalletsUITests {
     @Severity(SeverityLevel.NORMAL)
     @Story("As a normal user, I want to see description which tokens are handle")
     @Description("Handled tokens names should be provided below input wallet addresses field")
-    void whenOpenWalletPage_thenTokenHandleDescriptionShouldDisplayed() {
+    void whenOpenWalletPage_thenTokenHandleDescriptionShouldDisplayed(SoftAssertions softAssertions) {
         var tokenDescriptionText = this.pages.getHomePage()
                 .open(this.appBaseURL)
                 .getTokenDescriptionText();
 
-        assertThat(tokenDescriptionText).containsOnlyOnce("Ethereum");
-        assertThat(tokenDescriptionText).containsOnlyOnce("Polygon");
+        softAssertions.assertThat(tokenDescriptionText)
+                .containsOnlyOnce("Ethereum");
+        softAssertions.assertThat(tokenDescriptionText)
+                .containsOnlyOnce("Polygon");
+        softAssertions.assertAll();
     }
 
     @Test
@@ -113,7 +120,7 @@ public class InputWalletsUITests {
     @Story("As a normal user, when I type ETH wallet address refresh page or back from other page " +
             "then wallet address should be maintained in the input wallets")
     @Description("Wallet address should be saved in browser session storage")
-    void whenSendWalletAddress_thenShouldBeSavedInTheSessionStorage(WebDriver driver) {
+    void whenSendWalletAddress_thenShouldBeSavedInTheSessionStorage(WebDriver driver, SoftAssertions softAssertions) {
         var inputWalletPage = this.pages.getInputWalletPage();
         var walletAddress = "0x6cc28D37607024098F4104228E1388953875309B";
 
@@ -124,14 +131,17 @@ public class InputWalletsUITests {
                 .enterKeyPress()
                 .getEthBalanceAmountContainer();
 
-        driver.navigate().back();
+        WebDriverUtil.navigateBack(driver);
         var inputTextAfterBack = inputWalletPage.getInputWalletText();
 
-        driver.navigate().refresh();
+        WebDriverUtil.refreshPage(driver);
         var inputTextAfterRefresh = inputWalletPage.getInputWalletText();
 
-        assertThat(inputTextAfterBack).isEqualTo(walletAddress);
-        assertThat(inputTextAfterRefresh).isEqualTo(walletAddress);
+        softAssertions.assertThat(inputTextAfterBack)
+                .isEqualTo(walletAddress);
+        softAssertions.assertThat(inputTextAfterRefresh)
+                .isEqualTo(walletAddress);
+        softAssertions.assertAll();
     }
 
     @Tag("NavBar")

@@ -3,6 +3,7 @@ package pl.kargolek.util;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.devtools.DevTools;
+import org.openqa.selenium.devtools.DevToolsException;
 import org.openqa.selenium.devtools.HasDevTools;
 import org.openqa.selenium.devtools.v110.network.Network;
 import org.openqa.selenium.remote.Augmenter;
@@ -57,8 +58,8 @@ public class DevToolsDriver {
                                         responseBody.substring(0, endIndex)
                                 )
                         );
-                    } catch (InterruptedException e) {
-                        log.error("Error in parse dev tools request data");
+                    } catch (InterruptedException | DevToolsException e) {
+                        log.info("Error in parse dev tools request data");
                     }
                 });
         return this;

@@ -1,14 +1,17 @@
 package pl.kargolek.tests;
 
 import io.qameta.allure.*;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import pl.kargolek.data.TestData;
 import pl.kargolek.data.script.TestDataSql;
 import pl.kargolek.extension.BaseTestConfigBeforeAll;
+import pl.kargolek.extension.assertion.SoftAssertion;
 import pl.kargolek.extension.data.TestDataProvider;
 import pl.kargolek.pages.InitPages;
 import pl.kargolek.util.TestProperty;
+import pl.kargolek.util.WebDriverUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,6 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Feature("Error handler")
 @BaseTestConfigBeforeAll
 @TestDataProvider
+@SoftAssertion
 public class WalletProviderErrorHandlerTest {
 
     private static final String TOAST_TITLE_INFO = "Info";
@@ -51,7 +55,7 @@ public class WalletProviderErrorHandlerTest {
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user, when send blank wallet address, info should be raise")
     @Description("For blank address system should inform user about wrong action")
-    public void whenBlankWallet_thenInfoToast(){
+    public void whenBlankWallet_thenInfoToast(SoftAssertions softAssertions) {
         this.pages.getHomePage()
                 .open(this.appBaseURL)
                 .inputWalletsClearText()
@@ -63,15 +67,18 @@ public class WalletProviderErrorHandlerTest {
         var toastMessage = this.pages.getToastPage()
                 .getToastMessage();
 
-        assertThat(toastTitle).isEqualTo(TOAST_TITLE_INFO);
-        assertThat(toastMessage).isEqualTo(TOAST_INFO_WALLET_SYNTAX);
+        softAssertions.assertThat(toastTitle)
+                .isEqualTo(TOAST_TITLE_INFO);
+        softAssertions.assertThat(toastMessage)
+                .isEqualTo(TOAST_INFO_WALLET_SYNTAX);
+        softAssertions.assertAll();
     }
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user, when send too short wallet address, info should be raise")
     @Description("For too short address system should inform user about wrong action")
-    public void whenToShortWalletAddress_thenInfoToast(TestData data){
+    public void whenToShortWalletAddress_thenInfoToast(TestData data, SoftAssertions softAssertions) {
         this.pages.getHomePage()
                 .open(this.appBaseURL)
                 .inputWalletsClearText()
@@ -83,15 +90,18 @@ public class WalletProviderErrorHandlerTest {
         var toastMessage = this.pages.getToastPage()
                 .getToastMessage();
 
-        assertThat(toastTitle).isEqualTo(TOAST_TITLE_INFO);
-        assertThat(toastMessage).isEqualTo(TOAST_INFO_WALLET_SYNTAX);
+        softAssertions.assertThat(toastTitle)
+                .isEqualTo(TOAST_TITLE_INFO);
+        softAssertions.assertThat(toastMessage)
+                .isEqualTo(TOAST_INFO_WALLET_SYNTAX);
+        softAssertions.assertAll();
     }
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user, when send too long wallet address, info should be raise")
     @Description("For too long address system should inform user about wrong action")
-    public void whenToLongWalletAddress_thenInfoToast(TestData data){
+    public void whenToLongWalletAddress_thenInfoToast(TestData data, SoftAssertions softAssertions) {
         this.pages.getHomePage()
                 .open(this.appBaseURL)
                 .inputWalletsClearText()
@@ -103,15 +113,18 @@ public class WalletProviderErrorHandlerTest {
         var toastMessage = this.pages.getToastPage()
                 .getToastMessage();
 
-        assertThat(toastTitle).isEqualTo(TOAST_TITLE_INFO);
-        assertThat(toastMessage).isEqualTo(TOAST_INFO_WALLET_SYNTAX);
+        softAssertions.assertThat(toastTitle)
+                .isEqualTo(TOAST_TITLE_INFO);
+        softAssertions.assertThat(toastMessage)
+                .isEqualTo(TOAST_INFO_WALLET_SYNTAX);
+        softAssertions.assertAll();
     }
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user, when send invalid wallet address, info should be raise")
     @Description("For invalid address system should inform user about wrong action")
-    public void whenInvalidWalletAddress_thenInfoToast(TestData data){
+    public void whenInvalidWalletAddress_thenInfoToast(TestData data, SoftAssertions softAssertions) {
         this.pages.getHomePage()
                 .open(this.appBaseURL)
                 .inputWalletsClearText()
@@ -123,15 +136,18 @@ public class WalletProviderErrorHandlerTest {
         var toastMessage = this.pages.getToastPage()
                 .getToastMessage();
 
-        assertThat(toastTitle).isEqualTo(TOAST_TITLE_INFO);
-        assertThat(toastMessage).isEqualTo(TOAST_INFO_WALLET_SYNTAX);
+        softAssertions.assertThat(toastTitle)
+                .isEqualTo(TOAST_TITLE_INFO);
+        softAssertions.assertThat(toastMessage)
+                .isEqualTo(TOAST_INFO_WALLET_SYNTAX);
+        softAssertions.assertAll();
     }
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user, when send wallet address with illegal char, info should be raise")
     @Description("For wallet address with illegal char system should inform user about wrong action")
-    public void whenWalletAddressIllegalChar_thenInfoToast(TestData data){
+    public void whenWalletAddressIllegalChar_thenInfoToast(TestData data, SoftAssertions softAssertions) {
         this.pages.getHomePage()
                 .open(this.appBaseURL)
                 .inputWalletsClearText()
@@ -143,15 +159,18 @@ public class WalletProviderErrorHandlerTest {
         var toastMessage = this.pages.getToastPage()
                 .getToastMessage();
 
-        assertThat(toastTitle).isEqualTo(TOAST_TITLE_INFO);
-        assertThat(toastMessage).isEqualTo(TOAST_INFO_WALLET_SYNTAX);
+        softAssertions.assertThat(toastTitle)
+                .isEqualTo(TOAST_TITLE_INFO);
+        softAssertions.assertThat(toastMessage)
+                .isEqualTo(TOAST_INFO_WALLET_SYNTAX);
+        softAssertions.assertAll();
     }
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user, when send multiple wallet addresses with incorrect syntax, info should be raise")
     @Description("For incorrect wallets syntax '%s,%s' system should inform user about wrong action")
-    public void whenIncorrectWalletsSyntax_thenInfoToast(TestData data){
+    public void whenIncorrectWalletsSyntax_thenInfoToast(TestData data, SoftAssertions softAssertions) {
         this.pages.getHomePage()
                 .open(this.appBaseURL)
                 .inputWalletsClearText()
@@ -163,17 +182,23 @@ public class WalletProviderErrorHandlerTest {
         var toastMessage = this.pages.getToastPage()
                 .getToastMessage();
 
-        assertThat(toastTitle).isEqualTo(TOAST_TITLE_INFO);
-        assertThat(toastMessage).isEqualTo(TOAST_INFO_WALLET_SYNTAX);
+        softAssertions.assertThat(toastTitle)
+                .isEqualTo(TOAST_TITLE_INFO);
+        softAssertions.assertThat(toastMessage)
+                .isEqualTo(TOAST_INFO_WALLET_SYNTAX);
+        softAssertions.assertAll();
     }
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user, when send wallet addresses and ETH, MATIC price is not available, then system show error toast")
     @Description("For case of crypto price is not available")
-    public void whenNoEthPolygonPrice_thenSystemError(TestData data, TestDataSql sqlData, WebDriver driver){
+    public void whenNoEthPolygonPrice_thenSystemError(TestData data,
+                                                      TestDataSql sqlData,
+                                                      WebDriver driver,
+                                                      SoftAssertions softAssertions) {
         sqlData.deleteCryptocurrenciesData();
-        driver.navigate().refresh();
+        WebDriverUtil.refreshPage(driver);
 
         this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -186,18 +211,24 @@ public class WalletProviderErrorHandlerTest {
         var toastMessage = this.pages.getToastPage()
                 .getToastMessage();
 
-        assertThat(toastTitle).isEqualTo(TOAST_ERROR_TITLE);
-        assertThat(toastMessage).isEqualTo(TOAST_ERROR_MESSAGE);
+        softAssertions.assertThat(toastTitle)
+                .isEqualTo(TOAST_ERROR_TITLE);
+        softAssertions.assertThat(toastMessage)
+                .isEqualTo(TOAST_ERROR_MESSAGE);
+        softAssertions.assertAll();
     }
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user, when send wallet addresses and only ETH price is not available, then system show error toast")
     @Description("For case of crypto price is not available")
-    public void whenNoEthPrice_thenSystemError(TestData data, TestDataSql sqlData, WebDriver driver){
+    public void whenNoEthPrice_thenSystemError(TestData data,
+                                               TestDataSql sqlData,
+                                               WebDriver driver,
+                                               SoftAssertions softAssertions) {
         sqlData.deleteCryptocurrenciesData();
         sqlData.insertEthereumData();
-        driver.navigate().refresh();
+        WebDriverUtil.refreshPage(driver);
 
         this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -210,8 +241,11 @@ public class WalletProviderErrorHandlerTest {
         var toastMessage = this.pages.getToastPage()
                 .getToastMessage();
 
-        assertThat(toastTitle).isEqualTo(TOAST_ERROR_TITLE);
-        assertThat(toastMessage).isEqualTo(TOAST_ERROR_MESSAGE);
+        softAssertions.assertThat(toastTitle)
+                .isEqualTo(TOAST_ERROR_TITLE);
+        softAssertions.assertThat(toastMessage)
+                .isEqualTo(TOAST_ERROR_MESSAGE);
+        softAssertions.assertAll();
     }
 
     @Test

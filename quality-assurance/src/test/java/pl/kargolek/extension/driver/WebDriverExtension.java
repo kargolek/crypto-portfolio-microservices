@@ -70,6 +70,7 @@ public class WebDriverExtension implements BeforeAllCallback, AfterAllCallback, 
         chromeOptions.setCapability("platformName", "LINUX");
 
         driver = new RemoteWebDriver(new URL(hubURL), chromeOptions, false);
+        driver.manage().window().maximize();
 
         context.getStore(ExtensionContext.Namespace.GLOBAL).put(STORE_WEBDRIVER_KEY, driver);
     }
