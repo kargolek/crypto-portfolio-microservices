@@ -8,10 +8,15 @@ env:
   POLYGON_API_KEY: ${{ secrets.POLYGON_API_KEY }}
   AVALANCHE_API_KEY: ${{ secrets.AVALANCHE_API_KEY }}
 
-on: [push]
+on:
+  push:
+    branches:
+      - 'main'
+    if: >
+      github.event_name == 'push'
 
 jobs:
-  qa-test-main:
+  qa-tests-regression:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -55,8 +60,8 @@ jobs:
         with:
           time: 15s
 
-      - name: Start selenium test
-        run: mvn test
+      - name: Start selenium regression test
+        run: mvn test -Dgroups="TokenBalanceUI"
         working-directory: ./quality-assurance
 
       - name: Stop test env
@@ -94,3 +99,4 @@ jobs:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
+          DESTINATION_DIR: ./{{ github.head_ref }}
