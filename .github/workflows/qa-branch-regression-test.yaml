@@ -1,4 +1,4 @@
-name: "Quality Assurance"
+name: "qa-regression-test"
 
 env:
   COIN_MARKET_CAP_API_KEY: ${{ secrets.COIN_MARKET_CAP_API_KEY }}
@@ -83,10 +83,11 @@ jobs:
         id: allure-report
         with:
           allure_results: quality-assurance/target/allure-results
-          gh_pages: gh-pages/branch_name
+          gh_pages: gh-pages
           allure_report: allure-report
           allure_history: allure-history
           keep_reports: 10
+          subfolder: branch_name
 
       - name: Deploy report to Github Pages
         if: always()
