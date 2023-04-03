@@ -9,7 +9,11 @@ env:
   AVALANCHE_API_KEY: ${{ secrets.AVALANCHE_API_KEY }}
   BRANCH_NAME: ${{ github.ref_name }}
 
-on: [push]
+on:
+  push:
+    branches:
+      - '*'
+      - '!main'
 
 jobs:
   qa-tests-regression:
