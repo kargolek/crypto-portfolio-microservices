@@ -102,6 +102,10 @@ public class TestData {
     private final Wallet polygonTestNetWallet = TestnetWallet.POLYGON_WALLET_1;
     private final Wallet avalancheTestNetWallet = TestnetWallet.AVALANCHE_WALLET_1;
 
+    private final Wallet ethereumTestNetWalletEmpty = TestnetWallet.ETHEREUM_WALLET_2_EMPTY;
+    private final Wallet polygonTestNetWalletEmpty = TestnetWallet.POLYGON_WALLET_2_EMPTY;
+    private final Wallet avalancheTestNetWalletEmpty = TestnetWallet.AVALANCHE_WALLET_2_EMPTY;
+
     private final String explorerAddressTestnetEthereum = "https://goerli.etherscan.io/address/";
     private final String explorerAddressTestnetPolygon = "https://mumbai.polygonscan.com/address/";
     private final String explorerAddressTestnetAvalanche = "https://testnet.snowtrace.io/address/";

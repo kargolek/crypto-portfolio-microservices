@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pl.kargolek.pages.BasePage;
+import pl.kargolek.pages.balance.component.TotalValuePage;
 import pl.kargolek.pages.balance.component.avalanche.AvalancheTableActionBarPage;
 import pl.kargolek.pages.balance.component.avalanche.AvalancheTableAmountPage;
 import pl.kargolek.pages.balance.component.avalanche.AvalancheTableBalancePage;
@@ -92,6 +93,10 @@ public class WalletBalancePage extends BasePage {
     @Step("Get avalanche table balance page")
     public AvalancheTableBalancePage getAvalancheTableBalancePage() {
         return new AvalancheTableBalancePage(this.driver);
+    }
+    @Step("Get total value page")
+    public TotalValuePage getTotalValuePage(){
+        return new TotalValuePage(this.driver);
     }
 
 }
