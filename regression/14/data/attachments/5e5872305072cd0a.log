@@ -1,0 +1,15 @@
+[WARNING 2023-04-04T20:44:30.064]
+security - Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'interest-cohort'.
+
+[SEVERE 2023-04-04T20:44:30.064]
+https://goerli.etherscan.io/address/0x189B9cBd4AfF470aF2C0102f365FC1823d857965 - Failed to load resource: the server responded with a status of 403 ()
+
+[SEVERE 2023-04-04T20:44:30.215]
+https://goerli.etherscan.io/favicon.ico - Failed to load resource: the server responded with a status of 403 ()
+
+[SEVERE 2023-04-04T20:44:30.320]
+https://goerli.etherscan.io/favicon.ico - Failed to load resource: the server responded with a status of 403 ()
+
+[SEVERE 2023-04-04T20:44:30.732]
+https://goerli.etherscan.io/cdn-cgi/challenge-platform/h/b/pat/7b2c63bfdfac2cc7/1680641070383/606f649b13bc705aee1c892121113447e9954896d5ee9e3afad582c04b447b02/mL85efkHVvoJi1i - Failed to load resource: the server responded with a status of 401 ()
+
