@@ -1,4 +1,4 @@
-name: "Build and unit/integration tests"
+name: "build-and-run-unit-integration-test"
 
 env:
   COIN_MARKET_CAP_API_KEY: ${{ secrets.COIN_MARKET_CAP_API_KEY }}
