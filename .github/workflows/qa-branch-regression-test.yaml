@@ -12,7 +12,8 @@ env:
 on:
   push:
     branches:
-      - '*'
+      - 'main'
+      - 'CPA-*'
 
 jobs:
   qa-tests-regression:
