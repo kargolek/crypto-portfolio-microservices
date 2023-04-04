@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { TotalValueService } from '../../service/total-value.service';
+import { TotalValues } from '../../model/total-values';
 
 @Component({
   selector: 'app-total-value',
@@ -9,13 +9,29 @@ import { TotalValueService } from '../../service/total-value.service';
 })
 export class TotalValueComponent implements OnInit {
 
-  public data: number;
+  public totalValueData: TotalValues;
+  switchNumber: number = 0;
 
   constructor(private totalValueService: TotalValueService) { }
-  
+
   ngOnInit(): void {
-    this.totalValueService.currentTotalValue$.subscribe(data => {
-      this.data = data;
+    this.totalValueService.currentTotalValue$.subscribe(requestData => {
+      this.totalValueData = requestData;
     });
   }
+
+  getColor(value: number) {
+    return value < 0 ? '#FF4D00' : '#07F36B';
+  }
+
+  changeTotalValueDataTime() {
+    if (this.switchNumber === 0) {
+      this.switchNumber = 1;
+    } else if (this.switchNumber === 1) {
+      this.switchNumber = 2;
+    } else if (this.switchNumber === 2) {
+      this.switchNumber = 0;
+    }
+  }
+
 }

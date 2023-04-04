@@ -14,7 +14,12 @@ const apiGatewayURL = environment.apiGatewayURL;
 })
 export class BalanceService {
 
-  private dataSubject = new BehaviorSubject<UserWallet>({ name: '', symbol: '', total: { totalQuantity: 0, totalBalance: 0 }, balance: [] });
+  private dataSubject = new BehaviorSubject<UserWallet>({
+    name: '',
+    symbol: '',
+    total: { totalQuantity: 0, totalBalance: 0, totalBalance1h: 0, totalBalance24h: 0, totalBalance7d: 0 },
+    balance: []
+  });
   private data$ = this.dataSubject.asObservable();
 
   public getEthereumWalletBalancesURL = apiGatewayURL + '/api/v1/wallet/eth/balance?wallets=';
@@ -35,8 +40,8 @@ export class BalanceService {
         data.balance.forEach(wallet => {
           wallet.walletAddress = this.trimAddress(wallet.walletAddress);
         });
+        this.totalValueService.setTotalValue(data.total);
         this.dataSubject.next(data);
-        this.totalValueService.setTotalValue(data.total.totalBalance);
       }),
       catchError((error: HttpErrorResponse) => this.errorHandler.handleHttpError(error))
     );

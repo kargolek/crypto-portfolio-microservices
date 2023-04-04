@@ -110,7 +110,10 @@ public class DataUserWallet {
         return new UserTotalBalance()
                 .setTotalQuantity(
                         getUserBalance1().getQuantity().add(getUserBalance2().getQuantity()))
-                .setTotalBalance(getUserBalance1().getBalance().add(getUserBalance2().getBalance()));
+                .setTotalBalance(getUserBalance1().getBalance().add(getUserBalance2().getBalance()))
+                .setTotalBalance1h(getUserBalance1().getBalance().add(getUserBalance2().getBalance()))
+                .setTotalBalance24h(getUserBalance1().getBalance().add(getUserBalance2().getBalance()))
+                .setTotalBalance7d(getUserBalance1().getBalance().add(getUserBalance2().getBalance()));
     }
 
     public UserWallet getUserWalletOneEth() {

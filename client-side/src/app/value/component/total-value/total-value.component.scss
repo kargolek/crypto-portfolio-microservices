@@ -1,25 +1,56 @@
 @import '../../../../styles.scss';
 
 .total-value-container {
-
     background-color: $base-color;
     border: 1px solid $border-color;
     border-radius: 15px;
     margin-left: 1rem;
     margin-right: 1rem;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    user-select: none;
 
-    .total-value-data {
-        color: $text-value-base-color;
-        font-weight: bold;
-        margin-left: 2rem;
+    .component-container {
+        margin-top: 1.2rem;
+        margin-bottom: 1.2rem;
+
+        .data-container {
+            display: inline;
+            justify-content: bottom;
+            margin-bottom: 5px;
+
+            .total-value-data {
+                color: $text-value-base-color;
+                font-size: 1.6rem;
+                font-weight: bold;
+                margin-left: 2rem;
+            }
+
+            .total-value-diff-container {
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-end;
+                margin-left: 2rem;
+
+                .total-value-diff-quote {
+                    color: $text-color;
+                    font-size: 0.8rem;
+                    margin-right: 5px;
+                }
+
+                .total-value-diff-percent {
+                    color: $text-color;
+                    font-size: 0.8rem;
+                }
+            }
+        }
 
         .total-value-label {
-            color: $text-color;
+            color: $text-color-darker;
             font-weight: normal;
             font-size: 0.7rem;
+            margin-left: 2rem;
+            margin-top: 0.2rem;
         }
     }
-
 }

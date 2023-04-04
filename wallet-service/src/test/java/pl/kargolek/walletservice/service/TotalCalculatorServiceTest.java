@@ -32,10 +32,16 @@ class TotalCalculatorServiceTest extends BaseParamTest {
 
         assertThat(expected).extracting(
                 UserTotalBalance::getTotalQuantity,
-                UserTotalBalance::getTotalBalance
-        ).contains(
+                UserTotalBalance::getTotalBalance,
+                UserTotalBalance::getTotalBalance1h,
+                UserTotalBalance::getTotalBalance24h,
+                UserTotalBalance::getTotalBalance7d
+        ).containsExactly(
                 new BigDecimal("33.333333333"),
-                new BigDecimal("6600.66")
+                new BigDecimal("6600.66"),
+                new BigDecimal("6800.84"),
+                new BigDecimal("7001.04"),
+                new BigDecimal("7201.24")
         );
     }
 
@@ -47,8 +53,14 @@ class TotalCalculatorServiceTest extends BaseParamTest {
 
         assertThat(expected).extracting(
                 UserTotalBalance::getTotalQuantity,
-                UserTotalBalance::getTotalBalance
-        ).contains(
+                UserTotalBalance::getTotalBalance,
+                UserTotalBalance::getTotalBalance1h,
+                UserTotalBalance::getTotalBalance24h,
+                UserTotalBalance::getTotalBalance7d
+        ).containsExactly(
+                new BigDecimal("0"),
+                new BigDecimal("0"),
+                new BigDecimal("0"),
                 new BigDecimal("0"),
                 new BigDecimal("0")
         );
@@ -62,8 +74,14 @@ class TotalCalculatorServiceTest extends BaseParamTest {
 
         assertThat(expected).extracting(
                 UserTotalBalance::getTotalQuantity,
-                UserTotalBalance::getTotalBalance
-        ).contains(
+                UserTotalBalance::getTotalBalance,
+                UserTotalBalance::getTotalBalance1h,
+                UserTotalBalance::getTotalBalance24h,
+                UserTotalBalance::getTotalBalance7d
+        ).containsExactly(
+                new BigDecimal("0"),
+                new BigDecimal("0"),
+                new BigDecimal("0"),
                 new BigDecimal("0"),
                 new BigDecimal("0")
         );

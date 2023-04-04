@@ -26,6 +26,21 @@ public class TotalCalculatorService {
                 .filter(Objects::nonNull)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        return new UserTotalBalance(totalQuantity, totalBalance);
+        var totalBalance1h = userWallet.getBalance().stream()
+                .map(UserBalance::getBalance1h)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        var totalBalance24h = userWallet.getBalance().stream()
+                .map(UserBalance::getBalance24h)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        var totalBalance7d = userWallet.getBalance().stream()
+                .map(UserBalance::getBalance7d)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return new UserTotalBalance(totalQuantity, totalBalance, totalBalance1h, totalBalance24h, totalBalance7d);
     }
 }

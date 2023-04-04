@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { TotalValue } from 'src/app/value/model/total-value';
 import { TotalValueService } from 'src/app/value/service/total-value.service';
 import { UserBalance } from '../../model/user-balance';
 import { BalanceService } from '../../service/balance.service';
@@ -30,7 +29,7 @@ export class AbstractBalanceComponent {
       this.amountData = [data.symbol, data.total.totalQuantity, data.total.totalBalance];
     });
 
-    this.balanceService.getDataSource().subscribe(data =>{
+    this.balanceService.getDataSource().subscribe(data => {
       this.rows = data.balance;
     });
 
@@ -61,7 +60,7 @@ export class AbstractBalanceComponent {
     return this.rows.length;
   }
 
-  setTokenName(): string{
+  setTokenName(): string {
     return "token_name"
   }
 }

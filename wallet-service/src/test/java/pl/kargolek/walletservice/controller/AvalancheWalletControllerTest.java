@@ -61,7 +61,10 @@ class AvalancheWalletControllerTest extends BaseParamTest {
                 .andExpect(jsonPath("$.balance[0].balance90d").value(userBalance.getBalance90d()))
                 .andExpect(jsonPath("$.balance[0].walletExplorer").value(userBalance.getWalletExplorer()))
                 .andExpect(jsonPath("$.total.totalQuantity").value(total.getTotalQuantity()))
-                .andExpect(jsonPath("$.total.totalBalance").value(total.getTotalBalance()));
+                .andExpect(jsonPath("$.total.totalBalance").value(total.getTotalBalance()))
+                .andExpect(jsonPath("$.total.totalBalance1h").value(total.getTotalBalance()))
+                .andExpect(jsonPath("$.total.totalBalance24h").value(total.getTotalBalance()))
+                .andExpect(jsonPath("$.total.totalBalance7d").value(total.getTotalBalance()));
     }
 
     @Test

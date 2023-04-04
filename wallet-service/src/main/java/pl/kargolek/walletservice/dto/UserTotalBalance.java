@@ -17,4 +17,7 @@ import java.math.BigDecimal;
 public class UserTotalBalance {
     private BigDecimal totalQuantity;
     private BigDecimal totalBalance;
+    private BigDecimal totalBalance1h;
+    private BigDecimal totalBalance24h;
+    private BigDecimal totalBalance7d;
 }
