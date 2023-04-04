@@ -1,0 +1,22 @@
+[SEVERE 2023-04-04T22:23:53.202]
+http://172.18.0.1:8080/api/v1/wallet/eth/balance?wallets=0x0a4c79cE84202b03e95B7a692E5D728d83C44c7! - Failed to load resource: the server responded with a status of 400 (Bad Request)
+
+[SEVERE 2023-04-04T22:23:53.243]
+http://172.18.0.1:8080/api/v1/wallet/matic/balance?wallets=0x0a4c79cE84202b03e95B7a692E5D728d83C44c7! - Failed to load resource: the server responded with a status of 400 (Bad Request)
+
+[SEVERE 2023-04-04T22:23:53.257]
+http://172.18.0.1:8080/api/v1/wallet/avax/balance?wallets=0x0a4c79cE84202b03e95B7a692E5D728d83C44c7! - Failed to load resource: the server responded with a status of 400 (Bad Request)
+
+[SEVERE 2023-04-04T22:23:53.282]
+http://172.18.0.1:4201/main.js 0:51347 "ERROR" Error: Address is invalid for crypto ETH and address 0x0a4c79cE84202b03e95B7a692E5D728d83C44c7!, message: address is invalid
+    at http://172.18.0.1:4201/main.js:1:456203
+    at n.i [as _subscribe] (http://172.18.0.1:4201/main.js:1:293173)
+    at n._trySubscribe (http://172.18.0.1:4201/main.js:1:4964)
+    at http://172.18.0.1:4201/main.js:1:4909
+    at Ya (http://172.18.0.1:4201/main.js:1:2604)
+    at n.subscribe (http://172.18.0.1:4201/main.js:1:4823)
+    at http://172.18.0.1:4201/main.js:1:293354
+    at $M._error (http://172.18.0.1:4201/main.js:1:8027)
+    at $M.error (http://172.18.0.1:4201/main.js:1:2962)
+    at r.subscribe.l (http://172.18.0.1:4201/main.js:1:269060)
+
