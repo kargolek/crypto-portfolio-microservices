@@ -1,0 +1,263 @@
+[REQUESTS DATA]:
+
+Request:[2023-04-04T21:57:38.433639646]
+GET URL:http://172.18.0.1:4201/wallet
+Header:{Upgrade-Insecure-Requests=1, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433687846]
+GET URL:http://172.18.0.1:4201/runtime.js
+Header:{Referer=http://172.18.0.1:4201/wallet, Origin=http://172.18.0.1:4201, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433730646]
+GET URL:http://172.18.0.1:4201/polyfills.js
+Header:{Referer=http://172.18.0.1:4201/wallet, Origin=http://172.18.0.1:4201, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433741946]
+GET URL:http://172.18.0.1:4201/scripts.js
+Header:{Referer=http://172.18.0.1:4201/wallet, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433750346]
+GET URL:http://172.18.0.1:4201/main.js
+Header:{Referer=http://172.18.0.1:4201/wallet, Origin=http://172.18.0.1:4201, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433759146]
+GET URL:http://172.18.0.1:4201/styles.css
+Header:{Referer=http://172.18.0.1:4201/wallet, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433767446]
+GET URL:https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433776746]
+GET URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433795246]
+GET URL:http://172.18.0.1:4201/favicon.ico
+Header:{Referer=http://172.18.0.1:4201/wallet, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433804746]
+GET URL:http://172.18.0.1:4201/
+Header:{Upgrade-Insecure-Requests=1, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433813246]
+GET URL:http://172.18.0.1:4201/runtime.js
+Header:{Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433821746]
+GET URL:http://172.18.0.1:4201/polyfills.js
+Header:{Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433829646]
+GET URL:http://172.18.0.1:4201/scripts.js
+Header:{Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433837746]
+GET URL:http://172.18.0.1:4201/main.js
+Header:{Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433845947]
+GET URL:http://172.18.0.1:4201/styles.css
+Header:{Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433853447]
+GET URL:https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.433862847]
+GET URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.432871647]
+GET URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.432880347]
+GET URL:http://172.18.0.1:8080/api/v1/wallet/eth/balance?wallets=0x189B9cBd4AfF470aF2C0102f365FC1823d857965
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.432894447]
+GET URL:http://172.18.0.1:8080/api/v1/wallet/matic/balance?wallets=0x189B9cBd4AfF470aF2C0102f365FC1823d857965
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.432902647]
+GET URL:http://172.18.0.1:8080/api/v1/wallet/avax/balance?wallets=0x189B9cBd4AfF470aF2C0102f365FC1823d857965
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-04T21:57:38.431910947]
+GET URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+[RESPONSE DATA]:
+
+Response: [2023-04-04T21:57:38.433950547]
+URL:http://172.18.0.1:4201/scripts.js
+Status:200 OK
+Header:{Date=Tue, 04 Apr 2023 21:57:19 GMT, Last-Modified=Tue, 04 Apr 2023 21:52:11 GMT, Server=nginx/1.21.5, ETag="642c9c0b-589c", Content-Type=application/javascript, Connection=keep-alive, Accept-Ranges=bytes, Content-Length=22684}
+Body:var pJS=function(c,d){var l=document.querySelector("#"+c+" > .particles-js-canvas-el");this.pJS={can
+
+
+Response: [2023-04-04T21:57:38.433984947]
+URL:http://172.18.0.1:4201/styles.css
+Status:200 OK
+Header:{Date=Tue, 04 Apr 2023 21:57:19 GMT, Last-Modified=Tue, 04 Apr 2023 21:52:11 GMT, Server=nginx/1.21.5, ETag="642c9c0b-199c", Content-Type=text/css, Connection=keep-alive, Accept-Ranges=bytes, Content-Length=6556}
+Body:body{background-color:#1d2448;font-family:monospace}.particles-js-canvas-el{position:fixed;top:0;z-i
+
+
+Response: [2023-04-04T21:57:38.434009347]
+URL:http://172.18.0.1:4201/runtime.js
+Status:200 OK
+Header:{Date=Tue, 04 Apr 2023 21:57:18 GMT, Last-Modified=Tue, 04 Apr 2023 21:52:11 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="642c9c0b-384", Content-Length=900, Content-Type=application/javascript}
+Body:(()=>{"use strict";var e,v={},_={};function a(e){var f=_[e];if(void 0!==f)return f.exports;var r=_[e
+
+
+Response: [2023-04-04T21:57:38.434019647]
+URL:http://172.18.0.1:4201/polyfills.js
+Status:200 OK
+Header:{Date=Tue, 04 Apr 2023 21:57:19 GMT, Last-Modified=Tue, 04 Apr 2023 21:52:11 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="642c9c0b-8443", Content-Length=33859, Content-Type=application/javascript}
+Body:"use strict";(self.webpackChunkclient_side=self.webpackChunkclient_side||[]).push([[429],{583:()=>{!
+
+
+Response: [2023-04-04T21:57:38.434029347]
+URL:http://172.18.0.1:4201/main.js
+Status:200 OK
+Header:{Date=Tue, 04 Apr 2023 21:57:19 GMT, Last-Modified=Tue, 04 Apr 2023 21:52:11 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="642c9c0b-80665", Content-Length=525925, Content-Type=application/javascript}
+Body:"use strict";(self.webpackChunkclient_side=self.webpackChunkclient_side||[]).push([[179],{989:()=>{f
+
+
+Response: [2023-04-04T21:57:38.434039047]
+URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Status:200 OK
+Header:{Access-Control-Allow-Origin=*, Date=Tue, 04 Apr 2023 21:57:34 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:[]
+
+
+Response: [2023-04-04T21:57:38.434048547]
+URL:http://172.18.0.1:4201/
+Status:200 OK
+Header:{Accept-Ranges=bytes, Content-Length=7223, Content-Type=text/html, Date=Tue, 04 Apr 2023 21:57:18 GMT, ETag="642c9c0b-1c37", Last-Modified=Tue, 04 Apr 2023 21:52:11 GMT, Server=nginx/1.21.5}
+Body:<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <title>CryptoPortfolioApp</title>
+ 
+
+
+Response: [2023-04-04T21:57:38.434058247]
+URL:http://172.18.0.1:4201/scripts.js
+Status:200 OK
+Header:{Date=Tue, 04 Apr 2023 21:57:19 GMT, Last-Modified=Tue, 04 Apr 2023 21:52:11 GMT, Server=nginx/1.21.5, ETag="642c9c0b-589c", Content-Type=application/javascript, Connection=keep-alive, Accept-Ranges=bytes, Content-Length=22684}
+Body:var pJS=function(c,d){var l=document.querySelector("#"+c+" > .particles-js-canvas-el");this.pJS={can
+
+
+Response: [2023-04-04T21:57:38.434067648]
+URL:http://172.18.0.1:4201/styles.css
+Status:200 OK
+Header:{Date=Tue, 04 Apr 2023 21:57:19 GMT, Last-Modified=Tue, 04 Apr 2023 21:52:11 GMT, Server=nginx/1.21.5, ETag="642c9c0b-199c", Content-Type=text/css, Connection=keep-alive, Accept-Ranges=bytes, Content-Length=6556}
+Body:body{background-color:#1d2448;font-family:monospace}.particles-js-canvas-el{position:fixed;top:0;z-i
+
+
+Response: [2023-04-04T21:57:38.434078148]
+URL:http://172.18.0.1:4201/runtime.js
+Status:200 OK
+Header:{Date=Tue, 04 Apr 2023 21:57:18 GMT, Last-Modified=Tue, 04 Apr 2023 21:52:11 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="642c9c0b-384", Content-Length=900, Content-Type=application/javascript}
+Body:(()=>{"use strict";var e,v={},_={};function a(e){var f=_[e];if(void 0!==f)return f.exports;var r=_[e
+
+
+Response: [2023-04-04T21:57:38.434088048]
+URL:http://172.18.0.1:4201/polyfills.js
+Status:200 OK
+Header:{Date=Tue, 04 Apr 2023 21:57:19 GMT, Last-Modified=Tue, 04 Apr 2023 21:52:11 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="642c9c0b-8443", Content-Length=33859, Content-Type=application/javascript}
+Body:"use strict";(self.webpackChunkclient_side=self.webpackChunkclient_side||[]).push([[429],{583:()=>{!
+
+
+Response: [2023-04-04T21:57:38.434099648]
+URL:http://172.18.0.1:4201/main.js
+Status:200 OK
+Header:{Date=Tue, 04 Apr 2023 21:57:19 GMT, Last-Modified=Tue, 04 Apr 2023 21:52:11 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="642c9c0b-80665", Content-Length=525925, Content-Type=application/javascript}
+Body:"use strict";(self.webpackChunkclient_side=self.webpackChunkclient_side||[]).push([[179],{989:()=>{f
+
+
+Response: [2023-04-04T21:57:38.434113848]
+URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Status:200 OK
+Header:{Access-Control-Allow-Origin=*, Date=Tue, 04 Apr 2023 21:57:34 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:[]
+
+
+Response: [2023-04-04T21:57:38.432123348]
+URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Status:200 OK
+Header:{Access-Control-Allow-Origin=*, Date=Tue, 04 Apr 2023 21:57:35 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:[]
+
+
+Response: [2023-04-04T21:57:38.432134648]
+URL:http://172.18.0.1:8080/api/v1/wallet/eth/balance?wallets=0x189B9cBd4AfF470aF2C0102f365FC1823d857965
+Status:500 Internal Server Error
+Header:{Access-Control-Allow-Origin=*, Date=Tue, 04 Apr 2023 21:57:35 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:{"status":"INTERNAL_SERVER_ERROR","timestamp":"2023-04-04T21:57:35.546622514","message":"Unable to g
+
+
+Response: [2023-04-04T21:57:38.432144848]
+URL:http://172.18.0.1:8080/api/v1/wallet/matic/balance?wallets=0x189B9cBd4AfF470aF2C0102f365FC1823d857965
+Status:500 Internal Server Error
+Header:{Access-Control-Allow-Origin=*, Date=Tue, 04 Apr 2023 21:57:35 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:{"status":"INTERNAL_SERVER_ERROR","timestamp":"2023-04-04T21:57:35.667058794","message":"Unable to g
+
+
+Response: [2023-04-04T21:57:38.432154148]
+URL:http://172.18.0.1:8080/api/v1/wallet/avax/balance?wallets=0x189B9cBd4AfF470aF2C0102f365FC1823d857965
+Status:500 Internal Server Error
+Header:{Access-Control-Allow-Origin=*, Date=Tue, 04 Apr 2023 21:57:35 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:{"status":"INTERNAL_SERVER_ERROR","timestamp":"2023-04-04T21:57:35.632072154","message":"Unable to g
+
+
+Response: [2023-04-04T21:57:38.432163648]
+URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Status:200 OK
+Header:{Access-Control-Allow-Origin=*, Date=Tue, 04 Apr 2023 21:57:35 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:[]
