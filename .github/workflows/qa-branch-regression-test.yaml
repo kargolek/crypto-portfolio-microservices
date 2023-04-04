@@ -14,12 +14,12 @@ on:
     branches:
       - '*'
   pull_request:
-    types: [ opened, synchronize ]
     branches-ignore:
-      - 'main'
+      - main
 
 jobs:
   qa-tests-regression:
+    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
