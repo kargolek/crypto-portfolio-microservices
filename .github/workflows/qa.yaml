@@ -1,4 +1,4 @@
-name: "Quality Assurance"
+name: "qa-main-full-test"
 
 env:
   COIN_MARKET_CAP_API_KEY: ${{ secrets.COIN_MARKET_CAP_API_KEY }}
