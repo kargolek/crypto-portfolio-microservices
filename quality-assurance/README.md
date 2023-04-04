@@ -18,3 +18,4 @@ This test framework is built with Selenium, JUnit5, and Allure. It is designed t
 
 ### Test report
 1. Regression latest: https://kargolek.github.io/crypto-portfolio-microservices/regression/
+2. Main latest: https://kargolek.github.io/crypto-portfolio-microservices/main/
