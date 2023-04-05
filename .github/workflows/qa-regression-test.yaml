@@ -16,7 +16,7 @@ on:
 
 jobs:
   qa-tests-regression:
-    if: ${{ contains(github.head_ref, '#regressionTest') }}
+    if: ${{ contains(github.event.head_commit.message, '#regressionTest') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -60,12 +60,8 @@ jobs:
         with:
           time: 15s
 
-      - name: Functional test
-        run: mvn test -Dgroups="TotalValue"
-        working-directory: ./quality-assurance
-
       - name: Regression test
-        run: mvn test -Dgroups="TokenBalanceUI"
+        run: mvn test -Dgroups="TokenBalanceUI,TotalValue"
         working-directory: ./quality-assurance
 
       - name: Stop test env

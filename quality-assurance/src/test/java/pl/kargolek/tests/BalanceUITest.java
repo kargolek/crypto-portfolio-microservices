@@ -166,6 +166,62 @@ public class BalanceUITest {
     }
 
     @Test
+    @Severity(SeverityLevel.NORMAL)
+    @Story("As user I can see proper headers for symbol, total value and amount")
+    @Link(url = "https://trello.com/c/dRgxzOK3/" +
+            "62-cpa-62-as-user-i-want-see-info-about-which-value-is-amount-and-value-in-" +
+            "balance-page-total-balances-for-each-token-component", name="Story Link")
+    public void whenWalletValid_thenHeadersForSymbolTotalAmountTotalValueHeader(TestData data, SoftAssertions softAssertions) {
+        var balancePage = this.pages.getHomePage()
+                .open(this.appBaseURL)
+                .inputWallets(data.getWalletAddressValid())
+                .enterKeyPress();
+
+        var ethSymbolHeader = balancePage.getEthereumTableAmountPage()
+                .getSymbolHeader();
+        var ethTotalAmountHeader = balancePage.getEthereumTableAmountPage()
+                .getTotalAmountHeader();
+        var ethTotalValueHeader = balancePage.getEthereumTableAmountPage()
+                .getTotalTokenValueHeader();
+
+        var polygonSymbolHeader = balancePage.getPolygonTableAmountPage()
+                .getSymbolHeader();
+        var polygonTotalAmountHeader = balancePage.getPolygonTableAmountPage()
+                .getTotalAmountHeader();
+        var polygonTotalValueHeader = balancePage.getPolygonTableAmountPage()
+                .getTotalTokenValueHeader();
+
+        var avalancheSymbolHeader = balancePage.getAvalancheTableAmountPage()
+                .getSymbolHeader();
+        var avalancheTotalAmountHeader = balancePage.getAvalancheTableAmountPage()
+                .getTotalAmountHeader();
+        var avalancheTotalValueHeader = balancePage.getAvalancheTableAmountPage()
+                .getTotalTokenValueHeader();
+
+        softAssertions.assertThat(ethSymbolHeader.isDisplayed())
+                .isTrue();
+        softAssertions.assertThat(ethTotalAmountHeader.isDisplayed())
+                .isTrue();
+        softAssertions.assertThat(ethTotalValueHeader.isDisplayed())
+                .isTrue();
+
+        softAssertions.assertThat(polygonSymbolHeader.isDisplayed())
+                .isTrue();
+        softAssertions.assertThat(polygonTotalAmountHeader.isDisplayed())
+                .isTrue();
+        softAssertions.assertThat(polygonTotalValueHeader.isDisplayed())
+                .isTrue();
+
+        softAssertions.assertThat(avalancheSymbolHeader.isDisplayed())
+                .isTrue();
+        softAssertions.assertThat(avalancheTotalAmountHeader.isDisplayed())
+                .isTrue();
+        softAssertions.assertThat(avalancheTotalValueHeader.isDisplayed())
+                .isTrue();
+        softAssertions.assertAll();
+    }
+
+    @Test
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user I can switch view of wallet balance details")
     @Description("View can be switch 1. [Address, Amount, Value] 2. [1H, 24h, 7D] 3. [30D, 60D, 90D]")
@@ -208,13 +264,6 @@ public class BalanceUITest {
                         .isDisplayed())
                 .isTrue();
 
-        //Open explorer button
-        softAssertions.assertThat(balancePage.getEthereumTableBalancePage()
-                        .getFirstCellOpenExplorerButton()
-                        .isDisplayed())
-                .isTrue();
-
-
         balancePage.getEthereumTableActionBarPage()
                 .clickSwitchViewButton();
 
@@ -251,13 +300,6 @@ public class BalanceUITest {
                         .isDisplayed())
                 .isTrue();
 
-        //Open explorer button
-        softAssertions.assertThat(balancePage.getEthereumTableBalancePage()
-                        .getFirstCellOpenExplorerButton()
-                        .isDisplayed())
-                .isTrue();
-
-
         balancePage.getEthereumTableActionBarPage()
                 .clickSwitchViewButton();
 
@@ -291,12 +333,6 @@ public class BalanceUITest {
 
         softAssertions.assertThat(balancePage.getEthereumTableBalancePage()
                         .getFirstCell90dValue()
-                        .isDisplayed())
-                .isTrue();
-
-        //Open explorer button
-        softAssertions.assertThat(balancePage.getEthereumTableBalancePage()
-                        .getFirstCellOpenExplorerButton()
                         .isDisplayed())
                 .isTrue();
 
@@ -361,7 +397,7 @@ public class BalanceUITest {
     @Story("As user in system I am able to open explorer page for ETH wallet address that has been provided")
     @Description("Wallet explorers for test: ETH: https://goerli.etherscan.io/address/. " +
             "All addresses belong to the testnet for each token.")
-    public void whenClickOnOpenExplorerForEthereumWalletAddress_thenOpenExplorerPage(TestData data, WebDriver driver) {
+    public void whenClickOnEthereumWalletAddress_thenOpenExplorerPage(TestData data, WebDriver driver) {
         var balancePage = this.pages.getHomePage()
                 .open(this.appBaseURL)
                 .inputWallets(data.getWalletAddressValid())
@@ -369,9 +405,10 @@ public class BalanceUITest {
 
         var currentWindow = driver.getWindowHandle();
 
-        balancePage.getEthereumTableBalancePage()
-                .getFirstCellOpenExplorerButton()
-                .click();
+        var addressCell = balancePage.getEthereumTableBalancePage()
+                .getFirstCellAddress();
+        balancePage.clickElement(addressCell);
+
         WebDriverUtil.switchToNextTab(driver, currentWindow);
 
         assertThat(driver.getCurrentUrl())
@@ -393,9 +430,9 @@ public class BalanceUITest {
 
         var currentWindow = driver.getWindowHandle();
 
-        balancePage.getPolygonTableBalancePage()
-                .getFirstCellOpenExplorerButton()
-                .click();
+        var addressCell = balancePage.getPolygonTableBalancePage()
+                .getFirstCellAddress();
+        balancePage.clickElement(addressCell);
 
         WebDriverUtil.switchToNextTab(driver, currentWindow);
 
@@ -418,9 +455,9 @@ public class BalanceUITest {
 
         var currentWindow = driver.getWindowHandle();
 
-        balancePage.getAvalancheTableBalancePage()
-                .getFirstCellOpenExplorerButton()
-                .click();
+        var addressCell = balancePage.getAvalancheTableBalancePage()
+                .getFirstCellAddress();
+        balancePage.clickElement(addressCell);
 
         WebDriverUtil.switchToNextTab(driver, currentWindow);
 
@@ -502,14 +539,14 @@ public class BalanceUITest {
                 .getAvalancheTableBalancePage()
                 .getLastCellAddress();
 
-        softAssertions.assertThat(jsDriver.getTopPositionInViewport(element))
+        softAssertions.assertThat((Long) jsDriver.getTopPositionInViewport(element))
                 .isGreaterThan(browserHeight);
 
         this.pages.getWalletBalancePage().getAction()
                 .moveToElement(element)
                 .perform();
 
-        softAssertions.assertThat(jsDriver.getTopPositionInViewport(element))
+        softAssertions.assertThat((Long) jsDriver.getTopPositionInViewport(element))
                 .isLessThan(browserHeight);
 
         softAssertions.assertAll();

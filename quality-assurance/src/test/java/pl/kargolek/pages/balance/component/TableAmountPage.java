@@ -17,11 +17,35 @@ public abstract class TableAmountPage extends BasePage {
     private final By symbol = By.cssSelector(".symbol");
     private final By totalTokenValue = By.cssSelector(".total-value");
 
+    private final By symbolHeader = By.cssSelector(".header-symbol");
+
+    private final By totalAmountHeader = By.cssSelector(".header-symbol");
+
+    private final By totalTokenValueHeader = By.cssSelector(".header-symbol");
+
     public TableAmountPage(WebDriver driver) {
         super(driver);
     }
 
     protected abstract WebElement getParent();
+
+    @Step("Get symbol header")
+    public WebElement getSymbolHeader() {
+        return this.waitForElementVisibility(getParent(), Duration.ofSeconds(10))
+                .findElement(symbolHeader);
+    }
+
+    @Step("Get total amount header")
+    public WebElement getTotalAmountHeader() {
+        return this.waitForElementVisibility(getParent(), Duration.ofSeconds(10))
+                .findElement(totalAmountHeader);
+    }
+
+    @Step("Get total value header")
+    public WebElement getTotalTokenValueHeader() {
+        return this.waitForElementVisibility(getParent(), Duration.ofSeconds(10))
+                .findElement(totalTokenValueHeader);
+    }
 
     @Step("Get token amount text")
     public String getTotalAmountText() {
