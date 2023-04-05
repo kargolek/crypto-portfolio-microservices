@@ -7,7 +7,7 @@
                 <div class="table-header-cell header-total-value">Total Value</div>
             </div>
             <div class="table-row amount-row amount-container">
-                <div class="table-cell cell-amount">
+                <div class="table-cell amount-table-cell">
                     <div>
                         <div class="symbol-item">
                             <div class="icon-item">
@@ -17,10 +17,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="amount-item table-cell">
+                <div class="amount-item table-cell amount-table-cell">
                     <div class="total-amount">{{ amountData[1] }}</div>
                 </div>
-                <div class="amount-item table-cell">
+                <div class="amount-item table-cell amount-table-cell">
                     <div class="total-value">${{ amountData[2] }}</div>
                 </div>
             </div>
@@ -47,26 +47,28 @@
             </div>
             <ng-container *ngFor="let userBalance of rows">
                 <div class="table-row balance-row">
-                    <a *ngIf="showDetails === 1" class="table-cell cell-address" target="_blank"
+                    <a *ngIf="showDetails === 1" class="table-cell cell-address balance-table-cell" target="_blank"
                         [href]="userBalance.walletExplorer">{{ userBalance.walletAddress }}</a>
-                    <div *ngIf="showDetails === 1" class="table-cell cell-amount">{{ userBalance.quantity }}</div>
-                    <div *ngIf="showDetails === 1" class="table-cell cell-value">{{ userBalance.balance }}</div>
-                    <div *ngIf="showDetails === 2" class="table-cell cell-1h"
+                    <div *ngIf="showDetails === 1" class="table-cell cell-amount balance-table-cell">{{
+                        userBalance.quantity }}</div>
+                    <div *ngIf="showDetails === 1" class="table-cell cell-value balance-table-cell">{{
+                        userBalance.balance }}</div>
+                    <div *ngIf="showDetails === 2" class="table-cell cell-1h balance-table-cell"
                         [ngStyle]="{'color': getColor(userBalance.balance, userBalance.balance1h)}">{{
                         userBalance.balance1h }}</div>
-                    <div *ngIf="showDetails === 2" class="table-cell cell-24h"
+                    <div *ngIf="showDetails === 2" class="table-cell cell-24h balance-table-cell"
                         [ngStyle]="{'color': getColor(userBalance.balance, userBalance.balance24h)}">{{
                         userBalance.balance24h }}</div>
-                    <div *ngIf="showDetails === 2" class="table-cell cell-7d"
+                    <div *ngIf="showDetails === 2" class="table-cell cell-7d balance-table-cell"
                         [ngStyle]="{'color': getColor(userBalance.balance, userBalance.balance7d)}">{{
                         userBalance.balance7d }}</div>
-                    <div *ngIf="showDetails === 3" class="table-cell cell-30d"
+                    <div *ngIf="showDetails === 3" class="table-cell cell-30d balance-table-cell"
                         [ngStyle]="{'color': getColor(userBalance.balance, userBalance.balance30d)}">{{
                         userBalance.balance30d }}</div>
-                    <div *ngIf="showDetails === 3" class="table-cell cell-60d"
+                    <div *ngIf="showDetails === 3" class="table-cell cell-60d balance-table-cell"
                         [ngStyle]="{'color': getColor(userBalance.balance, userBalance.balance60d)}">{{
                         userBalance.balance60d }}</div>
-                    <div *ngIf="showDetails === 3" class="table-cell cell-90d"
+                    <div *ngIf="showDetails === 3" class="table-cell cell-90d balance-table-cell"
                         [ngStyle]="{'color': getColor(userBalance.balance, userBalance.balance90d)}">{{
                         userBalance.balance90d }}</div>
                 </div>

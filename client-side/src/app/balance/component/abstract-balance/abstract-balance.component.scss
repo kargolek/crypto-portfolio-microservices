@@ -21,17 +21,24 @@ app-crypto-icon ::ng-deep img {
     background-color: $base-color;
 }
 
-.symbol-item{
+.amount-table-cell{
+    font-size: 1rem;
+    color: $text-color;
+    font-weight: bold;
+}
+
+
+.symbol-item {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-.icon-item{
-    margin-top:0.2rem;
+.icon-item {
+    margin-top: 0.2rem;
 }
 
-.symbol{
+.symbol {
     margin-left: 0.7rem;
     margin-top: 0.55rem;
 }
@@ -87,7 +94,7 @@ i.material-icons:active {
     transform: scale(0.8);
 }
 
-.number-wallets{
+.number-wallets {
     vertical-align: middle;
     color: $text-color;
     font-size: 0.8rem;
@@ -147,10 +154,10 @@ i.material-icons:active {
     height: 4rem;
     position: relative;
     align-items: center;
-    
+
 }
 
-.balance-row{
+.balance-row {
     background-image: linear-gradient(90deg, $base-color-lighter 0%, $base-color 44%);
 }
 
@@ -161,11 +168,14 @@ i.material-icons:active {
 
 .table-cell {
     padding: 5px;
-    font-size: 1rem;
     text-align: center;
-    color: $text-color;
     border-radius: 15px;
     width: 100%;
+}
+
+.balance-table-cell {
+    font-size: 1rem;
+    color: $text-color;
 }
 
 .table-cell-explorer {
