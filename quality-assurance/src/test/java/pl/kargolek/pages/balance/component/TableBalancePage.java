@@ -33,7 +33,6 @@ public abstract class TableBalancePage extends BasePage {
     private final By cell30dValue = By.cssSelector(".cell-30d");
     private final By cell60dValue = By.cssSelector(".cell-60d");
     private final By cell90dValue = By.cssSelector(".cell-90d");
-    private final By cellOpenExplorer = By.cssSelector(".icon-open-explorer");
 
     public TableBalancePage(WebDriver driver) {
         super(driver);
@@ -174,14 +173,6 @@ public abstract class TableBalancePage extends BasePage {
                 .orElseThrow();
     }
 
-    @Step("Get last cell open explorer button")
-    public WebElement getLastCellOpenExplorerButton() {
-        var elements = this.getOpenExplorerButtonCells();
-        Collections.reverse(elements);
-        return elements.stream()
-                .findFirst()
-                .orElseThrow();
-    }
     @Step("Get first cell address column")
     public WebElement getFirstCellAddress() {
         return this.getAddressCells().stream()
@@ -244,13 +235,6 @@ public abstract class TableBalancePage extends BasePage {
                 .orElseThrow();
     }
 
-    @Step("Get first cell open explorer button")
-    public WebElement getFirstCellOpenExplorerButton() {
-        return this.getOpenExplorerButtonCells().stream()
-                .findFirst()
-                .orElseThrow();
-    }
-
     private List<WebElement> getAddressCells() {
         return this.waitForElementVisibility(this.getParent(), Duration.ofSeconds(10))
                 .findElements(cellAddress);
@@ -294,10 +278,5 @@ public abstract class TableBalancePage extends BasePage {
     private List<WebElement> get90ValueCells() {
         return this.waitForElementVisibility(this.getParent(), Duration.ofSeconds(10))
                 .findElements(cell90dValue);
-    }
-
-    private List<WebElement> getOpenExplorerButtonCells() {
-        return this.waitForElementVisibility(this.getParent(), Duration.ofSeconds(10))
-                .findElements(cellOpenExplorer);
     }
 }

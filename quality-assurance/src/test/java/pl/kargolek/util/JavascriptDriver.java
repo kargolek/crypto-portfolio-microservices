@@ -19,8 +19,8 @@ public class JavascriptDriver {
         this.javascriptExecutor = builder.javascriptExecutor;
     }
 
-    public Double getTopPositionInViewport(WebElement element) {
-        return (Double) this.javascriptExecutor.executeScript(
+    public Object getTopPositionInViewport(WebElement element) {
+        return  this.javascriptExecutor.executeScript(
                 "return arguments[0].getBoundingClientRect().top;",
                 element
         );
