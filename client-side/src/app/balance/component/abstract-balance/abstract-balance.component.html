@@ -1,17 +1,28 @@
 <div class="container col-9" *ngIf="dataSource$ | async as dataSource">
-    <div class="amount-container">
-        <div class="horizontal-amount-list col-9">
-            <div class="icon-item">
-                <app-crypto-icon [text]="setTokenName()"></app-crypto-icon>
+    <div class="table-new-container">
+        <div class="table">
+            <div class="table-header">
+                <div class="table-header-cell header-address">Symbol</div>
+                <div class="table-header-cell header-amount">Total Amount</div>
+                <div class="table-header-cell header-value">Total Value</div>
             </div>
-            <div class="symbol-item">
-                <h3 class="symbol">{{ amountData[0] }}</h3>
-            </div>
-            <div class="amount-item">
-                <h3 class="total-amount">{{ amountData[1] }}</h3>
-            </div>
-            <div class="amount-item">
-                <h3 class="total-value">${{ amountData[2] }}</h3>
+            <div class="table-row amount-row">
+                <div class="table-cell cell-amount">
+                    <div>
+                        <div class="symbol-item">
+                            <div class="icon-item">
+                                <app-crypto-icon [text]="setTokenName()"></app-crypto-icon>
+                            </div>
+                            <div class="symbol">{{ amountData[0] }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="amount-item table-cell">
+                    <div class="total-amount">{{ amountData[1] }}</div>
+                </div>
+                <div class="amount-item table-cell">
+                    <div class="total-value">${{ amountData[2] }}</div>
+                </div>
             </div>
         </div>
     </div>
@@ -33,11 +44,11 @@
                 <div *ngIf="showDetails === 3" class="table-header-cell header-30d">30d</div>
                 <div *ngIf="showDetails === 3" class="table-header-cell header-60d">60d</div>
                 <div *ngIf="showDetails === 3" class="table-header-cell header-90d">90d</div>
-                <div class="table-header-cell-explorer"></div>
             </div>
             <ng-container *ngFor="let userBalance of rows">
-                <div class="table-row">
-                    <div *ngIf="showDetails === 1" class="table-cell cell-address">{{ userBalance.walletAddress }}</div>
+                <div class="table-row balance-row">
+                    <a *ngIf="showDetails === 1" class="table-cell cell-address" target="_blank"
+                        [href]="userBalance.walletExplorer">{{ userBalance.walletAddress }}</a>
                     <div *ngIf="showDetails === 1" class="table-cell cell-amount">{{ userBalance.quantity }}</div>
                     <div *ngIf="showDetails === 1" class="table-cell cell-value">{{ userBalance.balance }}</div>
                     <div *ngIf="showDetails === 2" class="table-cell cell-1h"
@@ -58,9 +69,6 @@
                     <div *ngIf="showDetails === 3" class="table-cell cell-90d"
                         [ngStyle]="{'color': getColor(userBalance.balance, userBalance.balance90d)}">{{
                         userBalance.balance90d }}</div>
-                    <a class="table-cell-explorer" target="_blank" [href]="userBalance.walletExplorer">
-                        <mat-icon class="icon-open-explorer">open_in_new</mat-icon>
-                    </a>
                 </div>
                 <br class="row-divider" />
             </ng-container>

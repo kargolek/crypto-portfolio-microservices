@@ -11,48 +11,29 @@
     width: 90vw;
 }
 
-.amount-container {
-    display: grid;
-    justify-content: center;
-    background-color: $base-color;
-    border: 1px solid $border-color;
-    border-radius: 15px;
-    margin-top: 5px;
-}
-
-.horizontal-amount-list {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    justify-content: center;
-}
-
 app-crypto-icon ::ng-deep img {
-    width: 2rem;
-    height: 2rem;
-    margin-top: 0.8rem;
+    width: 1.8rem;
+    height: 1.8rem;
     align-items: center;
 }
 
-.icon-item {
-    width: 20%;
-    margin-left: 1.4rem;
+.amount-row {
+    background-color: $base-color;
 }
 
-.symbol-item {
-    width: 1.6rem;
-    margin-left: 0.5rem;
+.symbol-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
-.amount-item {
-    width: 100%;
-    margin-left: 0.2rem;
+.icon-item{
+    margin-top:0.2rem;
 }
 
-.horizontal-amount-list h2,
-h3 {
-    color: $text-color;
-    text-align: center;
+.symbol{
+    margin-left: 0.7rem;
+    margin-top: 0.55rem;
 }
 
 .total-value {
@@ -115,7 +96,6 @@ i.material-icons:active {
     width: 100%;
 }
 
-
 .table-container {
     background-color: $base-color-lighter;
     padding-top: -20px;
@@ -141,8 +121,8 @@ i.material-icons:active {
 
 .table-header-cell {
     padding: 5px;
-    color: $text-color;
-    font-size: .8rem;
+    color: $text-color-darker;
+    font-size: .7rem;
     text-align: center;
     vertical-align: auto;
     width: 100%;
@@ -167,6 +147,10 @@ i.material-icons:active {
     height: 4rem;
     position: relative;
     align-items: center;
+    
+}
+
+.balance-row{
     background-image: linear-gradient(90deg, $base-color-lighter 0%, $base-color 44%);
 }
 
