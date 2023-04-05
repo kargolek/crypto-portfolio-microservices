@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { TotalValueService } from 'src/app/value/service/total-value.service';
 import { UserBalance } from '../../model/user-balance';
 import { BalanceService } from '../../service/balance.service';
 
@@ -17,7 +18,7 @@ export class AbstractBalanceComponent {
 
   url: string = this.balanceService.getEthereumWalletBalancesURL
 
-  constructor(public balanceService: BalanceService) { }
+  constructor(public balanceService: BalanceService, private totalValueService: TotalValueService) { }
 
   ngOnInit(): void {
     this.dataSource$ = this.balanceService.getWalletsBalance(this.url).pipe(
@@ -25,12 +26,12 @@ export class AbstractBalanceComponent {
     );
 
     this.data$.subscribe(data => {
-      this.amountData = [data.symbol, data.total.totalQuantity, "$" + data.total.totalBalance];
+      this.amountData = [data.symbol, data.total.totalQuantity, data.total.totalBalance];
     });
 
-    this.balanceService.getDataSource().subscribe(data =>
-      this.rows = data.balance
-    );
+    this.balanceService.getDataSource().subscribe(data => {
+      this.rows = data.balance;
+    });
 
     this.toggleView();
   }
@@ -59,7 +60,7 @@ export class AbstractBalanceComponent {
     return this.rows.length;
   }
 
-  setTokenName(): string{
+  setTokenName(): string {
     return "token_name"
   }
 }

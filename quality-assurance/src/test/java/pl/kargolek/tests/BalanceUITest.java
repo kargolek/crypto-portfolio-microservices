@@ -32,8 +32,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @JavascriptDriverExecutor
 public class BalanceUITest {
 
-    private static final String RED_LOW_VALUE = "rgba(255, 77, 0, 1)";
-    private static final String GREEN_HIGHER_VALUE = "rgba(7, 243, 107, 1)";
     private String appBaseURL;
     private InitPages pages;
 
@@ -566,22 +564,22 @@ public class BalanceUITest {
                 .getCssValue("color");
 
         softAssertions.assertThat(element1hCssColorValue)
-                .isEqualTo(RED_LOW_VALUE);
+                .isEqualTo(data.getRedColorLowerValues());
 
         softAssertions.assertThat(element24hCssColorValue)
-                .isEqualTo(RED_LOW_VALUE);
+                .isEqualTo(data.getRedColorLowerValues());
 
         softAssertions.assertThat(element7dCssColorValue)
-                .isEqualTo(RED_LOW_VALUE);
+                .isEqualTo(data.getRedColorLowerValues());
 
         softAssertions.assertThat(element30dCssColorValue)
-                .isEqualTo(RED_LOW_VALUE);
+                .isEqualTo(data.getRedColorLowerValues());
 
         softAssertions.assertThat(element60dCssColorValue)
-                .isEqualTo(RED_LOW_VALUE);
+                .isEqualTo(data.getRedColorLowerValues());
 
         softAssertions.assertThat(element90dCssColorValue)
-                .isEqualTo(RED_LOW_VALUE);
+                .isEqualTo(data.getRedColorLowerValues());
 
         softAssertions.assertAll();
     }
@@ -642,22 +640,22 @@ public class BalanceUITest {
                 .getCssValue("color");
 
         softAssertions.assertThat(element1hCssColorValue)
-                .isEqualTo(GREEN_HIGHER_VALUE);
+                .isEqualTo(data.getGreenColorHigherValues());
 
         softAssertions.assertThat(element24hCssColorValue)
-                .isEqualTo(GREEN_HIGHER_VALUE);
+                .isEqualTo(data.getGreenColorHigherValues());
 
         softAssertions.assertThat(element7dCssColorValue)
-                .isEqualTo(GREEN_HIGHER_VALUE);
+                .isEqualTo(data.getGreenColorHigherValues());
 
         softAssertions.assertThat(element30dCssColorValue)
-                .isEqualTo(GREEN_HIGHER_VALUE);
+                .isEqualTo(data.getGreenColorHigherValues());
 
         softAssertions.assertThat(element60dCssColorValue)
-                .isEqualTo(GREEN_HIGHER_VALUE);
+                .isEqualTo(data.getGreenColorHigherValues());
 
         softAssertions.assertThat(element90dCssColorValue)
-                .isEqualTo(GREEN_HIGHER_VALUE);
+                .isEqualTo(data.getGreenColorHigherValues());
 
         softAssertions.assertAll();
     }

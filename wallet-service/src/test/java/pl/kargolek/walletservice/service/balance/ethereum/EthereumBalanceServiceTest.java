@@ -108,8 +108,19 @@ public class EthereumBalanceServiceTest extends BaseParamTest {
                 );
 
         assertThat(expected.getTotal())
-                .extracting(UserTotalBalance::getTotalQuantity, UserTotalBalance::getTotalBalance)
-                .contains(new BigDecimal("30"), new BigDecimal("54015.00"));
+                .extracting(
+                        UserTotalBalance::getTotalQuantity,
+                        UserTotalBalance::getTotalBalance,
+                        UserTotalBalance::getTotalBalance1h,
+                        UserTotalBalance::getTotalBalance24h,
+                        UserTotalBalance::getTotalBalance7d)
+                .containsExactly(
+                        new BigDecimal("30"),
+                        new BigDecimal("54015.00"),
+                        new BigDecimal("48343.43"),
+                        new BigDecimal("48073.35"),
+                        new BigDecimal("47803.27")
+                );
     }
 
     @Test

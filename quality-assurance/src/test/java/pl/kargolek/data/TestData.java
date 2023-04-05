@@ -79,6 +79,19 @@ public class TestData {
             .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
             .build();
 
+    private final Price polygonPricePastNegative = Price.builder()
+            .id(2L)
+            .cryptocurrencyId(2L)
+            .priceCurrent(new BigDecimal("1000.54321"))
+            .percentChange1h(new BigDecimal("-10.0"))
+            .percentChange24h(new BigDecimal("-10.0"))
+            .percentChange7d(new BigDecimal("-10.0"))
+            .percentChange30d(new BigDecimal("-10.0"))
+            .percentChange60d(new BigDecimal("-10.0"))
+            .percentChange90d(new BigDecimal("-10.0"))
+            .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
+            .build();
+
     private final Price avalanchePrice = Price.builder()
             .id(3L)
             .cryptocurrencyId(3L)
@@ -92,6 +105,19 @@ public class TestData {
             .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
             .build();
 
+    private final Price avalanchePricePastNegative = Price.builder()
+            .id(3L)
+            .cryptocurrencyId(3L)
+            .priceCurrent(new BigDecimal("1000.54321"))
+            .percentChange1h(new BigDecimal("-10.0"))
+            .percentChange24h(new BigDecimal("-10.0"))
+            .percentChange7d(new BigDecimal("-10.0"))
+            .percentChange30d(new BigDecimal("-10.0"))
+            .percentChange60d(new BigDecimal("-10.0"))
+            .percentChange90d(new BigDecimal("-10.0"))
+            .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
+            .build();
+
     private final String walletAddressToShort = "0x189B9cBd4AfF470aF2C0102f365FC1823d85796";
     private final String walletAddressValid = "0x189B9cBd4AfF470aF2C0102f365FC1823d857965";
     private final String walletAddressToLong = "0x189B9cBd4AfF470aF2C0102f365FC1823d8579650";
@@ -102,8 +128,15 @@ public class TestData {
     private final Wallet polygonTestNetWallet = TestnetWallet.POLYGON_WALLET_1;
     private final Wallet avalancheTestNetWallet = TestnetWallet.AVALANCHE_WALLET_1;
 
+    private final Wallet ethereumTestNetWalletEmpty = TestnetWallet.ETHEREUM_WALLET_2_EMPTY;
+    private final Wallet polygonTestNetWalletEmpty = TestnetWallet.POLYGON_WALLET_2_EMPTY;
+    private final Wallet avalancheTestNetWalletEmpty = TestnetWallet.AVALANCHE_WALLET_2_EMPTY;
+
     private final String explorerAddressTestnetEthereum = "https://goerli.etherscan.io/address/";
     private final String explorerAddressTestnetPolygon = "https://mumbai.polygonscan.com/address/";
     private final String explorerAddressTestnetAvalanche = "https://testnet.snowtrace.io/address/";
+
+    private final String redColorLowerValues = "rgba(255, 77, 0, 1)";
+    private final String greenColorHigherValues = "rgba(7, 243, 107, 1)";
 
 }

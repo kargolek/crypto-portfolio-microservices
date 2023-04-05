@@ -63,14 +63,19 @@ public class BasePage {
                 .until(ExpectedConditions.visibilityOf(element));
     }
 
+    public boolean waitForElementTextToChange(WebElement element, String text, Duration timeout) {
+        return new WebDriverWait(this.driver, timeout).until(
+                ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(element, text)));
+    }
+
     @Step("Click on the element {0}")
-    public WebElement clickElement(WebElement element){
+    public WebElement clickElement(WebElement element) {
         element.click();
         return element;
     }
 
     @Step("Click on the element {0}")
-    public String getTextElement(WebElement element){
+    public String getTextElement(WebElement element) {
         return element.getText();
     }
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TotalValueService } from 'src/app/value/service/total-value.service';
 import { BalanceService } from '../../service/balance.service';
 import { AbstractBalanceComponent } from '../abstract-balance/abstract-balance.component';
 
@@ -10,8 +11,8 @@ import { AbstractBalanceComponent } from '../abstract-balance/abstract-balance.c
 })
 export class AvalancheBalanceComponent extends AbstractBalanceComponent {
 
-    constructor(balanceService: BalanceService) {
-        super(balanceService);
+    constructor(balanceService: BalanceService, totalValueService: TotalValueService) {
+        super(balanceService, totalValueService);
     }
 
     override url: string = this.balanceService.getAvalancheWalletBalancesURL;

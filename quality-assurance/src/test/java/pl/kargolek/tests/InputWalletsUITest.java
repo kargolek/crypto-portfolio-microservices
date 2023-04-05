@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Feature("Input wallet UI")
 @BaseTestConfig
 @SoftAssertion
-public class InputWalletsUITests {
+public class InputWalletsUITest {
 
     private String appBaseURL;
     private InitPages pages;

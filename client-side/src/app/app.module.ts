@@ -28,6 +28,7 @@ import { EthereumBalanceComponent } from './balance/component/ethereum-balance/e
 import { PolygonBalanceComponent } from './balance/component/polygon-balance/polygon-balance.component';
 import { AbstractBalanceComponent } from './balance/component/abstract-balance/abstract-balance.component';
 import { AvalancheBalanceComponent } from './balance/component/avalanche-balance/avalanche-balance.component';
+import { TotalValueComponent } from './value/component/total-value/total-value.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AvalancheBalanceComponent } from './balance/component/avalanche-balance
     EthereumBalanceComponent,
     PolygonBalanceComponent,
     AbstractBalanceComponent,
-    AvalancheBalanceComponent
+    AvalancheBalanceComponent,
+    TotalValueComponent
   ],
   imports: [
     BrowserModule,

@@ -11,8 +11,8 @@ import pl.kargolek.pages.balance.component.TableAmountPage;
  */
 public class EthereumTableAmountPage extends TableAmountPage {
 
-    @FindBy(css = "app-polygon-balance")
-    private WebElement polygonBalanceComponent;
+    @FindBy(css = "app-ethereum-balance")
+    private WebElement ethereumBalanceComponent;
 
     public EthereumTableAmountPage(WebDriver driver) {
         super(driver);
@@ -21,6 +21,6 @@ public class EthereumTableAmountPage extends TableAmountPage {
     @Step("Get ethereum balance component")
     @Override
     protected WebElement getParent() {
-        return this.polygonBalanceComponent;
+        return this.ethereumBalanceComponent;
     }
 }
