@@ -16,7 +16,7 @@ export class AbstractBalanceComponent {
   amountData: any;
   showDetails = 0;
 
-  url: string = this.balanceService.getEthereumWalletBalancesURL
+  url: string = this.balanceService.getEthereumWalletBalancesURL;
 
   constructor(public balanceService: BalanceService, private totalValueService: TotalValueService) { }
 

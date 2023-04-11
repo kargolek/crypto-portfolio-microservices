@@ -72,6 +72,14 @@
                   "with": "src/environments/environment.docker.ts"
                 }
               ]
+            },
+            "local": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -87,6 +95,9 @@
             },
             "docker": {
               "browserTarget": "client-side:build:docker"
+            },
+            "local": {
+              "browserTarget": "client-side:build:local"
             }
           },
           "defaultConfiguration": "development"

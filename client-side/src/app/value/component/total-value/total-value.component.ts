@@ -11,12 +11,18 @@ export class TotalValueComponent implements OnInit {
 
   public totalValueData: TotalValues;
   switchNumber: number = 0;
+  trendData: number[] = [0, 0];
 
   constructor(private totalValueService: TotalValueService) { }
 
   ngOnInit(): void {
     this.totalValueService.currentTotalValue$.subscribe(requestData => {
       this.totalValueData = requestData;
+      this.trendData = [
+        this.totalValueData.value7d,
+        this.totalValueData.value24h,
+        this.totalValueData.value1h,
+        this.totalValueData.totalValue];
     });
   }
 

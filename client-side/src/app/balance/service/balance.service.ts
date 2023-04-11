@@ -6,6 +6,7 @@ import { TotalValueService } from 'src/app/value/service/total-value.service';
 import { environment } from 'src/environments/environment';
 import { UserWallet } from '../model/user-wallet';
 import { ErrorHandlerService } from './error-handler.service';
+import { TokenTreeChartDataService } from 'src/app/shared/services/token-tree-chart-data.service';
 
 const apiGatewayURL = environment.apiGatewayURL;
 
@@ -30,7 +31,8 @@ export class BalanceService {
     private http: HttpClient,
     private errorHandler: ErrorHandlerService,
     private inputWalletsData: InputWalletsDataService,
-    private totalValueService: TotalValueService
+    private totalValueService: TotalValueService,
+    private tokenTreeChartDataService: TokenTreeChartDataService
   ) { }
 
   getWalletsBalance(url: string): Observable<UserWallet> {
@@ -40,6 +42,7 @@ export class BalanceService {
         data.balance.forEach(wallet => {
           wallet.walletAddress = this.trimAddress(wallet.walletAddress);
         });
+        this.tokenTreeChartDataService.setData(data);
         this.totalValueService.setTotalValue(data.total);
         this.dataSubject.next(data);
       }),

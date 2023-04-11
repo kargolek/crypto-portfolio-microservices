@@ -48,7 +48,7 @@ jobs:
           docker-compose up -d
 
       - name: Start selenium grid
-        run: docker-compose -f selenium-compose.yml up -d
+        run: docker-compose -f selenium-compose.yaml up -d
         working-directory: ./quality-assurance
 
       - name: List containers
@@ -66,7 +66,7 @@ jobs:
 
       - name: Stop test env
         if: always()
-        run: docker-compose -f selenium-compose.yml down
+        run: docker-compose -f selenium-compose.yaml down
         working-directory: ./quality-assurance
 
       - name: Stop backend and fronted

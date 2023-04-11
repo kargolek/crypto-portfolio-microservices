@@ -1,0 +1,38 @@
+@import '../../../../styles.scss';
+
+::ng-deep .treemap-label {
+    font-size: 0.7rem;
+    color: $text-color;
+}
+
+::ng-deep .treemap-val {
+    color: $text-color;
+}
+
+::ng-deep .tooltip {
+    fill: rgb(255, 255, 255);
+    background-color: transparent;
+    color: $text-color;
+} 
+
+::ng-deep .cell {
+
+    &{
+        opacity: 0.5;
+    }
+
+    &.active,
+    &:hover {
+        opacity: 0.6;
+        transition: opacity 100ms ease-in-out;
+    }
+}
+
+::ng-deep g {
+    outline: none;
+}
+
+:host {
+    display: block;
+    width:98.5%;
+}
