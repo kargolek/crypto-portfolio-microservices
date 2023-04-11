@@ -76,6 +76,11 @@ ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
       box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.3);
     }
 
+    .tooltip-caret.position-bottom {
+      border-bottom-color: $base-color-lighter-2-opacity;
+      box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+    }
+
     color: $text-color;
     border-radius: 15px;
     margin: 0.5rem;
