@@ -22,6 +22,12 @@ public class TotalValuePage extends BasePage {
     @FindBy(css = ".total-value-diff-percent")
     private WebElement totalPercentDiff;
 
+    @FindBy(css = ".value-chart-container")
+    private WebElement trendLineChartContainer;
+
+    @FindBy(css = "app-trend-balance-chart .ng-animating")
+    private WebElement trendAnimation;
+
     public TotalValuePage(WebDriver driver) {
         super(driver);
     }
@@ -53,4 +59,16 @@ public class TotalValuePage extends BasePage {
         this.waitForElementVisibility(totalValue, Duration.ofSeconds(10)).click();
         return this;
     }
+
+    @Step("Get trend line chart container")
+    public WebElement getTrendLineChartContainer(){
+        return this.waitForElementVisibility(trendLineChartContainer, Duration.ofSeconds(10));
+    }
+    @Step("Wait for trend chart animation stop")
+    public TotalValuePage waitForStopAnimation(){
+        this.waitForElementInvisibility(trendAnimation, Duration.ofSeconds(5));
+        return this;
+    }
+
+
 }
