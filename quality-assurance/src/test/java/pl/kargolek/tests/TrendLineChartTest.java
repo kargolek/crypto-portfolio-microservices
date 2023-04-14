@@ -64,7 +64,7 @@ public class TrendLineChartTest {
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
-    @Story("As user when wallet balance not empty I want to see trend line for 7d ")
+    @Story("As user when wallet balance empty, then I want to see flat trend line for 7d ")
     @Description("When balance empty, chart shows flat line")
     public void whenWalletBalanceEmpty_thenChartShowsData(TestData data, VisualCompareService service) {
         var page = this.pages.getHomePage()
@@ -111,7 +111,7 @@ public class TrendLineChartTest {
 
     @Test
     @Severity(SeverityLevel.MINOR)
-    @Story("As user when open balance page, trend line chart label is visible ")
+    @Story("As user when open balance page, trend line chart label is visible")
     public void whenOpenBalancePage_thenTrendChartLabelVisible(TestData data) {
         var page = this.pages.getHomePage()
                 .open(this.baseURL)
