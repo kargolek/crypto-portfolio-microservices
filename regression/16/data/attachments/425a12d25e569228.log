@@ -1,0 +1,190 @@
+[REQUESTS DATA]:
+
+Request:[2023-04-14T18:45:16.608467230]
+GET URL:http://172.18.0.1:4201/
+Header:{Upgrade-Insecure-Requests=1, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-14T18:45:16.608534430]
+GET URL:http://172.18.0.1:4201/runtime.js
+Header:{Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-14T18:45:16.608569530]
+GET URL:http://172.18.0.1:4201/polyfills.js
+Header:{Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-14T18:45:16.608601830]
+GET URL:http://172.18.0.1:4201/scripts.js
+Header:{Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-14T18:45:16.608632730]
+GET URL:http://172.18.0.1:4201/main.js
+Header:{Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-14T18:45:16.608664130]
+GET URL:http://172.18.0.1:4201/styles.css
+Header:{Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-14T18:45:16.608712030]
+GET URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-14T18:45:16.608750030]
+GET URL:https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2
+Header:{sec-ch-ua="Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110", Referer=http://172.18.0.1:4201/, Origin=http://172.18.0.1:4201, sec-ch-ua-mobile=?0, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36, sec-ch-ua-platform="Linux"}
+Payload:No post data
+
+
+Request:[2023-04-14T18:45:16.608790130]
+GET URL:http://172.18.0.1:4201/assets/icons/ethereum.svg
+Header:{Referer=http://172.18.0.1:4201/wallet, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-14T18:45:16.607822930]
+GET URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-14T18:45:16.607854430]
+GET URL:http://172.18.0.1:8080/api/v1/wallet/eth/balance?wallets=0x0E510578889ce76db52686625E2E12D35D0b092e
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-14T18:45:16.607886930]
+GET URL:http://172.18.0.1:8080/api/v1/wallet/matic/balance?wallets=0x0E510578889ce76db52686625E2E12D35D0b092e
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-14T18:45:16.607920330]
+GET URL:http://172.18.0.1:8080/api/v1/wallet/avax/balance?wallets=0x0E510578889ce76db52686625E2E12D35D0b092e
+Header:{Accept=application/json, text/plain, */*, Referer=http://172.18.0.1:4201/, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-14T18:45:16.607953730]
+GET URL:http://172.18.0.1:4201/assets/icons/polygon-matic-logo.svg
+Header:{Referer=http://172.18.0.1:4201/balance, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+Request:[2023-04-14T18:45:16.607985430]
+GET URL:http://172.18.0.1:4201/assets/icons/avalanche-avax-logo.svg
+Header:{Referer=http://172.18.0.1:4201/balance, User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36}
+Payload:No post data
+
+
+[RESPONSE DATA]:
+
+Response: [2023-04-14T18:45:16.609032730]
+URL:http://172.18.0.1:4201/runtime.js
+Status:200 OK
+Header:{Date=Fri, 14 Apr 2023 18:45:12 GMT, Last-Modified=Fri, 14 Apr 2023 18:42:05 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="64399e7d-384", Content-Length=900, Content-Type=application/javascript}
+Body:(()=>{"use strict";var e,v={},_={};function a(e){var f=_[e];if(void 0!==f)return f.exports;var r=_[e
+
+
+Response: [2023-04-14T18:45:16.609069930]
+URL:http://172.18.0.1:4201/polyfills.js
+Status:200 OK
+Header:{Date=Fri, 14 Apr 2023 18:45:12 GMT, Last-Modified=Fri, 14 Apr 2023 18:42:05 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="64399e7d-845e", Content-Length=33886, Content-Type=application/javascript}
+Body:"use strict";(self.webpackChunkclient_side=self.webpackChunkclient_side||[]).push([[429],{583:()=>{!
+
+
+Response: [2023-04-14T18:45:16.609105030]
+URL:http://172.18.0.1:4201/styles.css
+Status:200 OK
+Header:{Date=Fri, 14 Apr 2023 18:45:12 GMT, Last-Modified=Fri, 14 Apr 2023 18:42:05 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="64399e7d-1bd0", Content-Length=7120, Content-Type=text/css}
+Body:body{background-color:#1d2448;font-family:monospace}.particles-js-canvas-el{position:fixed;top:0;z-i
+
+
+Response: [2023-04-14T18:45:16.609139030]
+URL:http://172.18.0.1:4201/scripts.js
+Status:200 OK
+Header:{Date=Fri, 14 Apr 2023 18:45:12 GMT, Last-Modified=Fri, 14 Apr 2023 18:42:05 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="64399e7d-589c", Content-Length=22684, Content-Type=application/javascript}
+Body:var pJS=function(c,d){var l=document.querySelector("#"+c+" > .particles-js-canvas-el");this.pJS={can
+
+
+Response: [2023-04-14T18:45:16.609171630]
+URL:http://172.18.0.1:4201/main.js
+Status:200 OK
+Header:{Date=Fri, 14 Apr 2023 18:45:12 GMT, Last-Modified=Fri, 14 Apr 2023 18:42:05 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="64399e7d-a803a", Content-Length=688186, Content-Type=application/javascript}
+Body:"use strict";(self.webpackChunkclient_side=self.webpackChunkclient_side||[]).push([[179],{877:(Ma,sr
+
+
+Response: [2023-04-14T18:45:16.609204430]
+URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Status:200 OK
+Header:{Access-Control-Allow-Origin=*, Date=Fri, 14 Apr 2023 18:45:12 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:[{"id":1,"name":"Ethereum","symbol":"ETH","coinMarketId":1027,"lastUpdate":"2023-04-14T18:45:12.3860
+
+
+Response: [2023-04-14T18:45:16.609237130]
+URL:https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2
+Status:200 
+Header:{date=Tue, 11 Apr 2023 17:01:17 GMT, x-content-type-options=nosniff, age=265418, content-security-policy-report-only=require-trusted-types-for 'script'; report-uri https://csp.withgoogle.com/csp/apps-themes, cross-origin-resource-policy=cross-origin, alt-svc=h3=":443"; ma=2592000,h3-29=":443"; ma=2592000, content-length=128616, x-xss-protection=0, last-modified=Tue, 07 Mar 2023 19:52:07 GMT, server=sffe, cross-origin-opener-policy=same-origin; report-to="apps-themes", report-to={"group":"apps-themes","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/apps-themes"}]}, content-type=font/woff2, access-control-allow-origin=*, cache-control=public, max-age=31536000, accept-ranges=bytes, timing-allow-origin=*, expires=Wed, 10 Apr 2024 17:01:17 GMT}
+Body:d09GMgABAAAAAfZoAA4AAAAFfqwAAfYOAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhwbDByD30QGYADrDhEICpDCfIzGRgvFWAAB
+
+
+Response: [2023-04-14T18:45:16.609274430]
+URL:http://172.18.0.1:4201/assets/icons/ethereum.svg
+Status:200 OK
+Header:{Date=Fri, 14 Apr 2023 18:44:56 GMT, Last-Modified=Fri, 14 Apr 2023 18:42:05 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="64399e7d-541", Content-Length=1345, Content-Type=image/svg+xml}
+Body:PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNW
+
+
+Response: [2023-04-14T18:45:16.608306330]
+URL:http://172.18.0.1:8080/api/v1/cryptocurrency
+Status:200 OK
+Header:{Access-Control-Allow-Origin=*, Date=Fri, 14 Apr 2023 18:45:12 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:[{"id":1,"name":"Ethereum","symbol":"ETH","coinMarketId":1027,"lastUpdate":"2023-04-14T18:45:12.3860
+
+
+Response: [2023-04-14T18:45:16.608339130]
+URL:http://172.18.0.1:8080/api/v1/wallet/matic/balance?wallets=0x0E510578889ce76db52686625E2E12D35D0b092e
+Status:200 OK
+Header:{Access-Control-Allow-Origin=*, Date=Fri, 14 Apr 2023 18:45:13 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:{"name":"Polygon","symbol":"MATIC","total":{"totalQuantity":0,"totalBalance":0.00,"totalBalance1h":0
+
+
+Response: [2023-04-14T18:45:16.608372830]
+URL:http://172.18.0.1:8080/api/v1/wallet/eth/balance?wallets=0x0E510578889ce76db52686625E2E12D35D0b092e
+Status:200 OK
+Header:{Access-Control-Allow-Origin=*, Date=Fri, 14 Apr 2023 18:45:13 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:{"name":"Ethereum","symbol":"ETH","total":{"totalQuantity":0,"totalBalance":0.00,"totalBalance1h":0.
+
+
+Response: [2023-04-14T18:45:16.608405930]
+URL:http://172.18.0.1:8080/api/v1/wallet/avax/balance?wallets=0x0E510578889ce76db52686625E2E12D35D0b092e
+Status:200 OK
+Header:{Access-Control-Allow-Origin=*, Date=Fri, 14 Apr 2023 18:45:13 GMT, transfer-encoding=chunked, Vary=Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Content-Type=application/json}
+Body:{"name":"Avalanche","symbol":"AVAX","total":{"totalQuantity":0,"totalBalance":0.00,"totalBalance1h":
+
+
+Response: [2023-04-14T18:45:16.608438030]
+URL:http://172.18.0.1:4201/assets/icons/polygon-matic-logo.svg
+Status:200 OK
+Header:{Date=Fri, 14 Apr 2023 18:45:00 GMT, Last-Modified=Fri, 14 Apr 2023 18:42:05 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="64399e7d-455", Content-Length=1109, Content-Type=image/svg+xml}
+Body:PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI0
+
+
+Response: [2023-04-14T18:45:16.608471130]
+URL:http://172.18.0.1:4201/assets/icons/avalanche-avax-logo.svg
+Status:200 OK
+Header:{Date=Fri, 14 Apr 2023 18:45:00 GMT, Last-Modified=Fri, 14 Apr 2023 18:42:05 GMT, Server=nginx/1.21.5, Accept-Ranges=bytes, ETag="64399e7d-653", Content-Length=1619, Content-Type=image/svg+xml}
+Body:PHN2ZyB3aWR0aD0iMTUwMyIgaGVpZ2h0PSIxNTA0IiB2aWV3Qm94PSIwIDAgMTUwMyAxNTA0IiBmaWxsPSJub25lIiB4bWxucz0i
