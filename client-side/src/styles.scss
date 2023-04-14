@@ -1,13 +1,17 @@
 $base-color: #1d2448;
 $base-color-lighter: #273162;
 $base-color-lighter-2: rgb(63, 75, 138);
-$base-color-lighter-2-opacity: rgb(63, 75, 138, 0.7);
+$base-color-lighter-2-opacity: rgb(63, 75, 138);
 $base-color-darker: #1a1f3d;
 $base-color-lighter-input: #262c4a;
 $border-color: #414974;
 $text-color: #dddddd;
 $text-color-darker: #b3b3b3;
 $text-value-base-color: #c9ae18;
+
+$eth-background-color: #1b3a6b;
+$matic-background-color: #1b426b;
+$avax-background-color: #1b4b6b;
 
 body {
     background-color: $base-color;
@@ -27,6 +31,7 @@ body {
     border-radius: 15px;
     margin: 0.8rem;
     font-size: 0.8rem;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.3);
 }
 
 #toast-container {
@@ -38,26 +43,25 @@ body {
 #toast-container>.toast-error {
     background-image: none;
     background-color: #cf5858;
-    box-shadow: none;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.3);
 
 }
 
 #toast-container>.toast-success {
     background-image: none;
     background-color: #2eae67;
-    box-shadow: none;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.3);
 
 }
 
 #toast-container>.toast-info {
     background-image: none;
     background-color: #256c95;
-    box-shadow: none;
-
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.3);
 }
 
 #toast-container .ngx-toastr:hover {
-    box-shadow: none;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.3);
     opacity: 100%;
     cursor: pointer;
 }
@@ -65,6 +69,25 @@ body {
 .toast-top-full-width {
     margin-top: 4.3rem;
 }
+
+ngx-tooltip-content.ngx-charts-tooltip-content.type-tooltip {
+    .tooltip-caret.position-top {
+      border-top-color: $base-color-lighter-2-opacity;
+      box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    .tooltip-caret.position-bottom {
+      border-bottom-color: $base-color-lighter-2-opacity;
+      box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    color: $text-color;
+    border-radius: 15px;
+    margin: 0.5rem;
+    font-size: 0.7rem;
+    background-color: $base-color-lighter-2-opacity;
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+  }
 
 ::-webkit-scrollbar {
     width: 20px;

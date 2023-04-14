@@ -24,6 +24,7 @@
         <allure-maven.version>2.12.0</allure-maven.version>
         <commons.io.version>2.11.0</commons.io.version>
         <mysql.connector.version>8.0.32</mysql.connector.version>
+        <awaitility.version>4.2.0</awaitility.version>
     </properties>
 
     <dependencies>
@@ -105,6 +106,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

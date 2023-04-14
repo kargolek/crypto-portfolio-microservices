@@ -1,7 +1,7 @@
 export const ParticlesConfig = {
     particles: {
       number: {
-        value: 90,
+        value: 50,
         density: {
           enable: true,
           value_area: 1400
@@ -17,7 +17,7 @@ export const ParticlesConfig = {
           color: '#E9E9E9'
         },
         polygon: {
-          nb_sides: 6
+          nb_sides: 5
         }
       },
       opacity: {
@@ -25,7 +25,7 @@ export const ParticlesConfig = {
         random: true,
         anim: {
           enable: true,
-          speed: 0.8,
+          speed: 0.7,
           opacity_min: 0.25,
           sync: true
         }
@@ -49,7 +49,7 @@ export const ParticlesConfig = {
       },
       move: {
         enable: true,
-        speed: 8,
+        speed: 7,
         direction: 'none',
         random: true,
         straight: false,
@@ -88,5 +88,5 @@ export const ParticlesConfig = {
         }
       }
     },
-    retina_detect: true
+    retina_detect: false
  };

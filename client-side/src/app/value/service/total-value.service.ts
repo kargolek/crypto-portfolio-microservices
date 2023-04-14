@@ -10,14 +10,17 @@ export class TotalValueService {
 
   private totalBalances: TotalBalance[] = [];
 
-  private totalValueSubject = new BehaviorSubject<TotalValues>({
+  private totalValueSubject: BehaviorSubject<TotalValues> = new BehaviorSubject<TotalValues>({
     totalValue: 0,
     totalValue1h: 0,
     totalValue24h: 0,
     totalValue7d: 0,
     percentageChange1h: 0,
     percentageChange24h: 0,
-    percentageChange7d: 0
+    percentageChange7d: 0,
+    value1h: 0,
+    value24h: 0,
+    value7d: 0
   });
 
   public currentTotalValue$ = this.totalValueSubject.asObservable();
@@ -30,24 +33,24 @@ export class TotalValueService {
     if (this.totalBalances.length === 3) {
 
       let totalValue = 0;
-      let totalValue1h = 0;
-      let totalValue24h = 0;
-      let totalValue7d = 0;
+      let totalOverallValue1h = 0;
+      let totalOverallValue24h = 0;
+      let totalOverallValue7d = 0;
 
       this.totalBalances.forEach(element => {
         totalValue += element.totalBalance;
-        totalValue1h += element.totalBalance1h;
-        totalValue24h += element.totalBalance24h;
-        totalValue7d += element.totalBalance7d;
+        totalOverallValue1h += element.totalBalance1h;
+        totalOverallValue24h += element.totalBalance24h;
+        totalOverallValue7d += element.totalBalance7d;
       });
 
-      let resultTotalValue1h = totalValue - totalValue1h;
-      let resultTotalValue24h = totalValue - totalValue24h;
-      let resultTotalValue7d = totalValue - totalValue7d;
+      let resultTotalValue1h = totalValue - totalOverallValue1h;
+      let resultTotalValue24h = totalValue - totalOverallValue24h;
+      let resultTotalValue7d = totalValue - totalOverallValue7d;
 
-      let resultPercent1h = this.calculatePercentageChange(totalValue, totalValue1h);
-      let resultPercent24h = this.calculatePercentageChange(totalValue, totalValue24h);
-      let resultPercent7d = this.calculatePercentageChange(totalValue, totalValue7d);
+      let resultPercent1h = this.calculatePercentageChange(totalValue, totalOverallValue1h);
+      let resultPercent24h = this.calculatePercentageChange(totalValue, totalOverallValue24h);
+      let resultPercent7d = this.calculatePercentageChange(totalValue, totalOverallValue7d);
 
       const totalValues: TotalValues = {
         totalValue: totalValue,
@@ -56,7 +59,10 @@ export class TotalValueService {
         totalValue7d: resultTotalValue7d,
         percentageChange1h: resultPercent1h,
         percentageChange24h: resultPercent24h,
-        percentageChange7d: resultPercent7d
+        percentageChange7d: resultPercent7d,
+        value1h: totalOverallValue1h,
+        value24h: totalOverallValue24h,
+        value7d: totalOverallValue7d
       };
       this.totalValueSubject.next(totalValues);
 

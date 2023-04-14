@@ -9,6 +9,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { SatPopoverModule } from '@ncstate/sat-popover';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { TrendModule } from 'ngx-trend';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +31,8 @@ import { PolygonBalanceComponent } from './balance/component/polygon-balance/pol
 import { AbstractBalanceComponent } from './balance/component/abstract-balance/abstract-balance.component';
 import { AvalancheBalanceComponent } from './balance/component/avalanche-balance/avalanche-balance.component';
 import { TotalValueComponent } from './value/component/total-value/total-value.component';
+import { TreeMapValueChartComponent } from './shared/component/tree-map-value-chart/tree-map-value-chart.component';
+import { TrendBalanceChartComponent } from './shared/component/trend-balance-chart/trend-balance-chart.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +47,9 @@ import { TotalValueComponent } from './value/component/total-value/total-value.c
     PolygonBalanceComponent,
     AbstractBalanceComponent,
     AvalancheBalanceComponent,
-    TotalValueComponent
+    TotalValueComponent,
+    TreeMapValueChartComponent,
+    TrendBalanceChartComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +62,9 @@ import { TotalValueComponent } from './value/component/total-value/total-value.c
     MatListModule,
     MatToolbarModule,
     MatIconModule,
-    SatPopoverModule
+    SatPopoverModule,
+    NgxChartsModule,
+    TrendModule
   ],
   providers: [
     ToastMessageService,
