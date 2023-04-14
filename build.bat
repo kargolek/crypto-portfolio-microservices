@@ -29,8 +29,3 @@ call docker-compose -f %DOCKER_COMPOSE_FILE% up -d --build
 
 cd /d %~dp0..\crypto-portfolio-microservices\quality-assurance\
 call docker-compose -f %SELENIUM_GRID_DOCKER_COMPOSE_FILE% up -d --build
-
-call timeout 15 > NUL
-
-cd /d %~dp0..\crypto-portfolio-microservices\quality-assurance\
-call mvn clean test

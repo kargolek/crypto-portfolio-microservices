@@ -38,6 +38,7 @@ export class TreeMapValueChartComponent {
 
   @ViewChild('treeMapChartContainer') chartContainer!: ElementRef;
   dataTemp: TokenChartTreeData[] = [];
+  public isMultiDataAvailable:boolean = false;
 
   constructor(private tokenTreeChartDataService: TokenTreeChartDataService) { }
 
@@ -46,6 +47,7 @@ export class TreeMapValueChartComponent {
       tap(data => {
         if (data.length === 3) {
           this.multi = data;
+          this.isMultiDataAvailable = this.setMultiDataAvailable();
         }
       })
     ).subscribe();
@@ -70,6 +72,10 @@ export class TreeMapValueChartComponent {
     } else {
       this.view = [containerWidth + 2, containerHeight];
     }
+  }
+
+  public setMultiDataAvailable(): boolean {
+    return this.multi.every(item => item.value === 0);
   }
 
 }

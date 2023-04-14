@@ -34,17 +34,14 @@ public class TotalValueServiceTest {
     private InitPages pages;
 
     @BeforeEach
-    public void setup(TestDataSql dataSql) {
+    public void setup(TestProperty property, InitPages pages, TestDataSql dataSql) {
+        this.baseURL = property.getAppBaseURL();
+        this.pages = pages;
+
         dataSql.deleteCryptocurrenciesData();
         dataSql.insertEthereumData();
         dataSql.insertAvalancheData();
         dataSql.insertPolygonData();
-    }
-
-    @BeforeEach
-    public void setup(TestProperty property, InitPages pages) {
-        this.baseURL = property.getAppBaseURL();
-        this.pages = pages;
     }
 
     @Test

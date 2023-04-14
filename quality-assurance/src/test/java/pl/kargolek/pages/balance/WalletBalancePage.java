@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pl.kargolek.pages.BasePage;
-import pl.kargolek.pages.balance.component.TotalValuePage;
 import pl.kargolek.pages.balance.component.avalanche.AvalancheTableActionBarPage;
 import pl.kargolek.pages.balance.component.avalanche.AvalancheTableAmountPage;
 import pl.kargolek.pages.balance.component.avalanche.AvalancheTableBalancePage;
@@ -15,6 +14,8 @@ import pl.kargolek.pages.balance.component.ethereum.EthereumTableBalancePage;
 import pl.kargolek.pages.balance.component.polygon.PolygonTableActionBarPage;
 import pl.kargolek.pages.balance.component.polygon.PolygonTableAmountPage;
 import pl.kargolek.pages.balance.component.polygon.PolygonTableBalancePage;
+import pl.kargolek.pages.balance.totals.TotalValuePage;
+import pl.kargolek.pages.balance.totals.treemap.TokenTreeMapChartPage;
 
 import java.time.Duration;
 
@@ -94,9 +95,15 @@ public class WalletBalancePage extends BasePage {
     public AvalancheTableBalancePage getAvalancheTableBalancePage() {
         return new AvalancheTableBalancePage(this.driver);
     }
+
     @Step("Get total value page")
-    public TotalValuePage getTotalValuePage(){
+    public TotalValuePage getTotalValuePage() {
         return new TotalValuePage(this.driver);
+    }
+
+    @Step("Get token tree map chart page")
+    public TokenTreeMapChartPage getTokenTreeMapChartPage() {
+        return new TokenTreeMapChartPage(this.driver);
     }
 
 }
