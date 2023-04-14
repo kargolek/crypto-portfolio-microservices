@@ -1,0 +1,4 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Fri Apr 14 21:06:41 GMT 2023","Fri Apr 14 21:06:52 GMT 2023","11298","","pl.kargolek.tests.ExampleTest","","pl.kargolek.tests.ExampleTest","whenCompareDiffElement_thenFail","whenCompareDiffElement_thenFail(TestData, VisualCompareService)",""
+"passed","Fri Apr 14 21:06:52 GMT 2023","Fri Apr 14 21:07:00 GMT 2023","7457","","pl.kargolek.tests.ExampleTest","","pl.kargolek.tests.ExampleTest","whenCompareSameElement_thenPass","whenCompareSameElement_thenPass(TestData, VisualCompareService)",""
+"passed","Fri Apr 14 21:07:00 GMT 2023","Fri Apr 14 21:07:08 GMT 2023","7877","","pl.kargolek.tests.ExampleTest","","pl.kargolek.tests.ExampleTest","whenCompareSameElementWithDiffData_thenFail","whenCompareSameElementWithDiffData_thenFail(TestData, VisualCompareService)",""
