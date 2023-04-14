@@ -36,6 +36,9 @@ public class BasePage {
     public WebElement waitForElementVisibility(WebElement element, Duration timeout) {
         return new WebDriverWait(this.driver, timeout).until(ExpectedConditions.visibilityOf(element));
     }
+    public Boolean waitForElementInvisibility(WebElement element, Duration timeout) {
+        return new WebDriverWait(this.driver, timeout).until(ExpectedConditions.invisibilityOf(element));
+    }
 
     public List<WebElement> waitForElementAllVisibility(WebElement element, Duration timeout) {
         return new WebDriverWait(this.driver, timeout).until(ExpectedConditions.visibilityOfAllElements(element));

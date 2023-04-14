@@ -63,34 +63,50 @@ public class TestDataSql {
         );
     }
 
-    public void insertEthereumData(){
+    public void insertEthereumData() {
         this.insertCryptocurrencyData(this.data.getEthereum());
         this.insertPriceData(this.data.getEthereumPrice());
     }
 
-    public void insertEthereumDataPricePastNegative(){
+    public void insertEthereumDataPricePastNegative() {
         this.insertCryptocurrencyData(this.data.getEthereum());
         this.insertPriceData(this.data.getEthereumPricePastNegative());
     }
 
-    public void insertPolygonData(){
+    public void insertEthereumDataPricePastNegativeMinus10Each() {
+        this.insertCryptocurrencyData(this.data.getEthereum());
+        this.insertPriceData(this.data.getEthereumPricePastNegativeMinus10Each());
+    }
+
+
+    public void insertPolygonData() {
         this.insertCryptocurrencyData(this.data.getPolygon());
         this.insertPriceData(this.data.getPolygonPrice());
     }
 
-    public void insertPolygonDataPricePastNegative(){
+    public void insertPolygonDataPricePastNegative() {
         this.insertCryptocurrencyData(this.data.getPolygon());
         this.insertPriceData(this.data.getPolygonPricePastNegative());
     }
 
-    public void insertAvalancheData(){
+    public void insertPolygonDataPricePastNegativeMinus10Each() {
+        this.insertCryptocurrencyData(this.data.getPolygon());
+        this.insertPriceData(this.data.getPolygonPricePastNegativeMinus10Each());
+    }
+
+    public void insertAvalancheData() {
         this.insertCryptocurrencyData(this.data.getAvalanche());
         this.insertPriceData(this.data.getAvalanchePrice());
     }
 
-    public void insertAvalancheDataPricePastNegative(){
+    public void insertAvalancheDataPricePastNegative() {
         this.insertCryptocurrencyData(this.data.getAvalanche());
         this.insertPriceData(this.data.getAvalanchePricePastNegative());
+    }
+
+    public void insertAvalancheDataPricePastNegativeMinus10Each() {
+        this.insertCryptocurrencyData(this.data.getAvalanche());
+        this.insertPriceData(this.data.getAvalanchePricePastNegativeMinus10Each());
     }
 
 }

@@ -61,7 +61,7 @@ jobs:
           time: 15s
 
       - name: Regression test
-        run: mvn test -Dgroups="TokenBalanceUI"
+        run: mvn test -Dgroups="TrendLineChartUI"
         working-directory: ./quality-assurance
 
       - name: Stop test env

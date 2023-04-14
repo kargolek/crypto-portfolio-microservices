@@ -66,6 +66,20 @@ public class TestData {
             .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
             .build();
 
+    private final Price ethereumPricePastNegativeMinus10Each = Price.builder()
+            .id(1L)
+            .cryptocurrencyId(1L)
+            .priceCurrent(new BigDecimal("1000.54321"))
+            .percentChange1h(new BigDecimal("-10.0"))
+            .percentChange24h(new BigDecimal("-20.0"))
+            .percentChange7d(new BigDecimal("-30.0"))
+            .percentChange30d(new BigDecimal("-40.0"))
+            .percentChange60d(new BigDecimal("-50.0"))
+            .percentChange90d(new BigDecimal("-60.0"))
+            .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
+            .build();
+
+
     private final Price polygonPrice = Price.builder()
             .id(2L)
             .cryptocurrencyId(2L)
@@ -92,6 +106,20 @@ public class TestData {
             .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
             .build();
 
+    private final Price polygonPricePastNegativeMinus10Each = Price.builder()
+            .id(2L)
+            .cryptocurrencyId(2L)
+            .priceCurrent(new BigDecimal("1000.54321"))
+            .percentChange1h(new BigDecimal("-10.0"))
+            .percentChange24h(new BigDecimal("-20.0"))
+            .percentChange7d(new BigDecimal("-30.0"))
+            .percentChange30d(new BigDecimal("-40.0"))
+            .percentChange60d(new BigDecimal("-50.0"))
+            .percentChange90d(new BigDecimal("-60.0"))
+            .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
+            .build();
+
+
     private final Price avalanchePrice = Price.builder()
             .id(3L)
             .cryptocurrencyId(3L)
@@ -115,6 +143,19 @@ public class TestData {
             .percentChange30d(new BigDecimal("-10.0"))
             .percentChange60d(new BigDecimal("-10.0"))
             .percentChange90d(new BigDecimal("-10.0"))
+            .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
+            .build();
+
+    private final Price avalanchePricePastNegativeMinus10Each = Price.builder()
+            .id(3L)
+            .cryptocurrencyId(3L)
+            .priceCurrent(new BigDecimal("1000.54321"))
+            .percentChange1h(new BigDecimal("-10.0"))
+            .percentChange24h(new BigDecimal("-20.0"))
+            .percentChange7d(new BigDecimal("-30.0"))
+            .percentChange30d(new BigDecimal("-40.0"))
+            .percentChange60d(new BigDecimal("-50.0"))
+            .percentChange90d(new BigDecimal("-60.0"))
             .lastUpdate(LocalDateTime.now(ZoneOffset.UTC))
             .build();
 
