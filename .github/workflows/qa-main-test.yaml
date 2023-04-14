@@ -64,7 +64,7 @@ jobs:
 
       - name: Stop test env
         if: always()
-        run: docker-compose -f selenium-compose.yml down
+        run: docker-compose -f selenium-compose.yaml down
         working-directory: ./quality-assurance
 
       - name: Stop backend and fronted
