@@ -28,6 +28,9 @@ public class TotalValuePage extends BasePage {
     @FindBy(css = "app-trend-balance-chart .ng-animating")
     private WebElement trendAnimation;
 
+    @FindBy(css = "app-total-value .total-value-label-trend")
+    private WebElement trendLineLabel;
+
     public TotalValuePage(WebDriver driver) {
         super(driver);
     }
@@ -64,11 +67,16 @@ public class TotalValuePage extends BasePage {
     public WebElement getTrendLineChartContainer(){
         return this.waitForElementVisibility(trendLineChartContainer, Duration.ofSeconds(10));
     }
+
     @Step("Wait for trend chart animation stop")
     public TotalValuePage waitForStopAnimation(){
         this.waitForElementInvisibility(trendAnimation, Duration.ofSeconds(5));
         return this;
     }
 
+    @Step("Get trend line chart label")
+    public WebElement getTrendChartLabel(){
+        return this.waitForElementVisibility(this.trendLineLabel, Duration.ofSeconds(10));
+    }
 
 }

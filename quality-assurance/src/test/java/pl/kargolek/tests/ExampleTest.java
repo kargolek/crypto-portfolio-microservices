@@ -48,8 +48,7 @@ public class ExampleTest {
                 .enterKeyPress()
                 .getTotalValuePage();
 
-        var trendLineChartContainer = page.waitForTotalValueTextChange()
-                .waitForStopAnimation()
+        var trendLineChartContainer = page.waitForStopAnimation()
                 .getTrendLineChartContainer();
 
         var result = service.compareElement(trendLineChartContainer, "trend_line_chart_container");
@@ -92,7 +91,6 @@ public class ExampleTest {
         var result = service.compareElement(trendLineChartContainer, "trend_line_chart_container");
 
         assertThat(result).isGreaterThan(0.0);
-
     }
 
 }
