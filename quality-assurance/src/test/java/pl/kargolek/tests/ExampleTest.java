@@ -77,4 +77,22 @@ public class ExampleTest {
 
     }
 
+    @Test
+    public void whenCompareSameElementWithDiffData_thenFail(TestData data, VisualCompareService service) {
+        var page = this.pages.getHomePage()
+                .open(this.baseURL)
+                .inputWalletsClearText()
+                .inputWallets(data.getEthereumTestNetWalletEmpty().getAddress())
+                .enterKeyPress()
+                .getTotalValuePage();
+
+        var trendLineChartContainer = page.waitForStopAnimation()
+                .getTrendLineChartContainer();
+
+        var result = service.compareElement(trendLineChartContainer, "trend_line_chart_container");
+
+        assertThat(result).isGreaterThan(0.0);
+
+    }
+
 }
