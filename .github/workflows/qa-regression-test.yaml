@@ -49,11 +49,11 @@ jobs:
 
       - name: Start selenium grid
         run: docker-compose -f selenium-compose.yaml up -d
-        working-directory: ./quality-assurance
+        working-directory: ./quality-assurance/qa-ui
 
       - name: List containers
         run: docker ps
-        working-directory: ./quality-assurance
+        working-directory: ./quality-assurance/qa-ui
 
       - name: Sleep for 15s
         uses: juliangruber/sleep-action@v1
@@ -62,12 +62,12 @@ jobs:
 
       - name: Regression test
         run: mvn test -Dgroups="TrendLineChartUI"
-        working-directory: ./quality-assurance
+        working-directory: ./quality-assurance/qa-ui
 
       - name: Stop test env
         if: always()
         run: docker-compose -f selenium-compose.yaml down
-        working-directory: ./quality-assurance
+        working-directory: ./quality-assurance/qa-ui
 
       - name: Stop backend and fronted
         if: always()
@@ -86,7 +86,7 @@ jobs:
         if: always()
         id: allure-report
         with:
-          allure_results: quality-assurance/target/allure-results
+          allure_results: quality-assurance/qa-ui/target/allure-results
           gh_pages: gh-pages
           allure_report: allure-report
           allure_history: allure-history

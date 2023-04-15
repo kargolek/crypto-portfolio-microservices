@@ -18,7 +18,7 @@ call mvn clean package -DskipTests
 cd /d %~dp0..\crypto-portfolio-microservices\client-side\
 call ng build --configuration=%BUILD_ENV_CLIENT%
 
-cd /d %~dp0..\crypto-portfolio-microservices\quality-assurance\
+cd /d %~dp0..\crypto-portfolio-microservices\quality-assurance\qa-ui\
 call docker-compose -f %SELENIUM_GRID_DOCKER_COMPOSE_FILE% down
 
 cd /d %~dp0..\crypto-portfolio-microservices\
@@ -27,5 +27,5 @@ call docker-compose -f %DOCKER_COMPOSE_FILE% down
 cd /d %~dp0..\crypto-portfolio-microservices\
 call docker-compose -f %DOCKER_COMPOSE_FILE% up -d --build
 
-cd /d %~dp0..\crypto-portfolio-microservices\quality-assurance\
+cd /d %~dp0..\crypto-portfolio-microservices\quality-assurance\qa-ui\
 call docker-compose -f %SELENIUM_GRID_DOCKER_COMPOSE_FILE% up -d --build
