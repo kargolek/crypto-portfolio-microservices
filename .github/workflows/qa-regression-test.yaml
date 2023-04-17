@@ -80,7 +80,7 @@ jobs:
 
       - name: Copy allure results qa-api to qa-ui
         run: |
-          cp -r quality-assurance/qa-api/target/allure-results quality-assurance/qa-ui/target/allure-results
+          cp -r quality-assurance/qa-api/target/allure-results/* quality-assurance/qa-ui/target/allure-results/
 
       - name: Ls qa-api
         run: |
