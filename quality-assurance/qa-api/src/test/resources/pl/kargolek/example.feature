@@ -1,4 +1,4 @@
-Feature: User Api Test
+Feature: Example api tests
 
   Scenario: Example scenario
     Given the example something data: "1234 data test"

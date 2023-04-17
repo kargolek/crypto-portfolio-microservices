@@ -78,6 +78,11 @@ jobs:
         if: always()
         run: docker-compose down
 
+      - name: Copy Allure results to qa-ui
+        run: |
+          cp -r qa-api/target/allure-results qa-ui/target/allure-results
+        working-directory: ./quality-assurance
+
       - name: Fetch allure report history
         uses: actions/checkout@v3
         if: always()

@@ -34,8 +34,4 @@ public class WalletServiceStepDef {
         System.out.println(arg0);
     }
 
-    @Then("result expected status {int}")
-    public void resultExpectedStatus(Integer statusCode) {
-        System.out.println("Status code: " + statusCode);
-    }
 }
