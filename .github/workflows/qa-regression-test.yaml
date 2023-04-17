@@ -8,6 +8,7 @@ env:
   POLYGON_API_KEY: ${{ secrets.POLYGON_API_KEY }}
   AVALANCHE_API_KEY: ${{ secrets.AVALANCHE_API_KEY }}
   BRANCH_NAME: ${{ github.ref_name }}
+  CUCUMBER_PUBLISH_TOKEN: ${{ secrets.CUCUMBER_PUBLISH_TOKEN }}
 
 on:
   push:
@@ -63,6 +64,10 @@ jobs:
       - name: Regression test
         run: mvn test -Dgroups="TrendLineChartUI"
         working-directory: ./quality-assurance/qa-ui
+
+      - name: API test
+        run: mvn test
+        working-directory: ./quality-assurance/qa-api
 
       - name: Stop test env
         if: always()
