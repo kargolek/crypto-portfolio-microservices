@@ -1,0 +1,5 @@
+"Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
+"Token balance","Trend line chart UI","As user when wallet balance empty, then I want to see flat trend line for 7d ","0","0","1","0","0"
+"Token balance","Trend line chart UI","As user when wallet balance not empty I want to see trend line for 7d ","0","0","1","0","0"
+"Token balance","Trend line chart UI","As user when wallet balance not empty and decrease 10% each past data, trend shows correct line","0","0","1","0","0"
+"Token balance","Trend line chart UI","As user when open balance page, trend line chart label is visible","0","0","1","0","0"
