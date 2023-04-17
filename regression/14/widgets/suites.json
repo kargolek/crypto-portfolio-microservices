@@ -1,1 +1,0 @@
-{"total":2,"items":[{"uid":"a50a4606b5658bc4035b0667fcc1f2c8","name":"pl.kargolek.tests.BalanceUITest","statistic":{"failed":0,"broken":0,"skipped":0,"passed":17,"unknown":0,"total":17}},{"uid":"ca45f5e6637d8f903049cbdcd2d72901","name":"pl.kargolek.tests.TotalValueServiceTest","statistic":{"failed":0,"broken":0,"skipped":0,"passed":9,"unknown":0,"total":9}}]}
