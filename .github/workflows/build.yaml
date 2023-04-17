@@ -25,5 +25,7 @@ jobs:
 #        run: mvn -B package --file pom.xml -Dgroups="SmokeTest"
       - name: Unit Test
         run: mvn -B test -Dgroups="UnitTest"
+        working-directory: ./crypto-price-service/
       - name: Integration Test
         run: mvn -B test -Dgroups="IntegrationTest"
+        working-directory: ./crypto-price-service/
