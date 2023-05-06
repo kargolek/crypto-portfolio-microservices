@@ -1,0 +1,1 @@
+{"status":"BAD_REQUEST","timestamp":"2023-05-06T19:18:18.89532287","message":"Duplicate entry '1027' for key 'cryptocurrency.UniqueCoinMarketCapId'"}

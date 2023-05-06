@@ -1,0 +1,1 @@
+{"status":"BAD_REQUEST","timestamp":"2023-05-06T19:18:20.087981883","message":"Server status code: 400, message: Invalid value for \"symbol\": \"SOMEUNKNOWNCRYPTO\""}
