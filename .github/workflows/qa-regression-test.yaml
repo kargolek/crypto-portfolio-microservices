@@ -82,14 +82,6 @@ jobs:
         run: |
           cp -r quality-assurance/qa-api/target/allure-results/* quality-assurance/qa-ui/target/allure-results/
 
-      - name: Ls qa-api
-        run: |
-          ls quality-assurance/qa-api/target/allure-results
-
-      - name: Ls qa-ui
-        run: |
-          ls quality-assurance/qa-ui/target/allure-results
-
       - name: Fetch allure report history
         uses: actions/checkout@v3
         if: always()
