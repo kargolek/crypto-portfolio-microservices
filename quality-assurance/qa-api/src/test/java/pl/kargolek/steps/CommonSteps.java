@@ -35,10 +35,16 @@ public class CommonSteps {
         dataSql.insertAvalancheData();
     }
 
-    @And("adding token data to db")
-    public void addingTokenDataToDb(List<Map<String, String>> data) {
-        var mappedEntries = DataTableMapper.map(data);
-        mappedEntries.forEach(dataSql::insertCryptocurrencyTableData);
+    @And("adding tokens default data to db")
+    public void tokenDataToDb() {
+        dataSql.insertEthereumData();
+        dataSql.insertAvalancheData();
+        dataSql.insertPolygonData();
     }
 
+    @And("adding token data to db")
+    public void addingTokenDataToDb(List<Map<String, String>> data) {
+        var mappedEntries = DataTableMapper.mapCryptocurrencyTableDto(data);
+        mappedEntries.forEach(dataSql::insertCryptocurrencyTableData);
+    }
 }

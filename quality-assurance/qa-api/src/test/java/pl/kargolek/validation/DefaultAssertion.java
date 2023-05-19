@@ -1,15 +1,12 @@
 package pl.kargolek.validation;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import io.cucumber.datatable.DataTable;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.groups.Tuple;
 import pl.kargolek.data.TestData;
-import pl.kargolek.data.dto.CryptocurrencyDTO;
-import pl.kargolek.data.dto.CryptocurrencyTableDTO;
-import pl.kargolek.data.dto.PlatformDTO;
-import pl.kargolek.data.dto.PriceDTO;
+import pl.kargolek.data.dto.*;
+import pl.kargolek.mapper.DataTableMapper;
+import pl.kargolek.mapper.JsonDataMapper;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -23,14 +20,12 @@ import static org.assertj.core.groups.Tuple.tuple;
  */
 public class DefaultAssertion {
 
-    private static final ObjectMapper mapper = new ObjectMapper()
-            .registerModule(new JavaTimeModule());
     private static final TestData data = new TestData();
 
     public static void assertJsonDataCryptoPriceService(String jsonData,
                                                         String jsonDataName,
                                                         CryptocurrencyTableDTO tokenTableData) {
-        var jsonCryptocurrencyDTO = mapJsonData(jsonData);
+        var jsonCryptocurrencyDTO = JsonDataMapper.mapCryptocurrencyDtoJsonData(jsonData);
         switch (jsonDataName.toLowerCase()) {
             case "ethereum-default" -> {
                 assertEthereumDefault(jsonCryptocurrencyDTO);
@@ -50,7 +45,7 @@ public class DefaultAssertion {
     public static void assertArrayJsonDataCryptoPriceService(String response,
                                                              String jsonDataName,
                                                              List<CryptocurrencyTableDTO> tableData) {
-        var cryptocurrencyDTOS = mapArrayJsonData(response);
+        var cryptocurrencyDTOS = JsonDataMapper.mapCryptocurrencyDtoArrayJsonData(response);
         switch (jsonDataName.toLowerCase()) {
             case "tokens-table" -> assertArrayTokenTable(cryptocurrencyDTOS, tableData);
             default -> throw new RuntimeException(
@@ -58,20 +53,69 @@ public class DefaultAssertion {
         }
     }
 
-    private static CryptocurrencyDTO mapJsonData(String json) {
-        try {
-            return mapper.readValue(json, CryptocurrencyDTO.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(String.format("Unable to map json data from response:%s", json));
-        }
+    public static void assertJsonWalletServiceNameSymbol(String response, DataTable table) {
+        var wallet = JsonDataMapper.mapWalletDtoJsonData(response);
+        var mappedTable = table.asMaps(String.class, String.class).stream()
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No data in table symbol name"));
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(wallet.getName()).isEqualTo(mappedTable.get("name"));
+        softAssertions.assertThat(wallet.getSymbol()).isEqualTo(mappedTable.get("symbol"));
+        softAssertions.assertAll();
     }
 
-    private static CryptocurrencyDTO[] mapArrayJsonData(String json) {
-        try {
-            return mapper.readValue(json, CryptocurrencyDTO[].class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(String.format("Unable to map json data from response:%s", json));
-        }
+    public static void assertJsonWalletServiceTotalQuantity(String response, DataTable table) {
+        var wallet = JsonDataMapper.mapWalletDtoJsonData(response);
+        var tableTotalDto = DataTableMapper.mapTotalDto(table.asMaps());
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(wallet.getTotal().getTotalQuantity())
+                .isEqualTo(tableTotalDto.getTotalQuantity());
+        softAssertions.assertThat(wallet.getTotal().getTotalBalance())
+                .isEqualTo(tableTotalDto.getTotalBalance());
+        softAssertions.assertThat(wallet.getTotal().getTotalBalance1h())
+                .isEqualTo(tableTotalDto.getTotalBalance1h());
+        softAssertions.assertThat(wallet.getTotal().getTotalBalance24h())
+                .isEqualTo(tableTotalDto.getTotalBalance24h());
+        softAssertions.assertThat(wallet.getTotal().getTotalBalance7d())
+                .isEqualTo(tableTotalDto.getTotalBalance7d());
+        softAssertions.assertAll();
+    }
+
+    public static void assertJsonWalletServiceBalances(String response, DataTable table) {
+        var wallet = JsonDataMapper.mapWalletDtoJsonData(response);
+        var balances = DataTableMapper.mapBalanceDto(table.asMaps());
+        var tupleBalances = balances.stream()
+                .map(balance -> tuple(
+                        balance.getWalletAddress(),
+                        balance.getQuantity(),
+                        balance.getBalance(),
+                        balance.getBalance1h(),
+                        balance.getBalance24h(),
+                        balance.getBalance7d(),
+                        balance.getBalance30d(),
+                        balance.getBalance60d(),
+                        balance.getBalance90d(),
+                        balance.getWalletExplorer()
+                ))
+                .toList();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(wallet.getBalance())
+                .extracting(
+                        BalanceDTO::getWalletAddress,
+                        BalanceDTO::getQuantity,
+                        BalanceDTO::getBalance,
+                        BalanceDTO::getBalance1h,
+                        BalanceDTO::getBalance24h,
+                        BalanceDTO::getBalance7d,
+                        BalanceDTO::getBalance30d,
+                        BalanceDTO::getBalance60d,
+                        BalanceDTO::getBalance90d,
+                        BalanceDTO::getWalletExplorer
+                ).containsExactlyElementsOf(tupleBalances);
+        softAssertions.assertAll();
     }
 
     private static void assertEthereumDefault(CryptocurrencyDTO cryptocurrencyDTO) {
@@ -319,5 +363,4 @@ public class DefaultAssertion {
 
         assertions.assertAll();
     }
-
 }

@@ -23,6 +23,7 @@ import pl.kargolek.validation.DefaultAssertion;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.equalTo;
 
@@ -31,7 +32,7 @@ import static org.hamcrest.Matchers.equalTo;
  */
 
 @Slf4j
-public class CryptoPriceServiceSteps {
+public class ServicesSteps {
 
     private final String baseURL = TestProperty.getInstance().getBaseURL();
     private RequestSpecification request;
@@ -168,13 +169,13 @@ public class CryptoPriceServiceSteps {
         DefaultAssertion.assertArrayJsonDataCryptoPriceService(
                 response,
                 "tokens-table",
-                DataTableMapper.map(tableData));
+                DataTableMapper.mapCryptocurrencyTableDto(tableData));
     }
 
     @And("receive valid json data for crypto-price")
     public void receiveValidJsonDataForCryptoPrice(List<Map<String, String>> tableData) {
         var response = this.response.body().asString();
-        var tokenDataTable = DataTableMapper.map(tableData).stream()
+        var tokenDataTable = DataTableMapper.mapCryptocurrencyTableDto(tableData).stream()
                 .findFirst()
                 .orElse(CryptocurrencyTableDTO.builder().build());
         DefaultAssertion.assertJsonDataCryptoPriceService(
@@ -186,5 +187,32 @@ public class CryptoPriceServiceSteps {
     @When("add payload property {string} as random alphanumeric {int}")
     public void addPayloadPropertyAsRandomAlphanumeric(String property, int length) {
         jsonObject.addProperty(property, RandomStringUtils.randomAlphabetic(length));
+    }
+
+    @When("send GET request to path {string} with query params")
+    public void sendGETRequestToPathWithQueryParams(String path, DataTable table) {
+        var queries = table.asMaps()
+                .stream()
+                .map(item -> String.format("%s=%s", item.get("query"), item.get("value")))
+                .collect(Collectors.joining("&"));
+        this.response = this.request.get(String.format("%s?%s", path, queries));
+    }
+
+    @And("receive wallet json data name and symbol")
+    public void receiveWalletJsonDataNameAndSymbol(DataTable table) {
+        var response = this.response.body().asString();
+        DefaultAssertion.assertJsonWalletServiceNameSymbol(response, table);
+    }
+
+    @And("receive wallets json data totals quantity")
+    public void receiveWalletsJsonDataTotalsQuantity(DataTable table) {
+        var response = this.response.body().asString();
+        DefaultAssertion.assertJsonWalletServiceTotalQuantity(response, table);
+    }
+
+    @And("receive wallets json data balances")
+    public void receiveWalletsJsonDataBalances(DataTable table) {
+        var response = this.response.body().asString();
+        DefaultAssertion.assertJsonWalletServiceBalances(response, table);
     }
 }
