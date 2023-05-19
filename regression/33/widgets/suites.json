@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"bfe7e70b623af44e429bc3c28d4f766a","name":"WalletService API Test - positive","statistic":{"failed":0,"broken":0,"skipped":0,"passed":18,"unknown":0,"total":18}},{"uid":"dbe7ef379768a0e30dfd5dc9bf7ee6ea","name":"pl.kargolek.tests.TrendLineChartTest","statistic":{"failed":0,"broken":0,"skipped":0,"passed":4,"unknown":0,"total":4}}]}

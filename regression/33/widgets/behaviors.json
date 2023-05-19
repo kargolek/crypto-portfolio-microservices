@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"4cb413264be8c59a0a6ceca03d5b59fa","name":"WalletService API Test - positive","statistic":{"failed":0,"broken":0,"skipped":0,"passed":18,"unknown":0,"total":18}},{"uid":"2bb6ae565836c472068d2074e7662dd3","name":"Token balance","statistic":{"failed":0,"broken":0,"skipped":0,"passed":1,"unknown":0,"total":1}}]}
