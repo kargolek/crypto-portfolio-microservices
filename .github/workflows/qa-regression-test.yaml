@@ -44,6 +44,9 @@ jobs:
       - name: Build microservices
         run: mvn -B package --file pom.xml -DskipTests
 
+      - name: Create tests results dir
+        run: mkdir -p quality-assurance/qa-ui/target/allure-results/
+
       - name: Start backend and frontend
         run: |
           docker-compose up -d
