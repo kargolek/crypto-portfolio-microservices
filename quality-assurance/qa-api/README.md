@@ -11,6 +11,7 @@ This test framework is built with RestAssured, Cucumber, JUnit5, and Allure. It 
 - Automated testing with RestAssured, Cucumber
 - Test execution with JUnit5
 - Detailed test reports with Allure
+- Simple running tests via Maven command with filter option by tags
 
 ### Test report
 1. Regression latest: https://kargolek.github.io/crypto-portfolio-microservices/regression/
