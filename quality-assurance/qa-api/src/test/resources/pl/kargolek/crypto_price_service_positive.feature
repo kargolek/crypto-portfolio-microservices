@@ -1,4 +1,4 @@
-@crypto_price_service_api_test_positive_db
+@crypto_price_service_api_test_positive
 @crypto_price_service_api_test
 Feature: CryptoPriceService API Test - positive
 

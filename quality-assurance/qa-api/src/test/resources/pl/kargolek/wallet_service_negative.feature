@@ -1,4 +1,4 @@
-@wallet_service_api_test_positive
+@wallet_service_api_test_negative
 @wallet_service_api_test
 Feature: WalletService API Test - negative
 
