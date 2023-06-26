@@ -1,0 +1,2 @@
+status	BAD_REQUEST
+message	Duplicate entry '1027' for key 'cryptocurrency.UniqueCoinMarketCapId'

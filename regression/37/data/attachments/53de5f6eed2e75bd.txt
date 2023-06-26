@@ -1,0 +1,1 @@
+{"status":"BAD_REQUEST","timestamp":"2023-06-26T14:33:24.280806128","message":"Received coin market cap crypto name, no match with provided name:Ethereum"}
