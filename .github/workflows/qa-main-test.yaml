@@ -58,6 +58,10 @@ jobs:
         with:
           time: 15s
 
+      - name: API test
+        run: mvn test
+        working-directory: ./quality-assurance/qa-api
+
       - name: Start selenium test
         run: mvn test
         working-directory: ./quality-assurance/qa-ui
