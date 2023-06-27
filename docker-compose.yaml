@@ -8,7 +8,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./quality-assurance/db_dump/backup.sql:/docker-entrypoint-initdb.d/backup.sql
+      - ./quality-assurance/qa-ui/db_dump/backup.sql:/docker-entrypoint-initdb.d/backup.sql
     environment:
       MYSQL_DATABASE: crypto_price
       MYSQL_USER: ${MYSQL_USER}
@@ -17,7 +17,7 @@ services:
     healthcheck:
       test: "/usr/bin/mysql --user=$MYSQL_USER --password=$MYSQL_PASSWORD --execute \"SHOW DATABASES;\""
       interval: 5s
-      timeout: 60s
+      timeout: 120s
       retries: 10
     networks:
       - test-env-network

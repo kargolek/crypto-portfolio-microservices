@@ -21,9 +21,35 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
           cache: 'maven'
-      - name: Build
+
+      - name: Build discovery-server
         run: mvn -B package --file pom.xml -Dgroups="SmokeTest"
-      - name: Unit Test
+        working-directory: ./discovery-server/
+
+      - name: Build gateway-service
+        run: mvn -B package --file pom.xml -Dgroups="SmokeTest"
+        working-directory: ./gateway-service/
+
+      - name: Build crypto-price-service
+        run: mvn -B package --file pom.xml -Dgroups="SmokeTest"
+        working-directory: ./crypto-price-service/
+
+      - name: Build wallet-service
+        run: mvn -B package --file pom.xml -Dgroups="SmokeTest"
+        working-directory: ./wallet-service/
+
+      - name: Unit Test crypto-price-service
         run: mvn -B test -Dgroups="UnitTest"
-      - name: Integration Test
+        working-directory: ./crypto-price-service/
+
+      - name: Unit Test wallet-service
+        run: mvn -B test -Dgroups="UnitTest"
+        working-directory: ./wallet-service/
+
+      - name: Integration Test crypto-price-service
         run: mvn -B test -Dgroups="IntegrationTest"
+        working-directory: ./crypto-price-service/
+
+      - name: Integration Test wallet-service
+        run: mvn -B test -Dgroups="IntegrationTest"
+        working-directory: ./wallet-service/

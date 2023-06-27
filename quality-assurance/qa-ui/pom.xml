@@ -1,39 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>crypto-portfolio-microservices</artifactId>
+        <artifactId>quality-assurance</artifactId>
         <groupId>pl.kargolek</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>quality-assurance</artifactId>
-    <packaging>pom</packaging>
-    <name>quality-assurance</name>
-    <modules>
-        <module>qa-ui</module>
-        <module>qa-api</module>
-    </modules>
+    <artifactId>qa-ui</artifactId>
+    <packaging>jar</packaging>
+
+    <name>qa-ui</name>
+    <url>http://maven.apache.org</url>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <selenium.version>4.8.1</selenium.version>
-        <junit.jupiter.version>5.9.2</junit.jupiter.version>
-        <surefile.version>3.0.0-M8</surefile.version>
-        <slf4j-api.version>2.0.6</slf4j-api.version>
-        <allure-junit5.version>2.21.0</allure-junit5.version>
-        <allure-maven.version>2.12.0</allure-maven.version>
-        <commons.io.version>2.11.0</commons.io.version>
-        <mysql.connector.version>8.0.32</mysql.connector.version>
-        <awaitility.version>4.2.0</awaitility.version>
-        <cucumber.junit.engine.version>7.11.2</cucumber.junit.engine.version>
-        <cucumber-java.version>7.11.2</cucumber-java.version>
-        <rest-assured.version>5.3.0</rest-assured.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -73,6 +56,11 @@
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j-api.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <version>${allure-junit5.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -122,4 +110,67 @@
             <version>4.7.0-0</version>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefile.version}</version>
+                <configuration>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>io.qameta.allure.junit5.AllureJunit5</value>
+                        </property>
+                    </properties>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+                    <systemProperties>
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>${project.basedir}/target/allure-results</value>
+                        </property>
+                        <property>
+                            <name>junit.jupiter.extensions.autodetection.enabled</name>
+                            <value>true</value>
+                        </property>
+                    </systemProperties>
+                    <reportFormat>plain</reportFormat>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-api</artifactId>
+                        <version>${junit.jupiter.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-engine</artifactId>
+                        <version>${junit.jupiter.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure-maven.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
