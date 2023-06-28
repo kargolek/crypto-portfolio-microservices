@@ -1,6 +1,6 @@
 @echo off
-set BUILD_ENV_CLIENT=docker
-set DOCKER_COMPOSE_FILE=docker-compose.yaml
+set BUILD_ENV_CLIENT=local
+set DOCKER_COMPOSE_FILE=docker-compose-local.yaml
 set SELENIUM_GRID_DOCKER_COMPOSE_FILE=selenium-compose.yaml
 
 cd /d %~dp0..\crypto-portfolio-microservices\crypto-price-service\
