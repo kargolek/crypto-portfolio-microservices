@@ -20,3 +20,8 @@ Crypto-Portfolio is an application that allows users to check the balances of th
 ## License
 
 This project is licensed under the MIT LICENSE. See the [LICENSE](LICENSE) file for more information.
+
+## Examples
+### Mobile version
+https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/1066fb1a-5582-45ed-90bc-f278ecef484d
+
