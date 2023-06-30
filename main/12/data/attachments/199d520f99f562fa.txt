@@ -1,0 +1,1 @@
+{"id":5,"name":"Ethereum","symbol":"ETH","coinMarketId":1027,"lastUpdate":"2023-06-30T22:17:43.276784573","platform":{"platform":null,"tokenAddress":null},"price":{"id":5,"priceCurrent":null,"percentChange1h":null,"percentChange24h":null,"percentChange7d":null,"percentChange30d":null,"percentChange60d":null,"percentChange90d":null,"lastUpdate":"2023-06-30T22:17:43.276772973"}}

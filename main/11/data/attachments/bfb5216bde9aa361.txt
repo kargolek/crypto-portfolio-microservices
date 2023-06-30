@@ -1,1 +1,0 @@
-{"id":8,"name":"Bitcoin","symbol":"BTC","coinMarketId":1,"lastUpdate":"2023-06-28T17:12:19.869042655","platform":{"platform":null,"tokenAddress":null},"price":{"id":7,"priceCurrent":null,"percentChange1h":null,"percentChange24h":null,"percentChange7d":null,"percentChange30d":null,"percentChange60d":null,"percentChange90d":null,"lastUpdate":"2023-06-28T17:12:19.869016655"}}

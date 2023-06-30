@@ -1,1 +1,0 @@
-{"status":"NOT_FOUND","timestamp":"2023-06-28T17:12:09.42547015","message":"No class pl.kargolek.cryptopriceservice.model.Cryptocurrency entity with id 1 exists!"}
