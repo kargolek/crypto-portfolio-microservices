@@ -19,17 +19,18 @@ Crypto-Portfolio is an application that allows users to check the balances of th
 ## How to Use
 
 *Preconditions*
-1. Create an account on the https://coinmarketcap.com/ and add API key "COIN_MARKET_CAP_API_KEY" to env variable
-2. Create an account on the https://etherscan.io/ and add API key "ETHERSCAN_API_KEY" to env variable
-3. Create an account on the https://snowtrace.io/ and add API key "AVALANCHE_API_KEY" to env variable
-4. Create an account on the https://polygonscan.com/ and add API key "POLYGON_API_KEY" to env variable
+1. Create an account on the https://coinmarketcap.com/ and add API key "COIN_MARKET_CAP_API_KEY" to system env variable
+2. Create an account on the https://etherscan.io/ and add API key "ETHERSCAN_API_KEY" to system env variable
+3. Create an account on the https://snowtrace.io/ and add API key "AVALANCHE_API_KEY" to system env variable
+4. Create an account on the https://polygonscan.com/ and add API key "POLYGON_API_KEY" to system env variable
 
 *Main Steps*
-1. Run cmd script for build and compose docker containers
+1. Clone repo
+2. Run cmd script for build and compose docker containers
 ```shell
 start build_env.bat
 ```
-2. Naviagte to
+3. Naviagte to
 * http://localhost:4201
 * http://<host_machine_ip>:4201
 
