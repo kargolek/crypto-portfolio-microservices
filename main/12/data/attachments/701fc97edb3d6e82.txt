@@ -1,1 +1,0 @@
-{"status":"BAD_REQUEST","timestamp":"2023-06-30T22:17:52.775019506","message":"Address is invalid for crypto ETH and address 0xZB6eD29A95753C3Ad948348e3e7b1A251080Ffb9, message: address is invalid"}
