@@ -46,7 +46,6 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(jsonApiError, jsonApiError.getStatus());
     }
 
-
     @ExceptionHandler(NoSuchCryptoPriceDataException.class)
     public ResponseEntity<?> handleException(NoSuchCryptoPriceDataException ex) {
         var jsonApiError = JsonApiErrorDTO.builder()

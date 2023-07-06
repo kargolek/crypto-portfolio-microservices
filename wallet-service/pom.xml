@@ -29,6 +29,7 @@
         <web3j.version>4.9.6</web3j.version>
         <guava.version>31.1-jre</guava.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
+        <springdoc-openapi-ui.version>1.6.15</springdoc-openapi-ui.version>
     </properties>
 
     <dependencies>
@@ -119,6 +120,12 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc-openapi-ui.version}</version>
         </dependency>
 
     </dependencies>

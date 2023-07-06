@@ -23,6 +23,8 @@ Crypto-Portfolio is an application that allows users to check the balances of th
 2. Create an account on the https://etherscan.io/ and add API key "ETHERSCAN_API_KEY" to system env variable
 3. Create an account on the https://snowtrace.io/ and add API key "AVALANCHE_API_KEY" to system env variable
 4. Create an account on the https://polygonscan.com/ and add API key "POLYGON_API_KEY" to system env variable
+5. Make sure you have Docker installed on your environment
+
 
 *Main Steps*
 1. Clone repo
@@ -30,11 +32,11 @@ Crypto-Portfolio is an application that allows users to check the balances of th
 ```shell
 start build_env.bat
 ```
-3. Naviagte to
+3. Navigate to
 * http://localhost:4201
 * http://<host_machine_ip>:4201
 
-The app has been started with: Bitcoin, Ethereum, Matic, Avax db data.
+The app will start with preloaded data for Bitcoin, Ethereum, Matic, Avax tokens.
 
 ## License
 
