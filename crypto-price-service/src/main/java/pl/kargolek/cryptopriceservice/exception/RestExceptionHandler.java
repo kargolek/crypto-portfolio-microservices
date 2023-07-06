@@ -131,7 +131,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 jsonApiError.getMessage()));
         return new ResponseEntity<>(jsonApiError, jsonApiError.getStatus());
     }
-
     @NotNull
     @Override
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
