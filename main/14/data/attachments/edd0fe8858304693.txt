@@ -1,0 +1,1 @@
+{"status":"BAD_REQUEST","timestamp":"2023-07-06T11:59:07.436868078","message":"Method argument are not valid","errors":["Token address length exceeds range [2,255]"]}

@@ -1,1 +1,0 @@
-{"status":"BAD_REQUEST","timestamp":"2023-06-30T22:51:57.356687748","message":"Method argument are not valid","errors":["Platform length exceeds range [2,100]"]}
