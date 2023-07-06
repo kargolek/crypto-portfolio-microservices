@@ -105,6 +105,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 jsonApiError.getMessage()));
         return new ResponseEntity<>(jsonApiError, jsonApiError.getStatus());
     }
+
     @ExceptionHandler(NoSuchPriceException.class)
     public ResponseEntity<?> handleNoSuchPriceException(NoSuchPriceException ex) {
         var jsonApiError = JsonApiError.builder()
@@ -130,7 +131,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 jsonApiError.getMessage()));
         return new ResponseEntity<>(jsonApiError, jsonApiError.getStatus());
     }
-
     @NotNull
     @Override
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
