@@ -1,4 +1,4 @@
-# Crypto-price-service
+# Crypto Price Service API Documentation
 
 ### Feature
 
@@ -40,5 +40,3 @@ start build.bat
 * http://localhost:8081/swagger-ui/index.html#/
 
 The app will start with preloaded data for Bitcoin, Ethereum, Matic, Avax tokens.
-
-

@@ -10,7 +10,6 @@ A service has been built to check wallet balances for multiple blockchains and t
 | GET    | `/api/v1/wallet/eth/balance` | Get ethereum wallet balance | Query: `wallets` (required: true, type: string) | JSON: UserWallet |
 | GET    | `/api/v1/wallet/avax/balance` | Get avalanche wallet balance | Query: `wallets` (required: true, type: string) | JSON: UserWallet |
 
-
 ### Swagger
 You can view the endpoint and scheme at the link below:
 https://app.swaggerhub.com/apis-docs/KAROLORLOWICZ/wallet-service_api_documentation/1.0.0
@@ -38,4 +37,3 @@ start build.bat
 * http://localhost:8082/swagger-ui/index.html#/
 
 The app will start with preloaded data for Bitcoin, Ethereum, Matic, Avax tokens.
-
