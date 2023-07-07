@@ -59,3 +59,7 @@ This project is licensed under the MIT LICENSE. See the [LICENSE](LICENSE) file 
 
 ### Mobile version
 https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/1066fb1a-5582-45ed-90bc-f278ecef484d
+
+### API Documentation
+1. crypto-price service 
+2. wallet-service
