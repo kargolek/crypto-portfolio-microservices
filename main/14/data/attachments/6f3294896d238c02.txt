@@ -1,1 +1,0 @@
-{"status":"NOT_FOUND","timestamp":"2023-07-06T11:59:03.462111669","message":"Provided contract address is not exist, contractAddress: 123"}
