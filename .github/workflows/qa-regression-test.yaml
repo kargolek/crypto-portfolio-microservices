@@ -64,9 +64,13 @@ jobs:
         with:
           time: 15s
 
-      - name: API test
-        run: mvn test
-        working-directory: ./quality-assurance/qa-api
+#      - name: API test
+#        run: mvn test
+#        working-directory: ./quality-assurance/qa-api
+
+      - name: UI regression tests
+        run: mvn clean test -Dgroups="InputWalletUI" -Dbrowser="chrome
+        working-directory: ./quality-assurance/qa-ui
 
       - name: Stop test env
         if: always()
@@ -77,9 +81,9 @@ jobs:
         if: always()
         run: docker-compose down
 
-      - name: Copy allure results qa-api to qa-ui
-        run: |
-          cp -r quality-assurance/qa-api/target/allure-results/* quality-assurance/qa-ui/target/allure-results/
+#      - name: Copy allure results qa-api to qa-ui
+#        run: |
+#          cp -r quality-assurance/qa-api/target/allure-results/* quality-assurance/qa-ui/target/allure-results/
 
       - name: Fetch allure report history
         uses: actions/checkout@v3

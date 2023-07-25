@@ -5,10 +5,7 @@ import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
-import pl.kargolek.util.ContainerNameResolver;
-import pl.kargolek.util.ContainerProcessHandler;
-import pl.kargolek.util.PathResolver;
-import pl.kargolek.util.ReportAttachment;
+import pl.kargolek.util.*;
 
 import java.io.File;
 import java.util.Arrays;
@@ -20,35 +17,39 @@ import java.util.Objects;
 @Slf4j
 class VideoRecordExtension implements BeforeEachCallback, AfterTestExecutionCallback {
 
-    private final ContainerProcessHandler handler = new ContainerProcessHandler();
+    private final BrowserType browserType = TestProperty.getInstance().getBrowserType();
+    private final VideoTestService videoTestService = new VideoTestService();
     private final ReportAttachment reportAttachment = new ReportAttachment();
-    private final File tempVideo = new File(PathResolver.TARGET_PATH, "temp_video.mp4");
 
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
-        handler.startDockerContainer(ContainerNameResolver.CHROME_VIDEO_CONTAINER_NAME);
-        Thread.sleep(1200);
+        videoTestService.startRecord(1200);
     }
 
     @Override
     public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
-        handler.stopDockerContainer(ContainerNameResolver.CHROME_VIDEO_CONTAINER_NAME);
-
-        if (validateVideoTempFile()) {
+        videoTestService.stopRecord();
+        var tempVideo = getTempVideo();
+        if (validateVideoTempFile(tempVideo)) {
             var attachmentVideo = new File(PathResolver.TARGET_PATH, "video-" + RandomUtils.nextLong() + ".mp4");
             tempVideo.renameTo(attachmentVideo);
-
-            if (isVideoOnFailedTest(extensionContext)) {
-                if (isTestFailed(extensionContext)) {
-                    reportAttachment.createAttachment(attachmentVideo, "Video attachment", ReportAttachment.AttachmentType.VIDEO_MP4);
-                }
+            if (isVideoOnFailedTest(extensionContext) && isTestFailed(extensionContext)) {
+                reportAttachment.createAttachment(attachmentVideo, "Video attachment", ReportAttachment.AttachmentType.VIDEO_MP4);
             } else {
                 reportAttachment.createAttachment(attachmentVideo, "Video attachment", ReportAttachment.AttachmentType.VIDEO_MP4);
             }
         }
     }
 
-    private boolean validateVideoTempFile() {
+    private File getTempVideo() {
+        return switch (browserType) {
+            case CHROME -> new File(PathResolver.TARGET_PATH, "temp_video_chrome.mp4");
+            case FIREFOX -> new File(PathResolver.TARGET_PATH, "temp_video_firefox.mp4");
+            default -> throw new RuntimeException();
+        };
+    }
+
+    private boolean validateVideoTempFile(File tempVideo) {
         if (!tempVideo.exists()) {
             log.error("Video temp file doesn't exist. Attach video file process skipped.");
             return false;

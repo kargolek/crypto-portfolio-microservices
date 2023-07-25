@@ -27,8 +27,26 @@ public class TestProperty {
         return System.getenv("MYSQL_USER");
     }
 
-
     public String getDbPassword(){
         return System.getenv("MYSQL_PASSWORD");
     }
+
+    public String getSeleniumHubURL(){
+        return PROPERTIES_LOADER.getPropertyValue("selenium.hub.url");
+    }
+
+    public BrowserType getBrowserType(){
+        var browser = System.getProperty("browser");
+        if (browser == null){
+            browser = "chrome";
+        }
+        return switch (browser) {
+            case "firefox" -> BrowserType.FIREFOX;
+            case "safari" -> BrowserType.SAFARI;
+            case "mobile-chrome" -> BrowserType.MOBILE_CHROME;
+            default -> BrowserType.CHROME;
+        };
+    }
+
+
 }

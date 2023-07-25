@@ -11,8 +11,8 @@ import java.util.Properties;
 @Slf4j
 public class PropertiesWriter {
 
-    private final String path;
-    private final String fileName;
+    private String path;
+    private String fileName;
     private final File propertyFile;
     private Properties properties;
 
@@ -21,6 +21,10 @@ public class PropertiesWriter {
         this.fileName = fileName;
         propertyFile = new File(path, fileName);
         loadProperties();
+    }
+
+    public PropertiesWriter(File propertyFile){
+        this.propertyFile = propertyFile;
     }
 
     public void writeProperty(String key, String value){

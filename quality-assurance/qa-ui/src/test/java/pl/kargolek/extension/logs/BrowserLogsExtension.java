@@ -4,7 +4,9 @@ import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
+import pl.kargolek.util.BrowserType;
 import pl.kargolek.util.ReportAttachment;
+import pl.kargolek.util.TestProperty;
 import pl.kargolek.util.WebDriverResolver;
 
 import java.nio.charset.StandardCharsets;
@@ -19,20 +21,23 @@ import java.util.List;
 public class BrowserLogsExtension implements AfterTestExecutionCallback {
     private final WebDriverResolver webDriverResolver = new WebDriverResolver();
     private final ReportAttachment reportAttachment = new ReportAttachment();
+    private final BrowserType browserType = TestProperty.getInstance().getBrowserType();
 
     @Override
     public void afterTestExecution(ExtensionContext extensionContext) {
-        var driver = webDriverResolver
-                .getStoredWebDriver(extensionContext);
+        if (browserType == BrowserType.CHROME){
+            var driver = webDriverResolver
+                    .getStoredWebDriver(extensionContext);
 
-        var consoleLogs = driver
-                .manage()
-                .logs()
-                .get(LogType.BROWSER)
-                .getAll();
+            var consoleLogs = driver
+                    .manage()
+                    .logs()
+                    .get(LogType.BROWSER)
+                    .getAll();
 
-        reportAttachment.createAttachment(toByteArray(consoleLogs), "Browser logs",
-                ReportAttachment.AttachmentType.TEXT_LOG);
+            reportAttachment.createAttachment(toByteArray(consoleLogs), "Browser logs",
+                    ReportAttachment.AttachmentType.TEXT_LOG);
+        }
     }
 
     private byte[] toByteArray(List<LogEntry> logEntries) {
