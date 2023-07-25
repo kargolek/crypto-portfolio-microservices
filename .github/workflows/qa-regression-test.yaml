@@ -69,7 +69,7 @@ jobs:
 #        working-directory: ./quality-assurance/qa-api
 
       - name: UI regression tests
-        run: mvn clean test -Dgroups="InputWalletUI" -Dbrowser="chrome"
+        run: mvn clean test -Dgroups="InputWalletUI" -Dbrowser="firefox"
         working-directory: ./quality-assurance/qa-ui
 
       - name: Stop test env
