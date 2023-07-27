@@ -1,4 +1,4 @@
-name: "qa-regression-test"
+name: "qa-regression-test-edge"
 
 env:
   COIN_MARKET_CAP_API_KEY: ${{ secrets.COIN_MARKET_CAP_API_KEY }}
