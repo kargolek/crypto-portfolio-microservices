@@ -43,9 +43,10 @@ class VideoRecordExtension implements BeforeEachCallback, AfterTestExecutionCall
 
     private File getTempVideo() {
         return switch (browserType) {
-            case CHROME -> new File(PathResolver.TARGET_PATH, "temp_video_chrome.mp4");
+            case CHROME, MOBILE_CHROME -> new File(PathResolver.TARGET_PATH, "temp_video_chrome.mp4");
             case FIREFOX -> new File(PathResolver.TARGET_PATH, "temp_video_firefox.mp4");
-            default -> throw new RuntimeException();
+            case EDGE -> new File(PathResolver.TARGET_PATH, "temp_video_edge.mp4");
+            default -> throw new RuntimeException("Unable to get temp video. Unknown browser type");
         };
     }
 

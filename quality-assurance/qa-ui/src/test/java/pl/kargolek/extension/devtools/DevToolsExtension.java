@@ -26,7 +26,7 @@ public class DevToolsExtension implements ParameterResolver, BeforeAllCallback, 
     @Override
     public void beforeAll(ExtensionContext context) {
         if (annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()
-                && browserType == BrowserType.CHROME) {
+                && isDriverSupportDevTools()) {
             initDevTools(context);
         }
     }
@@ -34,14 +34,14 @@ public class DevToolsExtension implements ParameterResolver, BeforeAllCallback, 
     @Override
     public void beforeEach(ExtensionContext context) {
         if (!annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()
-                && browserType == BrowserType.CHROME) {
+                && isDriverSupportDevTools()) {
             initDevTools(context);
         }
     }
 
     @Override
     public void afterEach(ExtensionContext context) {
-        if (browserType == BrowserType.CHROME) {
+        if (isDriverSupportDevTools()) {
             var data = this.formatData();
             this.attachNetworkData(data);
             if (!annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()) {
@@ -53,7 +53,7 @@ public class DevToolsExtension implements ParameterResolver, BeforeAllCallback, 
     @Override
     public void afterAll(ExtensionContext context) {
         if (annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()
-                && browserType == BrowserType.CHROME)
+                && isDriverSupportDevTools())
             this.devToolsDriver.closeConnection();
     }
 
@@ -111,6 +111,11 @@ public class DevToolsExtension implements ParameterResolver, BeforeAllCallback, 
                 attachedData.getBytes(StandardCharsets.UTF_8),
                 "Network",
                 ReportAttachment.AttachmentType.TEXT_LOG);
+    }
+
+    private boolean isDriverSupportDevTools(){
+        return browserType == BrowserType.CHROME || browserType == BrowserType.MOBILE_CHROME
+                || browserType == BrowserType.EDGE;
     }
 
 }

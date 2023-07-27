@@ -25,7 +25,7 @@ public class BrowserLogsExtension implements AfterTestExecutionCallback {
 
     @Override
     public void afterTestExecution(ExtensionContext extensionContext) {
-        if (browserType == BrowserType.CHROME){
+        if (isDriverSupportBrowserLog()) {
             var driver = webDriverResolver
                     .getStoredWebDriver(extensionContext);
 
@@ -57,5 +57,10 @@ public class BrowserLogsExtension implements AfterTestExecutionCallback {
                     .append("\n\n");
         });
         return builder.toString().getBytes(StandardCharsets.UTF_8);
+    }
+
+    private boolean isDriverSupportBrowserLog() {
+        return this.browserType == BrowserType.CHROME || this.browserType == BrowserType.MOBILE_CHROME
+                || this.browserType == BrowserType.EDGE;
     }
 }

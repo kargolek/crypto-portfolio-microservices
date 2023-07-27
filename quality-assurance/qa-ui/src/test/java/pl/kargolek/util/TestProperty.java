@@ -42,7 +42,7 @@ public class TestProperty {
         }
         return switch (browser) {
             case "firefox" -> BrowserType.FIREFOX;
-            case "safari" -> BrowserType.SAFARI;
+            case "edge" -> BrowserType.EDGE;
             case "mobile-chrome" -> BrowserType.MOBILE_CHROME;
             default -> BrowserType.CHROME;
         };
