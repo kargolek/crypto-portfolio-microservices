@@ -1,0 +1,2 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"failed","Fri Jul 28 02:29:00 GMT 2023","Fri Jul 28 02:29:17 GMT 2023","16935","","pl.kargolek.tests.ExampleTest","","pl.kargolek.tests.ExampleTest","test1","test1(WebDriver)",""
