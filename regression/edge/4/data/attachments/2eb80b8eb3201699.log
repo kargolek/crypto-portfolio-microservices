@@ -1,0 +1,22 @@
+[SEVERE 2023-07-28T00:58:14.808]
+http://172.18.0.1:8080/api/v1/wallet/matic/balance?wallets=0x189B9cBd4AfF470aF2C0102f365FC1823d857965 - Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+
+[SEVERE 2023-07-28T00:58:15.186]
+http://172.18.0.1:8080/api/v1/wallet/eth/balance?wallets=0x189B9cBd4AfF470aF2C0102f365FC1823d857965 - Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+
+[SEVERE 2023-07-28T00:58:15.378]
+http://172.18.0.1:8080/api/v1/wallet/avax/balance?wallets=0x189B9cBd4AfF470aF2C0102f365FC1823d857965 - Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+
+[SEVERE 2023-07-28T00:58:15.461]
+http://172.18.0.1:4201/main.js 0:51149 "ERROR" Error: Unable to get price for crypto: Ethereum
+    at http://172.18.0.1:4201/main.js:1:602001
+    at t.n [as _subscribe] (http://172.18.0.1:4201/main.js:1:295239)
+    at t._trySubscribe (http://172.18.0.1:4201/main.js:1:4962)
+    at http://172.18.0.1:4201/main.js:1:4907
+    at Uc (http://172.18.0.1:4201/main.js:1:2606)
+    at t.subscribe (http://172.18.0.1:4201/main.js:1:4821)
+    at http://172.18.0.1:4201/main.js:1:295420
+    at IL._error (http://172.18.0.1:4201/main.js:1:8024)
+    at IL.error (http://172.18.0.1:4201/main.js:1:2964)
+    at r.subscribe.l (http://172.18.0.1:4201/main.js:1:271399)
+
