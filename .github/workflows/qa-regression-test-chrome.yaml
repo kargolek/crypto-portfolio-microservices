@@ -66,23 +66,17 @@ jobs:
           time: 15s
 
       - name: UI regression tests
-        run: mvn clean test -Dgroups="InputWalletUI" -Dbrowser="chrome"
+        run: mvn test -Dgroups="exampleTag" -Dbrowser="chrome"
         working-directory: ./quality-assurance/qa-ui
 
       - name: Upload allure-results
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: allure-results-chrome
           path: ./quality-assurance/qa-ui/target/allure-results
-
-#      - name: Stop test env
-#        if: always()
-#        run: docker-compose -f selenium-compose.yaml down
-#        working-directory: ./quality-assurance/qa-ui
-#
-#      - name: Stop backend and fronted
-#        if: always()
-#        run: docker-compose down
+          retention-days: 1
+          if-no-files-found: error
 
   publish-report-chrome:
     if: ${{ contains(github.event.head_commit.message, '#regressionTest') }}
