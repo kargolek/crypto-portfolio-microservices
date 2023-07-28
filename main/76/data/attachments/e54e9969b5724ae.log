@@ -1,9 +1,0 @@
-[SEVERE 2023-04-04T23:34:19.952]
-https://goerli.etherscan.io/favicon.ico - Failed to load resource: the server responded with a status of 403 ()
-
-[SEVERE 2023-04-04T23:34:20.052]
-https://goerli.etherscan.io/favicon.ico - Failed to load resource: the server responded with a status of 403 ()
-
-[SEVERE 2023-04-04T23:34:20.453]
-https://goerli.etherscan.io/cdn-cgi/challenge-platform/h/g/pat/7b2d5c858ee02c89/1680651260042/4962c3c2d03cb0d06417f5ac1b2b13538d0d849bc493b329b74b295a8381c600/ju-RvYM9nYT3YHm - Failed to load resource: the server responded with a status of 401 ()
-

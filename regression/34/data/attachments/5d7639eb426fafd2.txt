@@ -1,1 +1,0 @@
-{"status":"INTERNAL_SERVER_ERROR","timestamp":"2023-06-21T09:25:25.271156405","message":"Unable to get price for crypto: Polygon"}

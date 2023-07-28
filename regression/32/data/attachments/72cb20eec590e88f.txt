@@ -1,1 +1,0 @@
-{"status":"NOT_FOUND","timestamp":"2023-05-06T19:18:20.538493962","message":"Unable to find cryptocurrency with id: 123456789"}

@@ -1,1 +1,0 @@
-{"status":"BAD_REQUEST","timestamp":"2023-05-06T19:18:21.088697767","message":"Method argument are not valid","errors":["Symbol length exceeds range [2,20]"]}

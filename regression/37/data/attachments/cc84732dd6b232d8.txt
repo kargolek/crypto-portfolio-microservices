@@ -1,1 +1,0 @@
-{"status":"INTERNAL_SERVER_ERROR","timestamp":"2023-06-26T14:33:36.854606342","message":"Unable to get price for crypto: Avalanche"}

@@ -1,4 +1,0 @@
-id	name	symbol	coinMarketId	platform	tokenAddress	priceId	priceCurrent	percentChange1h	percentChange24h	percentChange7d	percentChange30d	percentChange60d	percentChange90d
-1	Ethereum	ETH	1027	ethereum	0x2170Ed0880ac9A755fd29B2688956BD959F933F8	1	2000.12345	5.5	-5.5	10.5	-10.5	15.5	-15.5
-2	Polygon	MATIC	3890			2		5.5	-5.5	10.5	-10.5	15.5	-15.5
-3	Avalanche	AVAX	5805			3	20.12345	5.5	-5.5	10.5	-10.5	15.5	-15.5
