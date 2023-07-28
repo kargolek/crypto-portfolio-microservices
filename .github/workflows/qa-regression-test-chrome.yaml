@@ -65,10 +65,6 @@ jobs:
         with:
           time: 15s
 
-#      - name: API test
-#        run: mvn test
-#        working-directory: ./quality-assurance/qa-api
-
       - name: UI regression tests
         run: mvn clean test -Dgroups="InputWalletUI" -Dbrowser="chrome"
         working-directory: ./quality-assurance/qa-ui
@@ -81,10 +77,6 @@ jobs:
       - name: Stop backend and fronted
         if: always()
         run: docker-compose down
-
-#      - name: Copy allure results qa-api to qa-ui
-#        run: |
-#          cp -r quality-assurance/qa-api/target/allure-results/* quality-assurance/qa-ui/target/allure-results/
 
       - name: Fetch allure report history
         uses: actions/checkout@v3
@@ -102,7 +94,7 @@ jobs:
           allure_results: quality-assurance/qa-ui/target/allure-results
           gh_pages: gh-pages
           allure_report: allure-report
-          allure_history: allure-history
+          allure_history: allure-history/chrome
           keep_reports: 10
           subfolder: regression/chrome
 
@@ -112,4 +104,4 @@ jobs:
         with:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history
+          PUBLISH_DIR: allure-history/chrome
