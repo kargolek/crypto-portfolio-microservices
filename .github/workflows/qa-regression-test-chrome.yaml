@@ -79,7 +79,8 @@ jobs:
           if-no-files-found: error
 
   publish-report-chrome:
-    if: ${{ contains(github.event.head_commit.message, '#regressionTest') }}
+    if: ${{ contains(github.event.head_commit.message, '#regressionTest') && always() }}
+    needs: qa-tests-regression-chrome
     runs-on: ubuntu-latest
     concurrency: 1
     steps:
