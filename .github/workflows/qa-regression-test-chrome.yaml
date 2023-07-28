@@ -69,7 +69,7 @@ jobs:
         run: mvn clean test -Dgroups="InputWalletUI" -Dbrowser="chrome"
         working-directory: ./quality-assurance/qa-ui
 
-      - name: Upload allure test results
+      - name: Upload allure-results
         uses: actions/upload-artifact@v3
         with:
           name: allure-results-chrome
@@ -84,36 +84,40 @@ jobs:
 #        if: always()
 #        run: docker-compose down
 
-#  publish-report-chrome:
-#    if: ${{ contains(github.event.head_commit.message, '#regressionTest') }}
-#    needs: qa-tests-regression-chrome
-#    runs-on: ubuntu-latest
-#    concurrency: 1
-#    steps:
-#      - name: Fetch allure report history
-#        uses: actions/checkout@v3
-#        if: always()
-#        continue-on-error: true
-#        with:
-#          ref: gh-pages
-#          path: gh-pages
-#
-#      - name: Allure Report action from marketplace
-#        uses: simple-elf/allure-report-action@master
-#        if: always()
-#        id: allure-report
-#        with:
-#          allure_results: quality-assurance/qa-ui/target/allure-results
-#          gh_pages: gh-pages
-#          allure_report: allure-report
-#          allure_history: allure-history/chrome
-#          keep_reports: 10
-#          subfolder: regression/chrome
-#
-#      - name: Deploy report to Github Pages
-#        if: always()
-#        uses: peaceiris/actions-gh-pages@v3
-#        with:
-#          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          PUBLISH_BRANCH: gh-pages
-#          PUBLISH_DIR: allure-history/chrome
+  publish-report-chrome:
+    if: ${{ contains(github.event.head_commit.message, '#regressionTest') }}
+    needs: qa-tests-regression-chrome
+    runs-on: ubuntu-latest
+    concurrency: 1
+    steps:
+      - name: Download allure-results
+        uses: actions/download-artifact@v3
+        with:
+          name: allure-results-chrome
+          path: allure-results-chrome
+
+      - name: Fetch allure report history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Allure Report action from marketplace
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
+        with:
+          allure_results: allure-results-chrome
+          allure_history: allure-history/chrome
+          keep_reports: 10
+          subfolder: regression/chrome
+
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history/chrome
