@@ -1,0 +1,9 @@
+[WARNING 2023-07-28T02:42:24.168]
+security - Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'unload'.
+
+[SEVERE 2023-07-28T02:42:24.573]
+https://www.google.com/ 0 The Cross-Origin-Opener-Policy header has been ignored, because the URL's origin was untrustworthy. It was defined either in the final response or a redirect. Please deliver the response using the HTTPS protocol. You can also use the 'localhost' origin instead. See https://www.w3.org/TR/powerful-features/#potentially-trustworthy-origin and https://html.spec.whatwg.org/#the-cross-origin-opener-policy-header.
+
+[WARNING 2023-07-28T02:42:26.874]
+security - Error with Permissions-Policy header: Unrecognized feature: 'ch-ua-form-factor'.
+
