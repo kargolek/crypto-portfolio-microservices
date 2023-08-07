@@ -11,6 +11,8 @@ services:
       - SE_EVENT_BUS_HOST=selenium_hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=2
+      - SE_NODE_SESSION_TIMEOUT=60
     networks:
       - crypto-portfolio-microservices_test-env-network
   firefox_node:
@@ -24,6 +26,8 @@ services:
       - SE_EVENT_BUS_HOST=selenium_hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=2
+      - SE_NODE_SESSION_TIMEOUT=60
     networks:
       - crypto-portfolio-microservices_test-env-network
   edge_node:
@@ -37,6 +41,8 @@ services:
       - SE_EVENT_BUS_HOST=selenium_hub
       - SE_EVENT_BUS_PUBLISH_PORT=4442
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=2
+      - SE_NODE_SESSION_TIMEOUT=60
     networks:
       - crypto-portfolio-microservices_test-env-network
   record_chrome_video:

@@ -2,35 +2,28 @@ package pl.kargolek.extension.driver;
 
 import org.junit.jupiter.api.extension.*;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import pl.kargolek.extension.util.AnnotationResolver;
-import pl.kargolek.util.RemoteWebDriverFactory;
 import pl.kargolek.util.ReportEnvironment;
 import pl.kargolek.util.TestProperty;
-
-import java.net.MalformedURLException;
+import pl.kargolek.util.WebDriverFactory;
 
 /**
  * @author Karol Kuta-Orlowicz
  */
 public class WebDriverExtension implements BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback, ParameterResolver {
 
-    private WebDriver driver;
-    private final String STORE_WEBDRIVER_KEY = "webDriver";
     private final AnnotationResolver annotationResolver = new AnnotationResolver();
-    private final RemoteWebDriverFactory driverFactory = new RemoteWebDriverFactory();
-    private final TestProperty testProperty = TestProperty.getInstance();
     private final ReportEnvironment reportEnvironment = new ReportEnvironment();
-
     private String browserName;
     private String browserVersion;
     private String osName;
+    private String parallelism;
 
     @Override
     public void beforeAll(ExtensionContext context) throws Exception {
         if (annotationResolver.getSeleniumWebDriverAnnotation(context)
                 .isBeforeAll()) {
-            this.initWebDriver(context);
+            this.initWebDriver();
         }
     }
 
@@ -38,7 +31,7 @@ public class WebDriverExtension implements BeforeAllCallback, AfterAllCallback, 
     public void beforeEach(ExtensionContext context) throws Exception {
         if (!annotationResolver.getSeleniumWebDriverAnnotation(context)
                 .isBeforeAll()) {
-            initWebDriver(context);
+            initWebDriver();
         }
     }
 
@@ -46,17 +39,21 @@ public class WebDriverExtension implements BeforeAllCallback, AfterAllCallback, 
     public void afterEach(ExtensionContext context) {
         if (!annotationResolver.getSeleniumWebDriverAnnotation(context)
                 .isBeforeAll()) {
-            this.tearDownDriver(context);
+            this.tearDownDriver();
         }
     }
 
     @Override
     public void afterAll(ExtensionContext context) {
         if (annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()) {
-            this.tearDownDriver(context);
+            this.tearDownDriver();
         }
 
-        reportEnvironment.writeAllureEnvProperties(browserName, browserVersion, osName);
+        reportEnvironment.writeAllureEnvProperties(
+                browserName,
+                browserVersion,
+                osName,
+                parallelism);
     }
 
     @Override
@@ -68,50 +65,53 @@ public class WebDriverExtension implements BeforeAllCallback, AfterAllCallback, 
 
     @Override
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        return this.driver;
+        return WebDriverFactory.getRemoteWebDriverInstance();
     }
 
-    private void initWebDriver(ExtensionContext context) throws MalformedURLException {
-        var hubURL = testProperty.getSeleniumHubURL();
-        var browserType = testProperty.getBrowserType();
-
-        this.driver = driverFactory.getWebDriver(hubURL, browserType);
-        this.driver.manage()
+    private void initWebDriver() {
+        WebDriverFactory.getRemoteWebDriverInstance()
+                .manage()
                 .window()
                 .maximize();
 
-        context.getStore(ExtensionContext.Namespace.GLOBAL)
-                .put(STORE_WEBDRIVER_KEY, driver);
         setBrowserName();
         setBrowserVersion();
         setOsName();
+        setParallelism();
     }
 
-    private void tearDownDriver(ExtensionContext context) {
-        driver.quit();
-        context.getStore(ExtensionContext.Namespace.GLOBAL)
-                .remove(STORE_WEBDRIVER_KEY);
+    private void tearDownDriver() {
+        WebDriverFactory.closeWebDriverInstance();
     }
 
     public void setBrowserName() {
         if (this.browserName == null) {
-            this.browserName = ((RemoteWebDriver) driver).getCapabilities()
+            this.browserName = WebDriverFactory.getRemoteWebDriverInstance()
+                    .getCapabilities()
                     .getBrowserName();
         }
     }
 
     public void setBrowserVersion() {
         if (this.browserVersion == null) {
-            this.browserVersion = ((RemoteWebDriver) driver).getCapabilities()
+            this.browserVersion = WebDriverFactory.getRemoteWebDriverInstance()
+                    .getCapabilities()
                     .getBrowserVersion();
         }
     }
 
     public void setOsName() {
         if (this.osName == null) {
-            this.osName = ((RemoteWebDriver) driver).getCapabilities()
+            this.osName = WebDriverFactory.getRemoteWebDriverInstance()
+                    .getCapabilities()
                     .getPlatformName()
                     .name();
+        }
+    }
+
+    public void setParallelism() {
+        if (this.parallelism == null) {
+            this.parallelism = TestProperty.getInstance().getParallelism().toString();
         }
     }
 }

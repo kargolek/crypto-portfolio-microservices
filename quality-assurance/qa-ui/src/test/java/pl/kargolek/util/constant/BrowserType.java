@@ -1,4 +1,4 @@
-package pl.kargolek.util;
+package pl.kargolek.util.constant;
 
 /**
  * @author Karol Kuta-Orlowicz

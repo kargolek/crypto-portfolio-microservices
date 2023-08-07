@@ -65,7 +65,7 @@ jobs:
           time: 15s
 
       - name: UI regression tests
-        run: mvn test -Dgroups="exampleTag" -Dbrowser="chrome"
+        run: mvn clean test -T 4 -Dgroups="TokenBalanceUI" -Dbrowser="chrome" -Dheadless="enable" -Dnetwork="disable" "-Djunit.jupiter.execution.parallel.enabled=true"
         working-directory: ./quality-assurance/qa-ui
 
       - name: Upload allure-results

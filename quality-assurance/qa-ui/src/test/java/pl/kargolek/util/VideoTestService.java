@@ -1,5 +1,8 @@
 package pl.kargolek.util;
 
+import pl.kargolek.util.constant.BrowserType;
+import pl.kargolek.util.constant.HeadlessMode;
+
 import java.io.IOException;
 
 /**
@@ -8,26 +11,30 @@ import java.io.IOException;
 public class VideoTestService {
 
     private final BrowserType browserType = TestProperty.getInstance().getBrowserType();
+    private final HeadlessMode headlessMode = TestProperty.getInstance().getHeadlessMode();
     private final ContainerProcessHandler handler = new ContainerProcessHandler();
 
     public void startRecord(int sleepAfterStartContainer) throws IOException, InterruptedException {
-        if (browserType == BrowserType.CHROME || browserType == BrowserType.MOBILE_CHROME) {
-            handler.startDockerContainer(ContainerNameResolver.CHROME_VIDEO_CONTAINER_NAME);
-        } else if (browserType == BrowserType.FIREFOX) {
-            handler.startDockerContainer(ContainerNameResolver.FIREFOX_VIDEO_CONTAINER_NAME);
-        } else if (browserType == BrowserType.EDGE) {
-            handler.startDockerContainer(ContainerNameResolver.EDGE_VIDEO_CONTAINER_NAME);
+        if (headlessMode == HeadlessMode.DISABLE){
+            handler.startDockerContainer(getRecordContainerName());
         }
         Thread.sleep(sleepAfterStartContainer);
     }
 
     public void stopRecord() throws IOException, InterruptedException {
-        if (browserType == BrowserType.CHROME || browserType == BrowserType.MOBILE_CHROME) {
-            handler.stopDockerContainer(ContainerNameResolver.CHROME_VIDEO_CONTAINER_NAME);
-        } else if (browserType == BrowserType.FIREFOX) {
-            handler.stopDockerContainer(ContainerNameResolver.FIREFOX_VIDEO_CONTAINER_NAME);
-        } else if (browserType == BrowserType.EDGE) {
-            handler.stopDockerContainer(ContainerNameResolver.EDGE_VIDEO_CONTAINER_NAME);
+        if (headlessMode == HeadlessMode.DISABLE){
+            handler.stopDockerContainer(getRecordContainerName());
         }
+    }
+
+    private String getRecordContainerName(){
+        if (browserType == BrowserType.CHROME || browserType == BrowserType.MOBILE_CHROME) {
+            return ContainerNameResolver.CHROME_VIDEO_CONTAINER_NAME;
+        } else if (browserType == BrowserType.FIREFOX) {
+            return ContainerNameResolver.FIREFOX_VIDEO_CONTAINER_NAME;
+        } else if (browserType == BrowserType.EDGE) {
+            return ContainerNameResolver.EDGE_VIDEO_CONTAINER_NAME;
+        }
+        return ContainerNameResolver.CHROME_VIDEO_CONTAINER_NAME;
     }
 }

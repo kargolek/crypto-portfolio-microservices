@@ -9,6 +9,7 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebElement;
+import pl.kargolek.util.constant.HeadlessMode;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,8 +20,10 @@ import java.io.IOException;
 public class VisualCompareService {
 
     private static final String WEB_ELEMENT_IMAGE_TO_COMPARE = "visual/expected/%s_base.png";
+    private static final String WEB_ELEMENT_IMAGE_TO_COMPARE_HEADLESS = "visual/expected/headless/%s_base.png";
     private static final String CURRENT_WEB_ELEMENT_IMAGE = "visual/%s.png";
-    private ReportAttachment attachment = new ReportAttachment();
+    private final ReportAttachment attachment = new ReportAttachment();
+    private final HeadlessMode headlessMode = TestProperty.getInstance().getHeadlessMode();
 
     public VisualCompareService(VisualCompareServiceBuilder visualCompareServiceBuilder) {
     }
@@ -40,7 +43,7 @@ public class VisualCompareService {
     }
 
     private void validateTempFolder(String imgName) {
-        var baseFile = new File(String.format(WEB_ELEMENT_IMAGE_TO_COMPARE, imgName));
+        var baseFile = new File(String.format(getWebElementImageToCompare(), imgName));
         if (!baseFile.exists() && !baseFile.canRead())
             throw new RuntimeException("Unable to perform visual compare element. Base file doesn't exist.");
     }
@@ -55,7 +58,7 @@ public class VisualCompareService {
     }
 
     private double compereImagesProcess(String imageName) {
-        Mat mat1 = Imgcodecs.imread(String.format(WEB_ELEMENT_IMAGE_TO_COMPARE, imageName), Imgcodecs.IMREAD_GRAYSCALE);
+        Mat mat1 = Imgcodecs.imread(String.format(getWebElementImageToCompare(), imageName), Imgcodecs.IMREAD_GRAYSCALE);
         Mat mat2 = Imgcodecs.imread(String.format(CURRENT_WEB_ELEMENT_IMAGE, imageName), Imgcodecs.IMREAD_GRAYSCALE);
 
         if (!mat1.size().equals(mat2.size())) {
@@ -71,13 +74,20 @@ public class VisualCompareService {
         return (Core.countNonZero(threshold) * 100.0) / (threshold.size().width * threshold.size().height);
     }
 
-    private void attachImagesToReport(String imgName){
-        var imgCompareBase = new File(String.format(WEB_ELEMENT_IMAGE_TO_COMPARE, imgName));
+    private void attachImagesToReport(String imgName) {
+        var imgCompareBase = new File(String.format(getWebElementImageToCompare(), imgName));
         var imgElement = new File(String.format(CURRENT_WEB_ELEMENT_IMAGE, imgName));
         attachment.createAttachment(imgCompareBase, "Web element base to compare",
                 ReportAttachment.AttachmentType.IMAGE_PNG);
         attachment.createAttachment(imgElement, "Web element on the system",
                 ReportAttachment.AttachmentType.IMAGE_PNG);
+    }
+
+    private String getWebElementImageToCompare() {
+        if (headlessMode == HeadlessMode.DISABLE) {
+            return WEB_ELEMENT_IMAGE_TO_COMPARE;
+        } else
+            return WEB_ELEMENT_IMAGE_TO_COMPARE_HEADLESS;
     }
 
     public static class VisualCompareServiceBuilder {

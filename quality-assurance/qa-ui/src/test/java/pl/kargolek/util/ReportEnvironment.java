@@ -13,9 +13,11 @@ public class ReportEnvironment {
 
     public void writeAllureEnvProperties(String browserName,
                                          String browserVersion,
-                                         String osName) {
+                                         String osName,
+                                         String parallelism) {
         this.propertiesWriter.writeProperty("Browser Name", browserName);
         this.propertiesWriter.writeProperty("Browser Version", browserVersion);
         this.propertiesWriter.writeProperty("OS Name", osName);
+        this.propertiesWriter.writeProperty("Tests Parallelism", parallelism);
     }
 }

@@ -23,7 +23,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <selenium.version>4.10.0</selenium.version>
         <junit.jupiter.version>5.9.2</junit.jupiter.version>
-        <surefile.version>3.0.0-M8</surefile.version>
+        <surefile.version>3.1.2</surefile.version>
         <slf4j-api.version>2.0.6</slf4j-api.version>
         <allure-junit5.version>2.23.0</allure-junit5.version>
         <allure-maven.version>2.12.0</allure-maven.version>

@@ -20,7 +20,7 @@ public class JavascriptDriver {
     }
 
     public Object getTopPositionInViewport(WebElement element) {
-        return  this.javascriptExecutor.executeScript(
+        return this.javascriptExecutor.executeScript(
                 "return arguments[0].getBoundingClientRect().top;",
                 element
         );

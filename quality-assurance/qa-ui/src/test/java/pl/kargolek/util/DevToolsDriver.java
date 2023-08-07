@@ -20,13 +20,11 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 @Slf4j
 public class DevToolsDriver {
-    private final WebDriver webDriver;
     private final DevTools devTools;
     private final BlockingQueue<RequestModel> requests = new LinkedBlockingQueue<>();
     private final BlockingQueue<ResponseModel> responses = new LinkedBlockingQueue<>();
 
     public DevToolsDriver(DevToolsUtilsBuilder devToolsUtilsBuilder) {
-        this.webDriver = devToolsUtilsBuilder.webDriver;
         this.devTools = devToolsUtilsBuilder.devTools;
     }
 

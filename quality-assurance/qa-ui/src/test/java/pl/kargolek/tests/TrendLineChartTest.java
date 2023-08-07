@@ -4,9 +4,10 @@ import io.qameta.allure.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Isolated;
 import pl.kargolek.data.TestData;
 import pl.kargolek.data.script.TestDataSql;
-import pl.kargolek.extension.BaseTestConfigBeforeAll;
+import pl.kargolek.extension.BaseTestConfig;
 import pl.kargolek.extension.assertion.SoftAssertion;
 import pl.kargolek.extension.data.TestDataProvider;
 import pl.kargolek.extension.visual.VisualCompare;
@@ -22,10 +23,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Tag("TrendLineChartUI")
 @Epic("Token balance")
 @Feature("Trend line chart UI")
-@BaseTestConfigBeforeAll
+@BaseTestConfig
 @TestDataProvider
 @SoftAssertion
 @VisualCompare
+@Isolated
 public class TrendLineChartTest {
 
     private String baseURL;
@@ -40,6 +42,33 @@ public class TrendLineChartTest {
         dataSql.insertEthereumData();
         dataSql.insertAvalancheData();
         dataSql.insertPolygonData();
+    }
+
+    @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Story("As user when wallet balance not empty and decrease 10% each past data, trend shows correct line")
+    public void whenWalletBalanceMinus10PercentEach_thenShowsCorrectTrendLine(TestData data,
+                                                                              TestDataSql dataSql,
+                                                                              VisualCompareService service) {
+        dataSql.deleteCryptocurrenciesData();
+        dataSql.insertEthereumDataPricePastNegativeMinus10Each();
+        dataSql.insertAvalancheDataPricePastNegativeMinus10Each();
+        dataSql.insertPolygonDataPricePastNegativeMinus10Each();
+
+        var page = this.pages.getHomePage()
+                .open(this.baseURL)
+                .inputWalletsClearText()
+                .inputWallets(data.getEthereumTestNetWallet().getAddress())
+                .enterKeyPress()
+                .getTotalValuePage();
+
+        var trendLineChartContainer = page.waitForStopAnimation()
+                .getTrendLineChartContainer();
+
+        var result = service.compareElement(trendLineChartContainer,
+                "trend_decrease_line_chart_container");
+
+        assertThat(result).isEqualTo(0.0);
     }
 
     @Test
@@ -83,36 +112,10 @@ public class TrendLineChartTest {
     }
 
     @Test
-    @Severity(SeverityLevel.CRITICAL)
-    @Story("As user when wallet balance not empty and decrease 10% each past data, trend shows correct line")
-    public void whenWalletBalanceMinus10PercentEach_thenShowsCorrectTrendLine(TestData data,
-                                                                              TestDataSql dataSql,
-                                                                              VisualCompareService service) {
-        dataSql.deleteCryptocurrenciesData();
-        dataSql.insertEthereumDataPricePastNegativeMinus10Each();
-        dataSql.insertAvalancheDataPricePastNegativeMinus10Each();
-        dataSql.insertPolygonDataPricePastNegativeMinus10Each();
-
-        var page = this.pages.getHomePage()
-                .open(this.baseURL)
-                .inputWalletsClearText()
-                .inputWallets(data.getEthereumTestNetWallet().getAddress())
-                .enterKeyPress()
-                .getTotalValuePage();
-
-        var trendLineChartContainer = page.waitForStopAnimation()
-                .getTrendLineChartContainer();
-
-        var result = service.compareElement(trendLineChartContainer,
-                "trend_decrease_line_chart_container");
-
-        assertThat(result).isEqualTo(0.0);
-    }
-
-    @Test
     @Severity(SeverityLevel.MINOR)
     @Story("As user when open balance page, trend line chart label is visible")
     public void whenOpenBalancePage_thenTrendChartLabelVisible(TestData data) {
+        System.out.println("Im running class async");
         var page = this.pages.getHomePage()
                 .open(this.baseURL)
                 .inputWalletsClearText()
@@ -124,6 +127,6 @@ public class TrendLineChartTest {
                 .getText();
 
         assertThat(labelText).isEqualTo("Trend Line 7d");
+        System.out.println("Im stopping class async");
     }
-
 }
