@@ -1,6 +1,13 @@
 name: "qa-regression-test-chrome"
 
 env:
+  ####### TEST VARS #######
+  TAGS: TokenBalanceUI
+  BROWSER_TYPE: chrome
+  HEADLESS_MODE: enable
+  NETWORK_LISTENER: disable
+  PARALLEL_TEST: true
+  ####### ENV VARS #######
   COIN_MARKET_CAP_API_KEY: ${{ secrets.COIN_MARKET_CAP_API_KEY }}
   MYSQL_USER: ${{ secrets.MYSQL_USER }}
   MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
@@ -65,7 +72,7 @@ jobs:
           time: 15s
 
       - name: UI regression tests
-        run: mvn clean test -T 4 -Dgroups="TokenBalanceUI" -Dbrowser="chrome" -Dheadless="enable" -Dnetwork="disable" "-Djunit.jupiter.execution.parallel.enabled=false"
+        run: mvn clean test -T 4 -Dgroups="$TAGS" -Dbrowser="$BROWSER_TYPE" -Dheadless="$HEADLESS_MODE" -Dnetwork="$NETWORK_LISTENER" "-Djunit.jupiter.execution.parallel.enabled=$PARALLEL_TEST"
         working-directory: ./quality-assurance/qa-ui
 
       - name: Upload allure-results
