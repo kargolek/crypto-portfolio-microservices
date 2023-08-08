@@ -2,7 +2,7 @@ name: "qa-regression-test-chrome"
 
 env:
   ####### TEST VARS #######
-  TAGS: TokenBalanceUI
+  TAGS: HomePageUI,TokenBalanceUI
   BROWSER_TYPE: chrome
   HEADLESS_MODE: enable
   NETWORK_LISTENER: disable
