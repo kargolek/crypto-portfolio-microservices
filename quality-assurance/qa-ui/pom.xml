@@ -122,7 +122,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefile.version}</version>
                 <configuration>
-                    <threadCount>4</threadCount>
+<!--                    <threadCount>4</threadCount>-->
                     <parallel>methods</parallel>
                     <useUnlimitedThreads>false</useUnlimitedThreads>
                     <properties>
