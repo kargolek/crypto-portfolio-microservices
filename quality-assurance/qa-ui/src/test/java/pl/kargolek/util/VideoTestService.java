@@ -11,20 +11,15 @@ import java.io.IOException;
 public class VideoTestService {
 
     private final BrowserType browserType = TestProperty.getInstance().getBrowserType();
-    private final HeadlessMode headlessMode = TestProperty.getInstance().getHeadlessMode();
     private final ContainerProcessHandler handler = new ContainerProcessHandler();
 
     public void startRecord(int sleepAfterStartContainer) throws IOException, InterruptedException {
-        if (headlessMode == HeadlessMode.DISABLE){
             handler.startDockerContainer(getRecordContainerName());
-        }
-        Thread.sleep(sleepAfterStartContainer);
+            Thread.sleep(sleepAfterStartContainer);
     }
 
     public void stopRecord() throws IOException, InterruptedException {
-        if (headlessMode == HeadlessMode.DISABLE){
-            handler.stopDockerContainer(getRecordContainerName());
-        }
+        handler.stopDockerContainer(getRecordContainerName());
     }
 
     private String getRecordContainerName(){

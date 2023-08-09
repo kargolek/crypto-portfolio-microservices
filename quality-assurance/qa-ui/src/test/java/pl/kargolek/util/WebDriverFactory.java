@@ -82,7 +82,8 @@ public class WebDriverFactory {
                 if (headless == HeadlessMode.ENABLE) {
                     firefoxOptions.addArguments("--headless");
                 }
-                firefoxOptions.addArguments("--window-size=1920,1080");
+                firefoxOptions.addArguments("--width=1920");
+                firefoxOptions.addArguments("--height=1080");
                 return firefoxOptions;
             }
             case EDGE -> {

@@ -73,7 +73,7 @@ jobs:
           time: 30s
 
       - name: UI regression tests
-        run: mvn clean test -T 2 -Dgroups="$TAGS" -Dbrowser="$BROWSER_TYPE" -Dheadless="$HEADLESS_MODE" -Dnetwork="$NETWORK_LISTENER" "-Djunit.jupiter.execution.parallel.enabled=$PARALLEL_TEST"
+        run: mvn test -T 2 -Dgroups="$TAGS" -Dbrowser="$BROWSER_TYPE" -Dheadless="$HEADLESS_MODE" -Dnetwork="$NETWORK_LISTENER" "-Djunit.jupiter.execution.parallel.enabled=$PARALLEL_TEST"
         working-directory: ./quality-assurance/qa-ui
 
       - name: Upload allure-results

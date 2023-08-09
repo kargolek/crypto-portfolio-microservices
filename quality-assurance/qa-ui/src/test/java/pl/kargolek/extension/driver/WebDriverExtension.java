@@ -1,6 +1,7 @@
 package pl.kargolek.extension.driver;
 
 import org.junit.jupiter.api.extension.*;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import pl.kargolek.extension.util.AnnotationResolver;
 import pl.kargolek.util.ReportEnvironment;
@@ -69,8 +70,7 @@ public class WebDriverExtension implements BeforeAllCallback, AfterAllCallback, 
     }
 
     private void initWebDriver() {
-        WebDriverFactory.getRemoteWebDriverInstance()
-                .manage()
+        WebDriverFactory.getRemoteWebDriverInstance().manage()
                 .window()
                 .maximize();
 

@@ -26,6 +26,10 @@ public class JavascriptDriver {
         );
     }
 
+    public Object scrollToElement(WebElement webElement){
+        return this.javascriptExecutor.executeScript("arguments[0].scrollIntoView();", webElement);
+    }
+
     public static JavascriptDriverBuilder builder(WebDriver driver) {
         return new JavascriptDriverBuilder(driver);
     }

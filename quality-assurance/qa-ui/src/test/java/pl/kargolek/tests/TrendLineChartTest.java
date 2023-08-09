@@ -45,6 +45,7 @@ public class TrendLineChartTest {
     }
 
     @Test
+    @Tag("TEST_ISSUE")
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user when wallet balance not empty and decrease 10% each past data, trend shows correct line")
     public void whenWalletBalanceMinus10PercentEach_thenShowsCorrectTrendLine(TestData data,
@@ -72,6 +73,7 @@ public class TrendLineChartTest {
     }
 
     @Test
+    @Tag("TEST_ISSUE")
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user when wallet balance not empty I want to see trend line for 7d ")
     public void whenWalletBalanceNotEmpty_thenChartShowsData(TestData data, VisualCompareService service) {
@@ -92,6 +94,7 @@ public class TrendLineChartTest {
     }
 
     @Test
+    @Tag("TEST_ISSUE")
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user when wallet balance empty, then I want to see flat trend line for 7d ")
     @Description("When balance empty, chart shows flat line")
@@ -112,10 +115,10 @@ public class TrendLineChartTest {
     }
 
     @Test
+    @Tag("TEST_ISSUE")
     @Severity(SeverityLevel.MINOR)
     @Story("As user when open balance page, trend line chart label is visible")
     public void whenOpenBalancePage_thenTrendChartLabelVisible(TestData data) {
-        System.out.println("Im running class async");
         var page = this.pages.getHomePage()
                 .open(this.baseURL)
                 .inputWalletsClearText()
@@ -127,6 +130,5 @@ public class TrendLineChartTest {
                 .getText();
 
         assertThat(labelText).isEqualTo("Trend Line 7d");
-        System.out.println("Im stopping class async");
     }
 }

@@ -98,22 +98,22 @@ public class BalanceUITest {
                 .getCssValue("color");
 
         softAssertions.assertThat(element1hCssColorValue)
-                .isEqualTo(data.getGreenColorHigherValues());
+                .isIn(data.getGreenColorHigherValues(), data.getGreenColorHigherValuesFirefox());
 
         softAssertions.assertThat(element24hCssColorValue)
-                .isEqualTo(data.getGreenColorHigherValues());
+                .isIn(data.getGreenColorHigherValues(), data.getGreenColorHigherValuesFirefox());
 
         softAssertions.assertThat(element7dCssColorValue)
-                .isEqualTo(data.getGreenColorHigherValues());
+                .isIn(data.getGreenColorHigherValues(), data.getGreenColorHigherValuesFirefox());
 
         softAssertions.assertThat(element30dCssColorValue)
-                .isEqualTo(data.getGreenColorHigherValues());
+                .isIn(data.getGreenColorHigherValues(), data.getGreenColorHigherValuesFirefox());
 
         softAssertions.assertThat(element60dCssColorValue)
-                .isEqualTo(data.getGreenColorHigherValues());
+                .isIn(data.getGreenColorHigherValues(), data.getGreenColorHigherValuesFirefox());
 
         softAssertions.assertThat(element90dCssColorValue)
-                .isEqualTo(data.getGreenColorHigherValues());
+                .isIn(data.getGreenColorHigherValues(), data.getGreenColorHigherValuesFirefox());
 
         softAssertions.assertAll();
     }
@@ -167,22 +167,22 @@ public class BalanceUITest {
                 .getCssValue("color");
 
         softAssertions.assertThat(element1hCssColorValue)
-                .isEqualTo(data.getRedColorLowerValues());
+                .isIn(data.getRedColorLowerValues(), data.getRedColorLowerValuesFirefox());
 
         softAssertions.assertThat(element24hCssColorValue)
-                .isEqualTo(data.getRedColorLowerValues());
+                .isIn(data.getRedColorLowerValues(), data.getRedColorLowerValuesFirefox());
 
         softAssertions.assertThat(element7dCssColorValue)
-                .isEqualTo(data.getRedColorLowerValues());
+                .isIn(data.getRedColorLowerValues(), data.getRedColorLowerValuesFirefox());
 
         softAssertions.assertThat(element30dCssColorValue)
-                .isEqualTo(data.getRedColorLowerValues());
+                .isIn(data.getRedColorLowerValues(), data.getRedColorLowerValuesFirefox());
 
         softAssertions.assertThat(element60dCssColorValue)
-                .isEqualTo(data.getRedColorLowerValues());
+                .isIn(data.getRedColorLowerValues(), data.getRedColorLowerValuesFirefox());
 
         softAssertions.assertThat(element90dCssColorValue)
-                .isEqualTo(data.getRedColorLowerValues());
+                .isIn(data.getRedColorLowerValues(), data.getRedColorLowerValuesFirefox());
 
         softAssertions.assertAll();
     }

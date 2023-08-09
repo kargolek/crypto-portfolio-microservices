@@ -1,9 +1,9 @@
-name: "qa-regression-test-edge"
+name: "qa-regression-test-chrome"
 
 env:
   ####### TEST VARS #######
   TAGS: HomePageUI,TokenBalanceUI
-  BROWSER_TYPE: edge
+  BROWSER_TYPE: firefox
   HEADLESS_MODE: enable
   NETWORK_LISTENER: disable
   PARALLEL_TEST: true
@@ -24,7 +24,7 @@ on:
       - 'CPA-*'
 
 jobs:
-  qa-tests-regression-edge:
+  qa-tests-regression-chrome:
     if: ${{ contains(github.event.head_commit.message, '#regressionTest') }}
     runs-on: ubuntu-latest
     steps:
@@ -67,10 +67,10 @@ jobs:
         run: docker ps
         working-directory: ./quality-assurance/qa-ui
 
-      - name: Sleep for 15s
+      - name: Sleep for 30s
         uses: juliangruber/sleep-action@v1
         with:
-          time: 15s
+          time: 30s
 
       - name: UI regression tests
         run: mvn test -T 2 -Dgroups="$TAGS" -Dbrowser="$BROWSER_TYPE" -Dheadless="$HEADLESS_MODE" -Dnetwork="$NETWORK_LISTENER" "-Djunit.jupiter.execution.parallel.enabled=$PARALLEL_TEST"
@@ -80,22 +80,22 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: allure-results-edge
+          name: allure-results-chrome
           path: ./quality-assurance/qa-ui/target/allure-results
           retention-days: 1
           if-no-files-found: error
 
   publish-report-chrome:
     if: ${{ contains(github.event.head_commit.message, '#regressionTest') && always() }}
-    needs: qa-tests-regression-edge
+    needs: qa-tests-regression-chrome
     runs-on: ubuntu-latest
     concurrency: 1
     steps:
       - name: Download allure-results
         uses: actions/download-artifact@v3
         with:
-          name: allure-results-edge
-          path: allure-results-edge
+          name: allure-results-chrome
+          path: allure-results-chrome
 
       - name: Fetch allure report history
         uses: actions/checkout@v3
@@ -110,10 +110,10 @@ jobs:
         if: always()
         id: allure-report
         with:
-          allure_results: allure-results-edge
-          allure_history: allure-history/edge
+          allure_results: allure-results-chrome
+          allure_history: allure-history/chrome
           keep_reports: 10
-          subfolder: regression/edge
+          subfolder: regression/chrome
 
       - name: Deploy report to Github Pages
         if: always()
@@ -121,4 +121,4 @@ jobs:
         with:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history/edge
+          PUBLISH_DIR: allure-history/chrome

@@ -97,22 +97,22 @@ public class TotalValueServiceTest {
                 .getCssValue("color");
 
         softAssertions.assertThat(expectedColorDiffQuote1h)
-                .isEqualTo(data.getRedColorLowerValues());
+                .isIn(data.getRedColorLowerValues(), data.getRedColorLowerValuesFirefox());
 
         softAssertions.assertThat(expectedColorPercent1h)
-                .isEqualTo(data.getRedColorLowerValues());
+                .isIn(data.getRedColorLowerValues(), data.getRedColorLowerValuesFirefox());
 
         softAssertions.assertThat(expectedColorDiffQuote24h)
-                .isEqualTo(data.getRedColorLowerValues());
+                .isIn(data.getRedColorLowerValues(), data.getRedColorLowerValuesFirefox());
 
         softAssertions.assertThat(expectedColorPercent24h)
-                .isEqualTo(data.getRedColorLowerValues());
+                .isIn(data.getRedColorLowerValues(), data.getRedColorLowerValuesFirefox());
 
         softAssertions.assertThat(expectedColorDiffQuote7d)
-                .isEqualTo(data.getRedColorLowerValues());
+                .isIn(data.getRedColorLowerValues(), data.getRedColorLowerValuesFirefox());
 
         softAssertions.assertThat(expectedColorPercent7d)
-                .isEqualTo(data.getRedColorLowerValues());
+                .isIn(data.getRedColorLowerValues(), data.getRedColorLowerValuesFirefox());
 
         softAssertions.assertAll();
     }
@@ -167,22 +167,22 @@ public class TotalValueServiceTest {
                 .getCssValue("color");
 
         softAssertions.assertThat(expectedColorDiffQuote1h)
-                .isEqualTo(data.getGreenColorHigherValues());
+                .isIn(data.getGreenColorHigherValues(), data.getGreenColorHigherValuesFirefox());
 
         softAssertions.assertThat(expectedColorPercent1h)
-                .isEqualTo(data.getGreenColorHigherValues());
+                .isIn(data.getGreenColorHigherValues(), data.getGreenColorHigherValuesFirefox());
 
         softAssertions.assertThat(expectedColorDiffQuote24h)
-                .isEqualTo(data.getGreenColorHigherValues());
+                .isIn(data.getGreenColorHigherValues(), data.getGreenColorHigherValuesFirefox());
 
         softAssertions.assertThat(expectedColorPercent24h)
-                .isEqualTo(data.getGreenColorHigherValues());
+                .isIn(data.getGreenColorHigherValues(), data.getGreenColorHigherValuesFirefox());
 
         softAssertions.assertThat(expectedColorDiffQuote7d)
-                .isEqualTo(data.getGreenColorHigherValues());
+                .isIn(data.getGreenColorHigherValues(), data.getGreenColorHigherValuesFirefox());
 
         softAssertions.assertThat(expectedColorPercent7d)
-                .isEqualTo(data.getGreenColorHigherValues());
+                .isIn(data.getGreenColorHigherValues(), data.getGreenColorHigherValuesFirefox());
 
         softAssertions.assertAll();
     }

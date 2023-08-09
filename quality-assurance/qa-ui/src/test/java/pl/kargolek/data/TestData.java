@@ -180,4 +180,7 @@ public class TestData {
     private final String redColorLowerValues = "rgba(255, 77, 0, 1)";
     private final String greenColorHigherValues = "rgba(7, 243, 107, 1)";
 
+    private final String redColorLowerValuesFirefox = "rgb(255, 77, 0)";
+    private final String greenColorHigherValuesFirefox = "rgb(7, 243, 107)";
+
 }

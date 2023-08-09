@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import pl.kargolek.util.*;
 import pl.kargolek.util.constant.BrowserType;
+import pl.kargolek.util.constant.HeadlessMode;
 import pl.kargolek.util.constant.ParallelTest;
 
 import java.io.File;
@@ -32,7 +33,8 @@ class VideoRecordExtension implements BeforeEachCallback, AfterTestExecutionCall
 
     @Override
     public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
-        if (TestProperty.getInstance().getParallelism() == ParallelTest.ENABLE)
+        if (TestProperty.getInstance().getParallelism() == ParallelTest.ENABLE ||
+                TestProperty.getInstance().getHeadlessMode() == HeadlessMode.ENABLE)
             return;
         videoTestService.stopRecord();
         var tempVideo = getTempVideo();

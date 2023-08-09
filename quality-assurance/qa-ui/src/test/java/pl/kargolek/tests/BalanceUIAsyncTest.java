@@ -21,6 +21,8 @@ import pl.kargolek.util.JavascriptDriver;
 import pl.kargolek.util.TestProperty;
 import pl.kargolek.util.WebDriverUtil;
 
+import java.time.Duration;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -428,14 +430,12 @@ public class BalanceUIAsyncTest {
 
         var addressCell = balancePage.getEthereumTableBalancePage()
                 .getFirstCellAddress();
-        balancePage.clickElement(addressCell);
+        balancePage.clickElement(addressCell, Duration.ofSeconds(20));
 
         WebDriverUtil.switchToNextTab(driver, currentWindow);
 
-        assertThat(driver.getCurrentUrl())
-                .contains(
-                        data.getExplorerAddressTestnetEthereum()
-                );
+        assertThat(balancePage.waitForContainsURL(data.getExplorerAddressTestnetEthereum(), Duration.ofSeconds(5)))
+                .isTrue();
     }
 
     @Test
@@ -454,14 +454,12 @@ public class BalanceUIAsyncTest {
 
         var addressCell = balancePage.getPolygonTableBalancePage()
                 .getFirstCellAddress();
-        balancePage.clickElement(addressCell);
+        balancePage.clickElement(addressCell, Duration.ofSeconds(20));
 
         WebDriverUtil.switchToNextTab(driver, currentWindow);
 
-        assertThat(driver.getCurrentUrl())
-                .contains(
-                        data.getExplorerAddressTestnetPolygon()
-                );
+        assertThat(balancePage.waitForContainsURL(data.getExplorerAddressTestnetPolygon(), Duration.ofSeconds(5)))
+                .isTrue();
     }
 
     @Test
@@ -480,14 +478,12 @@ public class BalanceUIAsyncTest {
 
         var addressCell = balancePage.getAvalancheTableBalancePage()
                 .getFirstCellAddress();
-        balancePage.clickElement(addressCell);
+        balancePage.clickElement(addressCell, Duration.ofSeconds(20));
 
         WebDriverUtil.switchToNextTab(driver, currentWindow);
 
-        assertThat(driver.getCurrentUrl())
-                .contains(
-                        data.getExplorerAddressTestnetAvalanche()
-                );
+        assertThat(balancePage.waitForContainsURL(data.getExplorerAddressTestnetAvalanche(), Duration.ofSeconds(5)))
+                .isTrue();
     }
 
     @Test
@@ -569,9 +565,7 @@ public class BalanceUIAsyncTest {
         softAssertions.assertThat(viewportTop)
                 .isGreaterThan(browserHeight);
 
-        this.pages.getWalletBalancePage().getAction()
-                .moveToElement(element)
-                .perform();
+        jsDriver.scrollToElement(element);
 
         viewportTop = Double.valueOf(jsDriver.getTopPositionInViewport(element).toString());
         softAssertions.assertThat(viewportTop)
