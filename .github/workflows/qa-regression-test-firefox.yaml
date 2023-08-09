@@ -1,4 +1,4 @@
-name: "qa-regression-test-chrome"
+name: "qa-regression-test-firefox"
 
 env:
   ####### TEST VARS #######
@@ -24,8 +24,8 @@ on:
       - 'CPA-*'
 
 jobs:
-  qa-tests-regression-chrome:
-    if: ${{ contains(github.event.head_commit.message, '#regressionTest') }}
+  qa-tests-regression-firefox:
+    if: ${{ contains(github.event.head_commit.message, '#regressionTestAll') || contains(github.event.head_commit.message, '#regressionTestFirefox') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -80,22 +80,22 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: allure-results-chrome
+          name: allure-results-firefox
           path: ./quality-assurance/qa-ui/target/allure-results
           retention-days: 1
           if-no-files-found: error
 
-  publish-report-chrome:
-    if: ${{ contains(github.event.head_commit.message, '#regressionTest') && always() }}
-    needs: qa-tests-regression-chrome
+  publish-report-firefox:
+    if: ${{ contains(github.event.head_commit.message, '#regressionTest') || contains(github.event.head_commit.message, '#regressionTestFirefox') && always() }}
+    needs: qa-tests-regression-firefox
     runs-on: ubuntu-latest
     concurrency: 1
     steps:
       - name: Download allure-results
         uses: actions/download-artifact@v3
         with:
-          name: allure-results-chrome
-          path: allure-results-chrome
+          name: allure-results-firefox
+          path: allure-results-firefox
 
       - name: Fetch allure report history
         uses: actions/checkout@v3
@@ -110,10 +110,10 @@ jobs:
         if: always()
         id: allure-report
         with:
-          allure_results: allure-results-chrome
-          allure_history: allure-history/chrome
+          allure_results: allure-results-firefox
+          allure_history: allure-history/firefox
           keep_reports: 10
-          subfolder: regression/chrome
+          subfolder: regression/firefox
 
       - name: Deploy report to Github Pages
         if: always()
@@ -121,4 +121,4 @@ jobs:
         with:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history/chrome
+          PUBLISH_DIR: allure-history/firefox
