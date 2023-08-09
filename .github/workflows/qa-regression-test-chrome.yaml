@@ -6,7 +6,7 @@ env:
   BROWSER_TYPE: chrome
   HEADLESS_MODE: enable
   NETWORK_LISTENER: disable
-  PARALLEL_TEST: false
+  PARALLEL_TEST: true
 
   ####### ENV VARS #######
   COIN_MARKET_CAP_API_KEY: ${{ secrets.COIN_MARKET_CAP_API_KEY }}
@@ -60,7 +60,7 @@ jobs:
           docker-compose up -d
 
       - name: Start selenium grid
-        run: docker-compose -f selenium-compose.yaml up -d
+        run: docker-compose -f selenium-compose-chrome.yaml up -d
         working-directory: ./quality-assurance/qa-ui
 
       - name: List containers

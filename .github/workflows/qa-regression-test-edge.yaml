@@ -60,7 +60,7 @@ jobs:
           docker-compose up -d
 
       - name: Start selenium grid
-        run: docker-compose -f selenium-compose.yaml up -d
+        run: docker-compose -f selenium-compose-edge.yaml up -d
         working-directory: ./quality-assurance/qa-ui
 
       - name: List containers
