@@ -1,0 +1,9 @@
+[WARNING 2023-08-09T11:13:24.746]
+security - Error with Permissions-Policy header: Origin trial controlled feature not enabled: 'interest-cohort'.
+
+[SEVERE 2023-08-09T11:13:24.747]
+https://testnet.snowtrace.io/address/0x189B9cBd4AfF470aF2C0102f365FC1823d857965 - Failed to load resource: the server responded with a status of 403 ()
+
+[SEVERE 2023-08-09T11:13:25.144]
+https://testnet.snowtrace.io/favicon.ico - Failed to load resource: the server responded with a status of 403 ()
+
