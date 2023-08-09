@@ -6,6 +6,7 @@ import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Isolated;
 import pl.kargolek.data.TestData;
 import pl.kargolek.data.script.TestDataSql;
 import pl.kargolek.extension.BaseTestConfigBeforeAll;
@@ -30,6 +31,7 @@ import static org.awaitility.Awaitility.await;
 @BaseTestConfigBeforeAll
 @TestDataProvider
 @SoftAssertion
+@Isolated
 public class TokenTreeMapChartTest {
 
     private String baseURL;
@@ -59,7 +61,6 @@ public class TokenTreeMapChartTest {
         var tokenTreeMapPage = this.pages.getHomePage()
                 .open(this.baseURL)
                 .inputWalletsClearText()
-                .inputWalletsClearText()
                 .inputWallets(data.getEthereumTestNetWallet().getAddress())
                 .enterKeyPress()
                 .getTokenTreeMapChartPage();
@@ -88,16 +89,15 @@ public class TokenTreeMapChartTest {
     @Test
     @Severity(SeverityLevel.NORMAL)
     @Story("As user I can chart labels with token symbol and current token balance")
-    public void whenWalletBalanceNotEmpty_thenLabelWithSymbolAndBalance(TestData data, SoftAssertions softAssertions) {
+    public void whenWalletBalanceNotEmpty_thenLabelWithSymbolAndBalance(TestData data, SoftAssertions softAssertions) throws InterruptedException {
         var tokenTreeMapPage = this.pages.getHomePage()
                 .open(this.baseURL)
-                .inputWalletsClearText()
                 .inputWalletsClearText()
                 .inputWallets(data.getEthereumTestNetWallet().getAddress())
                 .enterKeyPress()
                 .getTokenTreeMapChartPage();
 
-        await().atMost(Duration.ofSeconds(10)).until(() ->
+        await().atMost(Duration.ofSeconds(20)).until(() ->
                 tokenTreeMapPage.getEthereumBalanceLabelText().equals("235"));
 
         var ethSymbolLabel = tokenTreeMapPage.getEthereumSymbolLabelText();

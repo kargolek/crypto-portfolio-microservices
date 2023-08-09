@@ -1,6 +1,14 @@
-name: "qa-regression-test"
+name: "qa-regression-test-edge"
 
 env:
+  ####### TEST VARS #######
+  TAGS: HomePageUI,TokenBalanceUI
+  BROWSER_TYPE: edge
+  HEADLESS_MODE: enable
+  NETWORK_LISTENER: disable
+  PARALLEL_TEST: false
+
+  ####### ENV VARS #######
   COIN_MARKET_CAP_API_KEY: ${{ secrets.COIN_MARKET_CAP_API_KEY }}
   MYSQL_USER: ${{ secrets.MYSQL_USER }}
   MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
@@ -16,8 +24,8 @@ on:
       - 'CPA-*'
 
 jobs:
-  qa-tests-regression:
-    if: ${{ contains(github.event.head_commit.message, '#regressionTest') }}
+  qa-tests-regression-edge:
+    if: ${{ contains(github.event.head_commit.message, '#regressionTestAll') || contains(github.event.head_commit.message, '#regressionTestEdge') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -52,34 +60,42 @@ jobs:
           docker-compose up -d
 
       - name: Start selenium grid
-        run: docker-compose -f selenium-compose.yaml up -d
+        run: docker-compose -f selenium-compose-edge.yaml up -d
         working-directory: ./quality-assurance/qa-ui
 
       - name: List containers
         run: docker ps
         working-directory: ./quality-assurance/qa-ui
 
-      - name: Sleep for 15s
+      - name: Sleep for 30s
         uses: juliangruber/sleep-action@v1
         with:
-          time: 15s
+          time: 30s
 
-      - name: API test
-        run: mvn test
-        working-directory: ./quality-assurance/qa-api
-
-      - name: Stop test env
-        if: always()
-        run: docker-compose -f selenium-compose.yaml down
+      - name: UI regression tests
+        run: mvn test -T 2 -Dgroups="$TAGS" -Dbrowser="$BROWSER_TYPE" -Dheadless="$HEADLESS_MODE" -Dnetwork="$NETWORK_LISTENER" "-Djunit.jupiter.execution.parallel.enabled=$PARALLEL_TEST"
         working-directory: ./quality-assurance/qa-ui
 
-      - name: Stop backend and fronted
+      - name: Upload allure-results
         if: always()
-        run: docker-compose down
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-results-edge
+          path: ./quality-assurance/qa-ui/target/allure-results
+          retention-days: 1
+          if-no-files-found: error
 
-      - name: Copy allure results qa-api to qa-ui
-        run: |
-          cp -r quality-assurance/qa-api/target/allure-results/* quality-assurance/qa-ui/target/allure-results/
+  publish-report-edge:
+    if: ${{ contains(github.event.head_commit.message, '#regressionTestAll') || contains(github.event.head_commit.message, '#regressionTestEdge') && always() }}
+    needs: qa-tests-regression-edge
+    runs-on: ubuntu-latest
+    concurrency: 1
+    steps:
+      - name: Download allure-results
+        uses: actions/download-artifact@v3
+        with:
+          name: allure-results-edge
+          path: allure-results-edge
 
       - name: Fetch allure report history
         uses: actions/checkout@v3
@@ -94,12 +110,10 @@ jobs:
         if: always()
         id: allure-report
         with:
-          allure_results: quality-assurance/qa-ui/target/allure-results
-          gh_pages: gh-pages
-          allure_report: allure-report
-          allure_history: allure-history
+          allure_results: allure-results-edge
+          allure_history: allure-history/edge
           keep_reports: 10
-          subfolder: regression
+          subfolder: regression/edge
 
       - name: Deploy report to Github Pages
         if: always()
@@ -107,4 +121,4 @@ jobs:
         with:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
-          PUBLISH_DIR: allure-history
+          PUBLISH_DIR: allure-history/edge

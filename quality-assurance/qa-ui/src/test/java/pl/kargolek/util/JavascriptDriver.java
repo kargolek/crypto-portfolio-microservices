@@ -20,10 +20,14 @@ public class JavascriptDriver {
     }
 
     public Object getTopPositionInViewport(WebElement element) {
-        return  this.javascriptExecutor.executeScript(
+        return this.javascriptExecutor.executeScript(
                 "return arguments[0].getBoundingClientRect().top;",
                 element
         );
+    }
+
+    public Object scrollToElement(WebElement webElement){
+        return this.javascriptExecutor.executeScript("arguments[0].scrollIntoView();", webElement);
     }
 
     public static JavascriptDriverBuilder builder(WebDriver driver) {

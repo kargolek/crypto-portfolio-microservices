@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.openqa.selenium.WebDriver;
 import pl.kargolek.data.script.TestDataSql;
 import pl.kargolek.extension.BaseTestConfig;
@@ -24,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Feature("Input wallet UI")
 @BaseTestConfig
 @SoftAssertion
-public class InputWalletsUITest {
+public class InputWalletsUIAsyncTest {
 
     private String appBaseURL;
     private InitPages pages;

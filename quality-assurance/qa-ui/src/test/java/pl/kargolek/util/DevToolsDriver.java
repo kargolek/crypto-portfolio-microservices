@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.DevToolsException;
 import org.openqa.selenium.devtools.HasDevTools;
-import org.openqa.selenium.devtools.v110.network.Network;
+import org.openqa.selenium.devtools.v114.network.Network;
 import org.openqa.selenium.remote.Augmenter;
 import pl.kargolek.extension.devtools.model.RequestModel;
 import pl.kargolek.extension.devtools.model.ResponseModel;
@@ -20,13 +20,11 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 @Slf4j
 public class DevToolsDriver {
-    private final WebDriver webDriver;
     private final DevTools devTools;
     private final BlockingQueue<RequestModel> requests = new LinkedBlockingQueue<>();
     private final BlockingQueue<ResponseModel> responses = new LinkedBlockingQueue<>();
 
     public DevToolsDriver(DevToolsUtilsBuilder devToolsUtilsBuilder) {
-        this.webDriver = devToolsUtilsBuilder.webDriver;
         this.devTools = devToolsUtilsBuilder.devTools;
     }
 

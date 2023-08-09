@@ -1,13 +1,16 @@
 package pl.kargolek.extension.devtools;
 
 import org.junit.jupiter.api.extension.*;
-import org.openqa.selenium.devtools.v110.network.model.MonotonicTime;
-import pl.kargolek.extension.exception.NoSuchExtensionInitObjectException;
+import org.openqa.selenium.devtools.v114.network.model.MonotonicTime;
 import pl.kargolek.extension.util.AnnotationResolver;
 import pl.kargolek.util.DevToolsDriver;
 import pl.kargolek.util.ReportAttachment;
-import pl.kargolek.util.WebDriverResolver;
+import pl.kargolek.util.TestProperty;
+import pl.kargolek.util.WebDriverFactory;
+import pl.kargolek.util.constant.BrowserType;
+import pl.kargolek.util.constant.NetworkReporter;
 
+import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -18,64 +21,58 @@ import java.util.stream.Collectors;
 /**
  * @author Karol Kuta-Orlowicz
  */
-public class DevToolsExtension implements ParameterResolver, BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {
+public class DevToolsExtension implements BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback {
     private DevToolsDriver devToolsDriver;
     private final ReportAttachment reportAttachment = new ReportAttachment();
-    private final WebDriverResolver webDriverResolver = new WebDriverResolver();
     private final AnnotationResolver annotationResolver = new AnnotationResolver();
+    private final BrowserType browserType = TestProperty.getInstance().getBrowserType();
 
     @Override
-    public void beforeAll(ExtensionContext context) {
-        if (annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()) {
-            initDevTools(context);
+    public void beforeAll(ExtensionContext context) throws MalformedURLException {
+        if (annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()
+                && isDriverSupportDevTools() && isNetworkReporterEnable()) {
+            initDevTools();
         }
     }
 
     @Override
-    public void beforeEach(ExtensionContext context) {
-        if (!annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()) {
-            initDevTools(context);
+    public void beforeEach(ExtensionContext context) throws MalformedURLException {
+        if (!annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()
+                && isDriverSupportDevTools() && isNetworkReporterEnable()) {
+            initDevTools();
         }
     }
 
     @Override
     public void afterEach(ExtensionContext context) {
-        var data = this.formatData();
-        this.attachNetworkData(data);
-        if (!annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()) {
-            this.devToolsDriver.closeConnection();
+        if (isDriverSupportDevTools() && isNetworkReporterEnable()) {
+            var data = this.formatData();
+            this.attachNetworkData(data);
+            if (!annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()) {
+                devToolsDriver.closeConnection();
+            }
         }
     }
 
     @Override
     public void afterAll(ExtensionContext context) {
-        if (annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll())
-            this.devToolsDriver.closeConnection();
+        if (annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()
+                && isDriverSupportDevTools() && isNetworkReporterEnable()) {
+            devToolsDriver.closeConnection();
+        }
     }
 
-    @Override
-    public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        return parameterContext.getParameter().getType() == DevToolsDriver.class;
-    }
-
-    @Override
-    public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        if (this.devToolsDriver != null) return this.devToolsDriver;
-        throw new NoSuchExtensionInitObjectException("Unable to resolve param: " + this.devToolsDriver.getClass().getCanonicalName());
-    }
-
-    private void initDevTools(ExtensionContext context) {
-        var webDriver = webDriverResolver.getStoredWebDriver(context);
-        this.devToolsDriver = DevToolsDriver
-                .builder(webDriver)
+    private synchronized void initDevTools() {
+        devToolsDriver = DevToolsDriver
+                .builder(WebDriverFactory.getRemoteWebDriverInstance())
                 .createConnection()
                 .build();
-        this.devToolsDriver.setNetworkRequestListener();
-        this.devToolsDriver.setNetworkResponsesListener();
+        devToolsDriver.setNetworkRequestListener();
+        devToolsDriver.setNetworkResponsesListener();
     }
 
     private String formatData() {
-        var requestsData = this.devToolsDriver.getRequests().stream()
+        var requestsData = devToolsDriver.getRequests().stream()
                 .map(requestModel -> String.format("\nRequest:[%s]\n%s URL:%s\nHeader:%s\nPayload:%s\n",
                         this.convert(requestModel.timestamp()),
                         requestModel.request().getMethod(),
@@ -84,7 +81,7 @@ public class DevToolsExtension implements ParameterResolver, BeforeAllCallback, 
                         requestModel.request().getPostData().orElse("No post data")))
                 .collect(Collectors.joining(System.lineSeparator()));
 
-        var responseData = this.devToolsDriver.getResponses().stream()
+        var responseData = devToolsDriver.getResponses().stream()
                 .map(responseModel -> String.format("\nResponse: [%s]\nURL:%s\nStatus:%s %s\nHeader:%s\nBody:%s\n",
                         this.convert(responseModel.timestamp()),
                         responseModel.response().getUrl(),
@@ -109,4 +106,12 @@ public class DevToolsExtension implements ParameterResolver, BeforeAllCallback, 
                 ReportAttachment.AttachmentType.TEXT_LOG);
     }
 
+    private boolean isDriverSupportDevTools() {
+        return browserType == BrowserType.CHROME || browserType == BrowserType.MOBILE_CHROME
+                || browserType == BrowserType.EDGE;
+    }
+
+    private boolean isNetworkReporterEnable() {
+        return TestProperty.getInstance().getNetworkReporter() == NetworkReporter.ENABLE;
+    }
 }

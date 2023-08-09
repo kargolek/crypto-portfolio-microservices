@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Isolated;
 import org.openqa.selenium.WebDriver;
 import pl.kargolek.extension.BaseTestConfig;
 import pl.kargolek.pages.InitPages;

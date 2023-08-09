@@ -71,9 +71,13 @@ public class BasePage {
                 ExpectedConditions.not(ExpectedConditions.textToBePresentInElement(element, text)));
     }
 
+    public boolean waitForContainsURL(String partURL, Duration timeout){
+        return new WebDriverWait(driver, timeout).until(ExpectedConditions.urlContains(partURL));
+    }
+
     @Step("Click on the element {0}")
-    public WebElement clickElement(WebElement element) {
-        element.click();
+    public WebElement clickElement(WebElement element, Duration timeout) {
+        new WebDriverWait(this.driver, timeout).until(ExpectedConditions.elementToBeClickable(element)).click();
         return element;
     }
 

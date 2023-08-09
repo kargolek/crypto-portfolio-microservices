@@ -1,7 +1,7 @@
 package pl.kargolek.extension.devtools.model;
 
-import org.openqa.selenium.devtools.v110.network.model.MonotonicTime;
-import org.openqa.selenium.devtools.v110.network.model.Request;
+import org.openqa.selenium.devtools.v114.network.model.MonotonicTime;
+import org.openqa.selenium.devtools.v114.network.model.Request;
 
 /**
  * @author Karol Kuta-Orlowicz

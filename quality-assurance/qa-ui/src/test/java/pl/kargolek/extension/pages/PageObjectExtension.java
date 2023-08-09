@@ -4,29 +4,30 @@ import org.junit.jupiter.api.extension.*;
 import pl.kargolek.extension.exception.NoSuchExtensionInitObjectException;
 import pl.kargolek.extension.util.AnnotationResolver;
 import pl.kargolek.pages.InitPages;
-import pl.kargolek.util.WebDriverResolver;
+import pl.kargolek.util.WebDriverFactory;
+
+import java.net.MalformedURLException;
 
 /**
  * @author Karol Kuta-Orlowicz
  */
 public class PageObjectExtension implements BeforeAllCallback, BeforeEachCallback, ParameterResolver {
 
-    private final WebDriverResolver driverResolver = new WebDriverResolver();
     private final AnnotationResolver annotationResolver = new AnnotationResolver();
     private InitPages initPages;
 
     @Override
-    public void beforeAll(ExtensionContext context) {
+    public void beforeAll(ExtensionContext context) throws MalformedURLException {
         if (annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()) {
-            var driver = driverResolver.getStoredWebDriver(context);
+            var driver = WebDriverFactory.getRemoteWebDriverInstance();
             this.initPages = new InitPages(driver);
         }
     }
 
     @Override
-    public void beforeEach(ExtensionContext context) {
+    public void beforeEach(ExtensionContext context) throws MalformedURLException {
         if (!annotationResolver.getSeleniumWebDriverAnnotation(context).isBeforeAll()) {
-            var driver = driverResolver.getStoredWebDriver(context);
+            var driver = WebDriverFactory.getRemoteWebDriverInstance();
             this.initPages = new InitPages(driver);
         }
     }

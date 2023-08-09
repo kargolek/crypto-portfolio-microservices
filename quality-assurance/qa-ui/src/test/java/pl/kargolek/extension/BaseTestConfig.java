@@ -14,6 +14,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+
+
 /**
  * @author Karol Kuta-Orlowicz
  */
@@ -21,12 +23,11 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @SeleniumWebDriver(isBeforeAll = false)
-@BrowserLogs
+@MySqlScript
 @TestProperties
 @VideoRecording
 @TakeScreenshot
+@BrowserLogs
 @DevTools
 @InitPageObject
-@MySqlScript
-public @interface BaseTestConfig {
-}
+public @interface BaseTestConfig {}

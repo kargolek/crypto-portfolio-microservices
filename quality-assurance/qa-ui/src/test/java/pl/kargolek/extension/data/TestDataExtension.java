@@ -11,7 +11,6 @@ import pl.kargolek.data.TestData;
  */
 public class TestDataExtension implements ParameterResolver {
 
-
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
         return parameterContext.getParameter().getType().equals(TestData.class);

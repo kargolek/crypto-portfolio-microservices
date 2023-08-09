@@ -109,6 +109,11 @@
             <artifactId>opencv</artifactId>
             <version>4.7.0-0</version>
         </dependency>
+        <dependency>
+            <groupId>me.fabriciorby</groupId>
+            <artifactId>maven-surefire-junit5-tree-reporter</artifactId>
+            <version>1.2.1</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -117,6 +122,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefile.version}</version>
                 <configuration>
+<!--                    <threadCount>4</threadCount>-->
+                    <parallel>methods</parallel>
+                    <useUnlimitedThreads>false</useUnlimitedThreads>
                     <properties>
                         <property>
                             <name>listener</name>
@@ -137,6 +145,20 @@
                         </property>
                     </systemProperties>
                     <reportFormat>plain</reportFormat>
+                    <consoleOutputReporter>
+                        <disable>false</disable>
+                    </consoleOutputReporter>
+                    <statelessTestsetInfoReporter
+                            implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter">
+                        <printStacktraceOnError>true</printStacktraceOnError>
+                        <printStacktraceOnFailure>true</printStacktraceOnFailure>
+                        <printStdoutOnError>true</printStdoutOnError>
+                        <printStdoutOnFailure>true</printStdoutOnFailure>
+                        <printStdoutOnSuccess>false</printStdoutOnSuccess>
+                        <printStderrOnError>true</printStderrOnError>
+                        <printStderrOnFailure>true</printStderrOnFailure>
+                        <printStderrOnSuccess>false</printStderrOnSuccess>
+                    </statelessTestsetInfoReporter>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -153,6 +175,11 @@
                         <groupId>org.junit.jupiter</groupId>
                         <artifactId>junit-jupiter-engine</artifactId>
                         <version>${junit.jupiter.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>me.fabriciorby</groupId>
+                        <artifactId>maven-surefire-junit5-tree-reporter</artifactId>
+                        <version>1.2.1</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -172,5 +199,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

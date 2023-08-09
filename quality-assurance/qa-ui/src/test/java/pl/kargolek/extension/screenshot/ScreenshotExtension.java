@@ -5,8 +5,9 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import pl.kargolek.util.ReportAttachment;
-import pl.kargolek.util.WebDriverResolver;
+import pl.kargolek.util.WebDriverFactory;
 
+import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -17,16 +18,15 @@ import java.util.Objects;
 class ScreenshotExtension implements AfterTestExecutionCallback {
 
     private final ReportAttachment attachment = new ReportAttachment();
-    private final WebDriverResolver webDriverResolver = new WebDriverResolver();
 
     @Override
-    public void afterTestExecution(ExtensionContext extensionContext) {
+    public void afterTestExecution(ExtensionContext extensionContext) throws MalformedURLException {
         if (isScreenshotOnFailedTest(extensionContext)) {
             if (isTestFailed(extensionContext)) {
-                takeScreenshotProcess(extensionContext);
+                takeScreenshotProcess();
             }
         } else {
-            takeScreenshotProcess(extensionContext);
+            takeScreenshotProcess();
         }
     }
 
@@ -67,8 +67,8 @@ class ScreenshotExtension implements AfterTestExecutionCallback {
                 .isPresent();
     }
 
-    private void takeScreenshotProcess(ExtensionContext extensionContext) {
-        var driver = webDriverResolver.getStoredWebDriver(extensionContext);
+    private void takeScreenshotProcess() {
+        var driver = WebDriverFactory.getRemoteWebDriverInstance();
         var bytesArray = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
 
         if (bytesArray.length > 0) {
