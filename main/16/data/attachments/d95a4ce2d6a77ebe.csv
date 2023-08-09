@@ -1,0 +1,2 @@
+status	BAD_REQUEST
+message	Server status code: 400, message: "symbol" should only include comma-separated alphanumeric cryptocurrency symbols

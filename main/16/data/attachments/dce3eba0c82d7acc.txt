@@ -1,0 +1,1 @@
+{"status":"BAD_REQUEST","timestamp":"2023-08-09T16:01:52.607729737","message":"Method argument are not valid","errors":["Symbol cannot be an empty","Name cannot be an empty"]}
