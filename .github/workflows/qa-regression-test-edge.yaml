@@ -67,10 +67,10 @@ jobs:
         run: docker ps
         working-directory: ./quality-assurance/qa-ui
 
-      - name: Sleep for 15s
+      - name: Sleep for 30s
         uses: juliangruber/sleep-action@v1
         with:
-          time: 15s
+          time: 30s
 
       - name: UI regression tests
         run: mvn test -T 2 -Dgroups="$TAGS" -Dbrowser="$BROWSER_TYPE" -Dheadless="$HEADLESS_MODE" -Dnetwork="$NETWORK_LISTENER" "-Djunit.jupiter.execution.parallel.enabled=$PARALLEL_TEST"
