@@ -6,7 +6,7 @@ env:
   BROWSER_TYPE: edge
   HEADLESS_MODE: enable
   NETWORK_LISTENER: disable
-  PARALLEL_TEST: true
+  PARALLEL_TEST: false
 
   ####### ENV VARS #######
   COIN_MARKET_CAP_API_KEY: ${{ secrets.COIN_MARKET_CAP_API_KEY }}
