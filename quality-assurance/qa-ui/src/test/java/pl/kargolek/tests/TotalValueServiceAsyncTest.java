@@ -37,7 +37,6 @@ public class TotalValueServiceAsyncTest {
     private InitPages pages;
 
     @BeforeAll
-    @Execution(ExecutionMode.SAME_THREAD)
     public static void setupAll(TestDataSql dataSql){
         dataSql.deleteCryptocurrenciesData();
         dataSql.insertEthereumData();
@@ -46,7 +45,6 @@ public class TotalValueServiceAsyncTest {
     }
 
     @BeforeEach
-    @Execution(ExecutionMode.CONCURRENT)
     public void setup(TestProperty property, InitPages pages) {
         this.baseURL = property.getAppBaseURL();
         this.pages = pages;
@@ -56,7 +54,6 @@ public class TotalValueServiceAsyncTest {
     @Severity(SeverityLevel.BLOCKER)
     @Story("As user I want see proper calculation of my wallet with coins at the top of balance page")
     @Description("Total value is number which represents total value of each token balance")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenProvideOneWallet_thenProperTotalValueData(TestData data) {
         this.pages.getHomePage()
                 .open(this.baseURL)
@@ -79,7 +76,6 @@ public class TotalValueServiceAsyncTest {
     @Severity(SeverityLevel.BLOCKER)
     @Story("As user I want see proper calculation of my wallet without coins at the top of balance page")
     @Description("Total value is number which represents total value of each token balance")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenProvideEmptyWallet_thenProperTotalValueData(TestData data) {
         this.pages.getHomePage()
                 .open(this.baseURL)
@@ -105,7 +101,6 @@ public class TotalValueServiceAsyncTest {
     @Severity(SeverityLevel.BLOCKER)
     @Story("As user I want see proper calculation of my wallet without and with coins at the top of balance page")
     @Description("Total value is number which represents total value of each token balance")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenProvideEmptyAndNotEmptyWallets_thenProperTotalValueData(TestData data) {
         var walletData = data.getEthereumTestNetWallet().getAddress() + "," +
                 data.getEthereumTestNetWalletEmpty().getAddress();
@@ -134,7 +129,6 @@ public class TotalValueServiceAsyncTest {
     @Severity(SeverityLevel.BLOCKER)
     @Story("As user I want see proper calculation of my multiple wallets with coins at the top of balance page")
     @Description("Total value is number which represents total value of each token balance")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenProvideMultipleNotEmptyWallets_thenProperTotalValueData(TestData data) {
         var walletData = data.getEthereumTestNetWallet().getAddress() + "," +
                 data.getEthereumTestNetWallet().getAddress() + "," +
@@ -167,7 +161,6 @@ public class TotalValueServiceAsyncTest {
     @Story("As user when no empty I want to details calculation of past value for 1h, 24h, 7d " +
             "in quote and percentage value")
     @Description("Quote shows diff value in USD")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenWalletNotEmpty_thenTotalDiffShowsFor1h24h7d(TestData data, SoftAssertions softAssertions) throws InterruptedException {
         var walletData = data.getEthereumTestNetWallet().getAddress();
 
@@ -249,7 +242,6 @@ public class TotalValueServiceAsyncTest {
     @Story("As user when multiple wallets I want to details calculation of past value for 1h, 24h, 7d " +
             "in quote and percentage value")
     @Description("Quote shows diff value in USD")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenMultipleWalletNotEmpty_thenTotalDiffShowsFor1h24h7d(TestData data, SoftAssertions softAssertions) {
         var walletData = data.getEthereumTestNetWallet().getAddress() + "," +
                 data.getEthereumTestNetWallet().getAddress() + "," +
@@ -331,7 +323,6 @@ public class TotalValueServiceAsyncTest {
     @Story("As user when empty wallet I want to details calculation of past value for 1h, 24h, 7d " +
             "in quote and percentage value")
     @Description("Quote shows diff value in USD")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenWalletEmpty_thenTotalDiffShowsFor1h24h7d(TestData data, SoftAssertions softAssertions) {
         var walletData = data.getEthereumTestNetWalletEmpty().getAddress();
 

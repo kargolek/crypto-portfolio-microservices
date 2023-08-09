@@ -63,7 +63,7 @@ jobs:
         working-directory: ./quality-assurance/qa-api
 
       - name: Start selenium test
-        run: mvn test
+        run: mvn test -T 2 -Dbrowser="chrome" -Dheadless="enable" -Dnetwork="disable" "-Djunit.jupiter.execution.parallel.enabled=false"
         working-directory: ./quality-assurance/qa-ui
 
       - name: Stop test env

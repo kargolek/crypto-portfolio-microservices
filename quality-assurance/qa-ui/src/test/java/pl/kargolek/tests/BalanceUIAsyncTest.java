@@ -59,7 +59,6 @@ public class BalanceUIAsyncTest {
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user I want to see balance component for ETH")
     @Description("ETH balance component for valid wallet")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenWalletValid_thenEthBalanceComponent(TestData data, WebDriver driver) {
         var component = this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -74,7 +73,6 @@ public class BalanceUIAsyncTest {
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user I want to see balance component for MATIC")
     @Description("MATIC balance component for valid wallet")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenWalletValid_thenMaticBalanceComponent(TestData data) {
         var component = this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -89,7 +87,6 @@ public class BalanceUIAsyncTest {
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user I want to see balance component for AVAX")
     @Description("AVAX balance component for valid wallet")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenWalletValid_thenAvaxBalanceComponent(TestData data) {
         var component = this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -104,7 +101,6 @@ public class BalanceUIAsyncTest {
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user I can see total amount value for token balance")
     @Description("Total amount count amounts from all of the wallets provided by user for each token")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenWalletValid_thenTotalAmount(TestData data, SoftAssertions softAssertions) {
         var balancePage = this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -131,7 +127,6 @@ public class BalanceUIAsyncTest {
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user I can see symbol name value for token balance")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenWalletValid_thenSymbolName(TestData data, SoftAssertions softAssertions) {
         var balancePage = this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -158,7 +153,6 @@ public class BalanceUIAsyncTest {
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user I can see total asset value for token balance")
     @Description("Total asset value based on the value of each wallet for each token")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenWalletValid_thenTotalValue(TestData data, SoftAssertions softAssertions, WebDriver driver) {
         var remoteWebDriver = (RemoteWebDriver) driver;
         System.out.println("Test Session ID: " + remoteWebDriver.getSessionId() + " Thread: " + Thread.currentThread().getName());
@@ -189,7 +183,6 @@ public class BalanceUIAsyncTest {
     @Link(url = "https://trello.com/c/dRgxzOK3/" +
             "62-cpa-62-as-user-i-want-see-info-about-which-value-is-amount-and-value-in-" +
             "balance-page-total-balances-for-each-token-component", name = "Story Link")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenWalletValid_thenHeadersForSymbolTotalAmountTotalValueHeader(TestData data, SoftAssertions softAssertions) {
         var balancePage = this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -244,7 +237,6 @@ public class BalanceUIAsyncTest {
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user I can switch view of wallet balance details")
     @Description("View can be switch 1. [Address, Amount, Value] 2. [1H, 24h, 7D] 3. [30D, 60D, 90D]")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenPressSwitchWalletBalanceDetailView_thenViewIsChanged(TestData data, SoftAssertions softAssertions) {
         var balancePage = this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -362,7 +354,6 @@ public class BalanceUIAsyncTest {
     @Test
     @Severity(SeverityLevel.NORMAL)
     @Story("As user I can see wallets counter")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenMultipleWallets_thenCounterShowsTheNumber(TestData data) {
         var walletsData = data.getWalletAddressValid() + ","
                 + data.getWalletAddressValid() + ","
@@ -384,7 +375,6 @@ public class BalanceUIAsyncTest {
     @Severity(SeverityLevel.CRITICAL)
     @Story("As user I can see addresses that I provided on the /wallet page")
     @Description("Address is reduce to 11 char.")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenMultipleWallets_thenAddressesAreInTheProperColumn(TestData data, SoftAssertions softAssertions) {
         var walletData = data.getEthereumTestNetWallet().getAddress() + "," +
                 data.getWalletAddressValid();
@@ -419,7 +409,6 @@ public class BalanceUIAsyncTest {
     @Story("As user in system I am able to open explorer page for ETH wallet address that has been provided")
     @Description("Wallet explorers for test: ETH: https://goerli.etherscan.io/address/. " +
             "All addresses belong to the testnet for each token.")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenClickOnEthereumWalletAddress_thenOpenExplorerPage(TestData data, WebDriver driver) {
         var balancePage = this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -443,7 +432,6 @@ public class BalanceUIAsyncTest {
     @Story("As user in system I am able to open explorer page for MATIC wallet address that has been provided")
     @Description("Wallet explorer for test: MATIC: https://mumbai.polygonscan.com/address/" +
             "All addresses belong to the testnet.")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenClickOnOpenExplorerForPolygonWalletAddress_thenOpenExplorerPage(TestData data, WebDriver driver) {
         var balancePage = this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -467,7 +455,6 @@ public class BalanceUIAsyncTest {
     @Story("As user in system I am able to open explorer page for AVAX wallet address that has been provided")
     @Description("Wallet explorer for test: AVAX: https://testnet.snowtrace.io/address/. " +
             "All addresses belong to the testnet.")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenClickOnOpenExplorerForAvalancheWalletAddress_thenOpenExplorerPage(TestData data, WebDriver driver) {
         var balancePage = this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -489,7 +476,6 @@ public class BalanceUIAsyncTest {
     @Test
     @Severity(SeverityLevel.NORMAL)
     @Story("As user when I refresh the balance page, data should be maintained")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenRefreshThePage_thenDataMaintain(TestData data, WebDriver driver) {
         this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -512,7 +498,6 @@ public class BalanceUIAsyncTest {
     @Test
     @Severity(SeverityLevel.NORMAL)
     @Story("As user when I navigate back and forward, data should be maintained")
-    @Execution(ExecutionMode.CONCURRENT)
     public void whenNavigateBackAndForwardPage_thenDataMaintain(TestData data, WebDriver driver) {
         this.pages.getHomePage()
                 .open(this.appBaseURL)

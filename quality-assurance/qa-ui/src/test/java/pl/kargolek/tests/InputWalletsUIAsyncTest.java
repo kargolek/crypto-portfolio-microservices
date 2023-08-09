@@ -49,7 +49,6 @@ public class InputWalletsUIAsyncTest {
     @Severity(SeverityLevel.NORMAL)
     @Story("As a normal user, I want to see app title")
     @Description("When user open wallet's provider page, app title should be display")
-    @Execution(ExecutionMode.CONCURRENT)
     void whenOpenWalletPage_thenTitleShouldBeDisplay(TestProperty property) {
         var appTitleText = this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -62,7 +61,6 @@ public class InputWalletsUIAsyncTest {
     @Severity(SeverityLevel.NORMAL)
     @Story("As a normal user, I want to see description which tokens are handle")
     @Description("Handled tokens names should be provided below input wallet addresses field")
-    @Execution(ExecutionMode.CONCURRENT)
     void whenOpenWalletPage_thenTokenHandleDescriptionShouldDisplayed(SoftAssertions softAssertions) {
         var tokenDescriptionText = this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -79,7 +77,6 @@ public class InputWalletsUIAsyncTest {
     @Severity(SeverityLevel.NORMAL)
     @Story("As a normal user, I can see placeholder in input field")
     @Description("User can see placeholder in input field that inform what data should be typed")
-    @Execution(ExecutionMode.CONCURRENT)
     void whenOpenWalletPage_thenInputPlaceholderShouldBeVisible() {
         var placeholder = this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -93,7 +90,6 @@ public class InputWalletsUIAsyncTest {
     @Story("As a normal user, when I type ETH wallet address and press send button " +
             "I want to open balance page")
     @Description("When user hit send button with valid ETH wallet address, balance page should be open")
-    @Execution(ExecutionMode.CONCURRENT)
     void whenWalletAddressCorrectAndPressSend_thenBalancePageShouldBeOpen() {
         var isBalancePageOpened = this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -110,7 +106,6 @@ public class InputWalletsUIAsyncTest {
     @Story("As a normal user, when I type ETH wallet address and press enter key " +
             "I want to open balance page")
     @Description("When user hit send key with valid ETH wallet address, balance page should be open")
-    @Execution(ExecutionMode.CONCURRENT)
     void whenWalletAddressCorrectAndPressEnterKey_thenBalancePageShouldBeOpen() {
         var isBalancePageOpened = this.pages.getHomePage()
                 .open(this.appBaseURL)
@@ -127,7 +122,6 @@ public class InputWalletsUIAsyncTest {
     @Story("As a normal user, when I type ETH wallet address refresh page or back from other page " +
             "then wallet address should be maintained in the input wallets")
     @Description("Wallet address should be saved in browser session storage")
-    @Execution(ExecutionMode.CONCURRENT)
     void whenSendWalletAddress_thenShouldBeSavedInTheSessionStorage(WebDriver driver, SoftAssertions softAssertions) {
         var inputWalletPage = this.pages.getInputWalletPage();
         var walletAddress = "0x6cc28D37607024098F4104228E1388953875309B";
@@ -157,7 +151,6 @@ public class InputWalletsUIAsyncTest {
     @Severity(SeverityLevel.NORMAL)
     @Story("As a normal user, I can use navbar in wallets page")
     @Description("Navbar is enable in the wallets page")
-    @Execution(ExecutionMode.CONCURRENT)
     void whenOpenWalletPage_thenNavbarShouldBeDisplay() {
         this.pages.getHomePage()
                 .open(this.appBaseURL);
@@ -171,7 +164,6 @@ public class InputWalletsUIAsyncTest {
     @Severity(SeverityLevel.NORMAL)
     @Story("As a normal user when open wallet input page, I can use price banner")
     @Description("Price banner component should be attached to /wallet page")
-    @Execution(ExecutionMode.CONCURRENT)
     void whenOpenWalletPage_thenPriceBannerShouldBeAvailable() {
         this.pages.getHomePage()
                 .open(this.appBaseURL);

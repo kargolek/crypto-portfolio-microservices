@@ -27,22 +27,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 @BaseTestConfig
 @TestDataProvider
 @SoftAssertion
-//@Execution(ExecutionMode.SAME_THREAD)
 public class WalletProviderErrorHandlerAsyncTest {
 
     private static final String TOAST_TITLE_INFO = "Info";
     private static final String TOAST_INFO_WALLET_SYNTAX = "Please provide correct wallets data. Check wallet address syntax.";
-    private static final String TOAST_ERROR_TITLE = "Error";
-    private static final String TOAST_ERROR_MESSAGE = "Internal system error. Please try again later.";
     private String appBaseURL;
     private InitPages pages;
 
-    private static long start;
-
     @BeforeAll
     public static void setupAll(TestDataSql testDataSql){
-        start = System.currentTimeMillis();
-        System.out.println("Im running 1");
         testDataSql.deleteCryptocurrenciesData();
         testDataSql.insertEthereumData();
         testDataSql.insertPolygonData();
@@ -53,12 +46,6 @@ public class WalletProviderErrorHandlerAsyncTest {
     public void setupEach(TestProperty testProperty, InitPages initPages){
         this.appBaseURL = testProperty.getAppBaseURL();
         this.pages = initPages;
-    }
-
-    @AfterAll
-    static void tearDownAll(){
-        var time = (System.currentTimeMillis() - start)/1000 + "s";
-        System.out.println(time);
     }
 
     @Test
