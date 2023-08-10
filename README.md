@@ -1,4 +1,4 @@
-## Crypto-Portfolio
+# Crypto-Portfolio
 [![codecov](https://codecov.io/github/kargolek/crypto-portfolio-microservices/branch/main/graph/badge.svg?token=EF3DVKJ11I)](https://codecov.io/github/kargolek/crypto-portfolio-microservices)
 [![Build Status](https://github.com/kargolek/crypto-portfolio-microservices/workflows/build-and-run-unit-integration-test/badge.svg)](https://github.com/kargolek/crypto-portfolio-microservices/actions/workflows/build.yaml)
 [![Full Test](https://github.com/kargolek/crypto-portfolio-microservices/workflows/qa-main-full-test/badge.svg)](https://kargolek.github.io/crypto-portfolio-microservices/main/) 
@@ -9,7 +9,7 @@
 Crypto-Portfolio is an application that allows users to check the balances of their cryptocurrency portfolios for various tokens such as Ethereum, Matic, and Avalanche. 
 It provides a convenient way to monitor multiple wallet addresses simultaneously.
 
-### Features
+## Features
 
 - **Multi-Token Support**: The application checks the balances of crypto wallets for different tokens, including Ethereum, Matic, and Avalanche. More tokens will be added in the future.
 - **Multi-Wallet Check**: Users can check the balances of up to 70 wallet addresses at once.
@@ -22,7 +22,7 @@ It provides a convenient way to monitor multiple wallet addresses simultaneously
 - **Unit Testing, Integration Testing, and E2E Testing**: The application provides comprehensive test coverage to ensure its stability and reliability.
 - **Cross-Platform**: The application is built to support both desktop and mobile browsers.
 
-### How to Use
+## How to Use
 
 *Preconditions*
 1. Create an account on the https://coinmarketcap.com/ and add API key "COIN_MARKET_CAP_API_KEY" to system env variable
@@ -43,11 +43,11 @@ start build_env.bat
 
 The app will start with preloaded data for Bitcoin, Ethereum, Matic, Avax tokens.
 
-### License
+## License
 
 This project is licensed under the MIT LICENSE. See the [LICENSE](LICENSE) file for more information.
 
-### Examples
+## Examples
 
 #### Desktop version
 
@@ -63,6 +63,6 @@ This project is licensed under the MIT LICENSE. See the [LICENSE](LICENSE) file 
 #### Mobile version
 https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/1066fb1a-5582-45ed-90bc-f278ecef484d
 
-### API Documentation
+## API Documentation
 1. crypto-price service [OPEN](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/crypto-price-service/README.md)
 2. wallet-service [OPEN](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/wallet-service/README.md)
