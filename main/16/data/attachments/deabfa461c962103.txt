@@ -1,0 +1,1 @@
+{"status":"INTERNAL_SERVER_ERROR","timestamp":"2023-08-10T13:09:29.696161872","message":"Unable to get price for crypto: Ethereum"}
