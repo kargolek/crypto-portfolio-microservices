@@ -1,7 +1,8 @@
-![Workflow Status](https://github.com/kargolek/crypto-portfolio-microservices/workflows/build-and-run-unit-integration-test/badge.svg) ![Workflow Status](https://github.com/kargolek/crypto-portfolio-microservices/workflows/qa-main-full-test/badge.svg) ![Workflow Status](https://github.com/kargolek/crypto-portfolio-microservices/workflows/qa-regression-test/badge.svg) 
+![https://github.com/kargolek/crypto-portfolio-microservices/actions/workflows/build.yaml](https://github.com/kargolek/crypto-portfolio-microservices/workflows/build-and-run-unit-integration-test/badge.svg) ![Workflow Status](https://github.com/kargolek/crypto-portfolio-microservices/workflows/qa-main-full-test/badge.svg) ![Workflow Status](https://github.com/kargolek/crypto-portfolio-microservices/workflows/qa-regression-test/badge.svg) 
 # Crypto-Portfolio
 
-Crypto-Portfolio is an application that allows users to check the balances of their cryptocurrency portfolios for various tokens such as Ethereum, Matic, and Avalanche. It provides a convenient way to monitor multiple wallet addresses simultaneously.
+Crypto-Portfolio is an application that allows users to check the balances of their cryptocurrency portfolios for various tokens such as Ethereum, Matic, and Avalanche. 
+It provides a convenient way to monitor multiple wallet addresses simultaneously.
 
 ## Features
 
