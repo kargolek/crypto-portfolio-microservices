@@ -30,6 +30,7 @@
         <maven-surefire-junit5-tree-reporter.version>1.1.0</maven-surefire-junit5-tree-reporter.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <springdoc-openapi-ui.version>1.6.15</springdoc-openapi-ui.version>
+        <jacoco-maven-plugin-version>0.8.10</jacoco-maven-plugin-version>
     </properties>
 
     <dependencies>
@@ -190,11 +191,6 @@
                         <artifactId>maven-surefire-junit5-tree-reporter</artifactId>
                         <version>${maven-surefire-junit5-tree-reporter.version}</version>
                     </dependency>
-                    <dependency>
-                        <groupId>org.jacoco</groupId>
-                        <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>0.8.10</version>
-                    </dependency>
                 </dependencies>
 
                 <configuration>
@@ -209,7 +205,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.10</version>
+                <version>${jacoco-maven-plugin-version}</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
