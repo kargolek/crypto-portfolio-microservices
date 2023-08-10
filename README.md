@@ -1,5 +1,10 @@
-![https://github.com/kargolek/crypto-portfolio-microservices/actions/workflows/build.yaml](https://github.com/kargolek/crypto-portfolio-microservices/workflows/build-and-run-unit-integration-test/badge.svg) ![Workflow Status](https://github.com/kargolek/crypto-portfolio-microservices/workflows/qa-main-full-test/badge.svg) ![Workflow Status](https://github.com/kargolek/crypto-portfolio-microservices/workflows/qa-regression-test/badge.svg) 
-# Crypto-Portfolio
+[![Build Status](https://github.com/kargolek/crypto-portfolio-microservices/workflows/build-and-run-unit-integration-test/badge.svg)](https://github.com/kargolek/crypto-portfolio-microservices/actions/workflows/build.yaml)
+[![Full Test](https://github.com/kargolek/crypto-portfolio-microservices/workflows/qa-main-full-test/badge.svg)](https://kargolek.github.io/crypto-portfolio-microservices/main/) 
+[![Regression Test](https://github.com/kargolek/crypto-portfolio-microservices/workflows/qa-regression-test-chrome/badge.svg)](https://kargolek.github.io/crypto-portfolio-microservices/regression/chrome)
+[![Regression Test](https://github.com/kargolek/crypto-portfolio-microservices/workflows/qa-regression-test-edge/badge.svg)](https://kargolek.github.io/crypto-portfolio-microservices/regression/edge)
+[![Regression Test](https://github.com/kargolek/crypto-portfolio-microservices/workflows/qa-regression-test-firefox/badge.svg)](https://kargolek.github.io/crypto-portfolio-microservices/regression/firefox)
+
+## Crypto-Portfolio
 
 Crypto-Portfolio is an application that allows users to check the balances of their cryptocurrency portfolios for various tokens such as Ethereum, Matic, and Avalanche. 
 It provides a convenient way to monitor multiple wallet addresses simultaneously.
@@ -48,6 +53,7 @@ This project is licensed under the MIT LICENSE. See the [LICENSE](LICENSE) file 
 
 * Input wallet view
 ![web_screen1](https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/d8ea8ef2-1d57-4edf-abb3-91c96b276d41)
+
 
 * Portfolio view
 ![web_screen2](https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/715ab29f-a5d0-4a04-be63-dba4e3a4b54c)
