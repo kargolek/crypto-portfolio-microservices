@@ -30,6 +30,7 @@
         <guava.version>31.1-jre</guava.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
         <springdoc-openapi-ui.version>1.6.15</springdoc-openapi-ui.version>
+        <jacoco-maven-plugin-version>0.8.10</jacoco-maven-plugin-version>
     </properties>
 
     <dependencies>
@@ -190,6 +191,26 @@
                     </statelessTestsetInfoReporter>
                 </configuration>
 
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin-version}</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
