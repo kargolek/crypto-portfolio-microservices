@@ -1,0 +1,2 @@
+status	BAD_REQUEST
+message	Received coin market cap crypto name, no match with provided name:Ethereum

@@ -1,0 +1,3 @@
+status	BAD_REQUEST
+message	Method argument are not valid
+errors	[Token address length exceeds range [2,255]]

@@ -1,0 +1,1 @@
+{"status":"BAD_REQUEST","timestamp":"2023-08-10T16:10:07.174519664","message":"Server status code: 400, message: \"symbol\" should only include comma-separated alphanumeric cryptocurrency symbols"}
