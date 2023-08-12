@@ -1,4 +1,4 @@
-# Crypto-Portfolio
+# Crypto-Portfolio [![Trello](https://img.shields.io/badge/Trello-0052CC?style=for-the-badge&logo=trello&logoColor=white)](https://trello.com/b/PnS0tEYn/crypto-portfolio-app)
 [![codecov](https://codecov.io/github/kargolek/crypto-portfolio-microservices/branch/main/graph/badge.svg?token=EF3DVKJ11I)](https://codecov.io/github/kargolek/crypto-portfolio-microservices)
 [![Build Status](https://github.com/kargolek/crypto-portfolio-microservices/workflows/build-and-run-unit-integration-test/badge.svg)](https://github.com/kargolek/crypto-portfolio-microservices/actions/workflows/build.yaml)
 [![Full Test](https://github.com/kargolek/crypto-portfolio-microservices/workflows/qa-main-full-test/badge.svg)](https://kargolek.github.io/crypto-portfolio-microservices/main/) 
