@@ -23,11 +23,10 @@ The `qa-ui` module focuses on conducting UI tests for the Crypto Portfolio appli
 
 Highlighted aspects of the `qa-ui` module:
 
-- **Selenium 4 and JUnit 5**: Utilizes Selenium 4, a powerful web testing framework, and JUnit 5, a widely used testing framework for Java applications.
+- **Selenium 4, JUnit 5 and Maven Surefire**: Utilizes Selenium 4, a powerful web testing framework, and JUnit 5, a widely used testing framework for Java applications.
 - **Cross-Browser Testing**: Validates the compatibility of the application across multiple browsers, detecting any inconsistencies in behavior or layout.
-- **Responsive Design**: Ensures that the user interface maintains its usability and visual integrity on various screen sizes and devices.
 - **Visual Regression Testing**: Detects any unintended visual changes between different versions of the application, safeguarding against design regressions.
-- **Automation Efficiency**: By automating UI testing, the module increases testing efficiency and accuracy, providing rapid feedback to the development team.
-
+- **Comprehensive Test Reports with Allure**: We employ the Allure framework to generate detailed test reports that offer an interactive visual representation of test results. These reports come enriched with attachments such as screenshots, video recordings, and browser logs. This feature enhances our ability to understand test outcomes and quickly diagnose issues.
+- **Test parallelization**: By running tests in parallel mode, the execution time has been significantly reduced, resulting in a more efficient testing process and quicker feedback on the status of the crypto portfolio microservices.
 
 Feel free to explore the `qa-api` and `qa-ui` directories for detailed information, test scripts, and resources related to the quality assurance process.

@@ -2,11 +2,11 @@ name: "qa-regression-test-chrome"
 
 env:
   ####### TEST VARS #######
-  TAGS: HomePageUI,TokenBalanceUI
+  TAGS:
   BROWSER_TYPE: chrome
   HEADLESS_MODE: enable
-  NETWORK_LISTENER: disable
-  PARALLEL_TEST: true
+  NETWORK_LISTENER: enable
+  PARALLEL_TEST: false
 
   ####### ENV VARS #######
   COIN_MARKET_CAP_API_KEY: ${{ secrets.COIN_MARKET_CAP_API_KEY }}

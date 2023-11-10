@@ -2,8 +2,8 @@ package pl.kargolek.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.devtools.DevTools;
-import org.openqa.selenium.devtools.DevToolsException;
 import org.openqa.selenium.devtools.HasDevTools;
 import org.openqa.selenium.devtools.v114.network.Network;
 import org.openqa.selenium.remote.Augmenter;
@@ -42,7 +42,7 @@ public class DevToolsDriver {
     }
 
     public DevToolsDriver setNetworkResponsesListener() {
-        devTools.send(Network.enable(Optional.empty(), Optional.empty(), Optional.empty()));
+        devTools.send(Network.enable(Optional.of(100000), Optional.empty(), Optional.empty()));
         devTools.addListener(Network.responseReceived(),
                 responseReceived -> {
                     try {
@@ -56,7 +56,7 @@ public class DevToolsDriver {
                                         responseBody.substring(0, endIndex)
                                 )
                         );
-                    } catch (InterruptedException | DevToolsException e) {
+                    } catch (InterruptedException | WebDriverException e) {
                         log.info("Error in parse dev tools request data");
                     }
                 });
@@ -97,6 +97,7 @@ public class DevToolsDriver {
         public DevToolsUtilsBuilder createConnection() {
             this.devTools = ((HasDevTools) webDriver).getDevTools();
             this.devTools.createSession();
+            devTools.send(Network.clearBrowserCache());
             return this;
         }
 
