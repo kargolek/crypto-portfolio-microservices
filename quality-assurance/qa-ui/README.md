@@ -20,7 +20,8 @@ The test framework is built using **Selenium 4.10, JUnit5, Maven Surefire and Al
 
 ## How to run locally
 ### Prerequisites
-1. Run **build.bat** from ./crypto-portfolio-microservices to start app
+1. **Docker** should be installed
+2. Run **build.bat** from ./crypto-portfolio-microservices to start app
 
 ### Running the Main Tests
 1. Navigate to ./crypto-portfolio-microservices/quality-assurance/qa-ui
@@ -34,7 +35,7 @@ Run params example:
 ```shell
 mvn test -T 2 -Dgroups="ExampleTag,ExampleTag2"     
 ```
-* Exclude tags
+* Exclude test by tags
 ```shell
 mvn test -T 2 -Dgroups="!ExampleTag"     
 ```
@@ -57,7 +58,7 @@ mvn test -T 2 "-Djunit.jupiter.execution.parallel.enabled=true || false"
 
 ## Examples
 
-#### Example test class
+### Example test class
 ```java
 package pl.kargolek.tests;
 
@@ -106,4 +107,23 @@ public class HomePageTest {
 ```
 * The test class is configured using the [@BaseTestConfig](https://github.com/kargolek/crypto-portfolio-microservices/blob/main/quality-assurance/qa-ui/src/test/java/pl/kargolek/extension/BaseTestConfig.java) annotation and **Junit 5 extension feature**
 
-#### Example test report
+### Example test report
+
+* #### Home page
+![Test report](asset/allure_regression_chrome_home.png)
+* #### Behavior page and test's overview
+![Test report](asset/allure_regression_chrome_behavior_page.png)
+* #### Clearly executions steps of each tests with description
+![Test report](asset/allure_detail_view_execution_steps.png)
+* #### Indicated step by error type
+![Test report](asset/allure_detail_view_execution_steps_error_step.png)
+* #### Chrome browser console error logs
+![Test report](asset/allure_detail_view_browser_logs_with_errors.png)
+* #### Chrome network events
+![Test report](asset/allure_detail_view_network_events.png)
+* #### Visual comparing of web elements
+![Test report](asset/allure_detail_view_web_element_visual_comparing.png)
+* #### Test execution video
+
+* #### Console output during execution tests
+![Test report](asset/console_log_pretty_print_output.png)
