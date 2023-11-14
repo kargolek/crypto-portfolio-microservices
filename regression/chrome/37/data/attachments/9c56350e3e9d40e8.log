@@ -1,0 +1,6 @@
+[WARNING 2023-11-14T21:35:28.755]
+https://mumbai.polygonscan.com/assets/vendor/jquery/dist/jquery.min.js?v=23.11.1.0 1:38414 "jQuery.Deferred exception: Cannot read properties of null (reading 'dispose')" "TypeError: Cannot read properties of null (reading 'dispose')\n    at HTMLDocument.\u003Canonymous> (https://mumbai.polygonscan.com/address/0x189B9cBd4AfF470aF2C0102f365FC1823d857965:2661:25)\n    at e (https://mumbai.polygonscan.com/assets/vendor/jquery/dist/jquery.min.js?v=23.11.1.0:2:36552)\n    at t (https://mumbai.polygonscan.com/assets/vendor/jquery/dist/jquery.min.js?v=23.11.1.0:2:36928)" undefined
+
+[SEVERE 2023-11-14T21:35:28.762]
+https://mumbai.polygonscan.com/assets/vendor/jquery/dist/jquery.min.js?v=23.11.1.0 1:38538 Uncaught TypeError: Cannot read properties of null (reading 'dispose')
+
