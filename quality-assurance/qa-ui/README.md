@@ -124,6 +124,6 @@ public class HomePageTest {
 * #### Visual comparing of web elements
 ![Test report](asset/allure_detail_view_web_element_visual_comparing.png)
 * #### Test execution video
-
+https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/c0240a3f-fac8-4223-b110-358fbc7dd873
 * #### Console output during execution tests
 ![Test report](asset/console_log_pretty_print_output.png)
