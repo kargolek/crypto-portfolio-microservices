@@ -13,9 +13,9 @@ It provides a convenient way to monitor multiple wallet addresses simultaneously
 - [Features](#features)
 - [How to use](#how-to-use)
 - [License](#license)
-- [Examples](#examples)
 - [API documentation](#api-documentation)
 - [Quality Assurance](#api-documentation)
+- [Examples](#examples)
 
 ## Features
 
@@ -55,22 +55,6 @@ The app will start with preloaded data for Bitcoin, Ethereum, Matic, Avax tokens
 
 This project is licensed under the MIT LICENSE. See the [LICENSE](LICENSE) file for more information.
 
-## Examples
-
-#### Desktop version
-
-* Input wallet view
-![web_screen1](https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/d8ea8ef2-1d57-4edf-abb3-91c96b276d41)
-
-
-* Portfolio view
-![web_screen2](https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/715ab29f-a5d0-4a04-be63-dba4e3a4b54c)
-![web_screen3](https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/d2464acc-4c22-4ecf-99de-5b8354c50044)
-![web_screen4](https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/35c5b72d-c74c-4ed7-a800-8e6446aab0b8)
-
-#### Mobile version
-https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/1066fb1a-5582-45ed-90bc-f278ecef484d
-
 ## API Documentation
 1. [crypto-price service](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/crypto-price-service/README.md)
 2. [wallet-service](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/wallet-service/README.md)
@@ -79,3 +63,20 @@ https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/1066f
 1. [**Unit & Integration tests** for **crypto-price-service**](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/crypto-price-service/src/test/java/pl/kargolek/cryptopriceservice)
 2. [**Unit & Integration tests** for **wallet-service**](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/crypto-price-service/src/test/java/pl/kargolek/cryptopriceservice)
 3. [**QA tests** for **API** and **UI**](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/quality-assurance)
+
+## Examples
+
+#### Desktop version
+
+* Input wallet view
+   ![web_screen1](https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/d8ea8ef2-1d57-4edf-abb3-91c96b276d41)
+
+
+* Portfolio view
+   ![web_screen2](https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/715ab29f-a5d0-4a04-be63-dba4e3a4b54c)
+   ![web_screen3](https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/d2464acc-4c22-4ecf-99de-5b8354c50044)
+   ![web_screen4](https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/35c5b72d-c74c-4ed7-a800-8e6446aab0b8)
+
+#### Mobile version
+   https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/1066fb1a-5582-45ed-90bc-f278ecef484d
+

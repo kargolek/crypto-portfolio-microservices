@@ -2,6 +2,13 @@
 
 [![Test Status](https://github.com/kargolek/crypto-portfolio-microservices/actions/workflows/qa-main-test.yaml/badge.svg)](https://github.com/kargolek/crypto-portfolio-microservices/actions/workflows/qa-main-test.yaml)
 
+### Table of content
+- [Description](#description)
+- [Features](#features)
+- [Example BDD](#example-bdd-test)
+- [How to run locally](#how-to-run-api-tests-locally)
+- [Latest test report on CI](#latest-test-report-on-ci)
+
 ### Description
 
 This test framework is built with RestAssured, Cucumber, JUnit5, and Allure. It is designed to automate API microservices tests and provide detailed test reports.
@@ -12,10 +19,6 @@ This test framework is built with RestAssured, Cucumber, JUnit5, and Allure. It 
 - Test execution with JUnit5
 - Detailed test reports with Allure
 - Simple running tests via Maven command with filter option by tags
-
-### Latest Test report on CI
-1. Regression latest: https://kargolek.github.io/crypto-portfolio-microservices/regression/
-2. Main latest: https://kargolek.github.io/crypto-portfolio-microservices/main/
 
 ### Example bdd test
 ```gherkin
@@ -71,5 +74,9 @@ mvn clean test -Dgroups="wallet_service_api_test_positive | crypto_price_service
 ```shell
 mvn allure:serve
 ```
+### Latest Test report on CI
+1. Regression latest: https://kargolek.github.io/crypto-portfolio-microservices/regression/
+2. Main latest: https://kargolek.github.io/crypto-portfolio-microservices/main/
+
 #### *Example test report*
 ![Test report](asset/allure_report_api_bdd_filtered.png)

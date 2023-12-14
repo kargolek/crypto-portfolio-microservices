@@ -367,25 +367,16 @@ for e.g: trend_line_chart_container_base.png
 The file should be created separately for browsers: Chrome, Edge, and Firefox, and also for headless mode.
 
 ### Example test report
-
 * #### Home page
-
 ![Test report](asset/allure_regression_chrome_home.png)
-
 * #### Behavior page and test's overview
-
 ![Test report](asset/allure_regression_chrome_behavior_page.png)
-
 * #### Clearly executions steps of each tests with description
-
 ![Test report](asset/allure_detail_view_execution_steps.png)
-
 * #### Indicated step by error type
-
 ![Test report](asset/allure_detail_view_execution_steps_error_step.png)
 * #### Chrome browser console error logs
 ![Test report](asset/allure_detail_view_browser_logs_with_errors.png)
-
 * #### Chrome network logs
 ![Test report](asset/allure_detail_view_network_events.png)
 * #### Visual comparing of web elements
