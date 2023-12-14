@@ -25,10 +25,7 @@ https://app.swaggerhub.com/apis-docs/KAROLORLOWICZ/wallet-service_api_documentat
 
 *Main Steps*
 1. Clone repo
-2. Run
-```shell
-cd ..
-```
+2. Navigate to path: */crypto-portfolio-microservices
 3. Run cmd script for build and compose docker containers
 ```shell
 start build.bat

@@ -6,8 +6,11 @@
 
 Welcome to the Quality Assurance section of the Crypto Portfolio Microservices project. This repository contains two essential modules, `qa-api` and `qa-ui`, dedicated to ensuring the reliability, functionality, and performance of the Crypto Portfolio application.
 
-## [QA-API Module](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/quality-assurance/qa-api)
+## Table of content
+- [QA-API](#qa-api-modulehttpsgithubcomkargolekcrypto-portfolio-microservicestreemainquality-assuranceqa-api)
+- [QA-UI](#qa-ui-modulehttpsgithubcomkargolekcrypto-portfolio-microservicestreemainquality-assuranceqa-ui)
 
+## [QA-API Module](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/quality-assurance/qa-api)
 
 The `qa-api` module is designed to conduct comprehensive API testing for the Crypto Portfolio application. It encompasses a suite of tests that validate the functionality of various endpoints for **[crypto-price-service](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/crypto-price-service)** and **[wallet-service](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/wallet-service)**, data integrity, error handling, and the overall robustness of the API.
 

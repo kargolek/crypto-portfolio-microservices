@@ -9,6 +9,14 @@
 Crypto-Portfolio is an application that allows users to check the balances of their cryptocurrency portfolios for various tokens such as Ethereum, Matic, and Avalanche. 
 It provides a convenient way to monitor multiple wallet addresses simultaneously.
 
+## Table of content
+- [Features](#features)
+- [How to use](#how-to-use)
+- [License](#license)
+- [Examples](#examples)
+- [API documentation](#api-documentation)
+- [Quality Assurance](#api-documentation)
+
 ## Features
 
 - **Multi-Token Support**: The application checks the balances of crypto wallets for different tokens, including Ethereum, Matic, and Avalanche. More tokens will be added in the future.
@@ -64,5 +72,10 @@ This project is licensed under the MIT LICENSE. See the [LICENSE](LICENSE) file 
 https://github.com/kargolek/crypto-portfolio-microservices/assets/33175703/1066fb1a-5582-45ed-90bc-f278ecef484d
 
 ## API Documentation
-1. crypto-price service [OPEN](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/crypto-price-service/README.md)
-2. wallet-service [OPEN](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/wallet-service/README.md)
+1. [crypto-price service](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/crypto-price-service/README.md)
+2. [wallet-service](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/wallet-service/README.md)
+
+## Quality Assurance
+1. [**Unit & Integration tests** for **crypto-price-service**](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/crypto-price-service/src/test/java/pl/kargolek/cryptopriceservice)
+2. [**Unit & Integration tests** for **wallet-service**](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/crypto-price-service/src/test/java/pl/kargolek/cryptopriceservice)
+3. [**QA tests** for **API** and **UI**](https://github.com/kargolek/crypto-portfolio-microservices/tree/main/quality-assurance)
