@@ -16,6 +16,12 @@ cd /d %~dp0..\crypto-portfolio-microservices\wallet-service\
 call mvn clean package -DskipTests
 
 cd /d %~dp0..\crypto-portfolio-microservices\client-side\
+call npm install --legacy-peer-deps @angular-devkit/build-angular
+
+cd /d %~dp0..\crypto-portfolio-microservices\client-side\
+call npm install -g @angular/cli
+
+cd /d %~dp0..\crypto-portfolio-microservices\client-side\
 call ng build --configuration=%BUILD_ENV_CLIENT%
 
 cd /d %~dp0..\crypto-portfolio-microservices\quality-assurance\qa-ui\

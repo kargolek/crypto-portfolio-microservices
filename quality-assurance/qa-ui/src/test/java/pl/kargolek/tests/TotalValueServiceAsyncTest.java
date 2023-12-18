@@ -6,8 +6,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.parallel.Execution;
-import org.junit.jupiter.api.parallel.ExecutionMode;
 import pl.kargolek.data.TestData;
 import pl.kargolek.data.script.TestDataSql;
 import pl.kargolek.extension.BaseTestConfig;
@@ -298,19 +296,19 @@ public class TotalValueServiceAsyncTest {
                 .getText();
 
         softAssertions.assertThat(resultQuote1h)
-                .containsOnlyOnce("1h (1068.15$)");
+                .containsOnlyOnce("1h (467.83$)");
 
         softAssertions.assertThat(resultPercentage1h)
                 .containsOnlyOnce("10.00%");
 
         softAssertions.assertThat(resultQuote24h)
-                .containsOnlyOnce("24h (1068.15$)");
+                .containsOnlyOnce("24h (467.83$)");
 
         softAssertions.assertThat(resultPercentage24h)
                 .containsOnlyOnce("10.00%");
 
         softAssertions.assertThat(resultQuote7d)
-                .containsOnlyOnce("7d (1068.15$)");
+                .containsOnlyOnce("7d (467.83$)");
 
         softAssertions.assertThat(resultPercentage7d)
                 .containsOnlyOnce("10.00%");
@@ -405,11 +403,13 @@ public class TotalValueServiceAsyncTest {
         var avalanchePrice = data.getAvalanchePrice().getPriceCurrent();
         var avalancheValue = data.getAvalancheTestNetWallet().getAmount().multiply(avalanchePrice);
 
-        var tempTotalValueCounted = ethereumValue.add(polygonValue).add(avalancheValue)
+        var tempEthereumPolygonValue = ethereumValue.add(polygonValue)
                 .setScale(2, RoundingMode.FLOOR);
-        var multiplyTotalValueCounter = tempTotalValueCounted.multiply(multiplyBy);
+        var ethereumPolygonValue = tempEthereumPolygonValue.multiply(multiplyBy);
+        var totalValue = ethereumPolygonValue.add(avalancheValue)
+                .setScale(2, RoundingMode.FLOOR);
 
-        return multiplyTotalValueCounter.toPlainString() + " USD";
+        return totalValue.toPlainString() + " USD";
     }
 
 }

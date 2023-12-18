@@ -398,12 +398,10 @@ Feature: WalletService API Test - positive
       | Avalanche | AVAX   |
     And receive wallets json data totals quantity
       | totalQuantity | totalBalance | totalBalance1h | totalBalance24h | totalBalance7d |
-      | 3.0           | 60.38        | 57.06          | 63.70           | 54.04          |
+      | 1.5          | 30.19        | 28.53          | 31.85           | 27.02          |
     And receive wallets json data balances
       | walletAddress                              | quantity | balance | balance1h | balance24h | balance7d | balance30d | balance60d | balance90d | walletExplorer                                                                  |
       | 0x8d81156294aBC787e5cBcc16774799Aeba574439 | 1.5      | 30.19   | 28.53     | 31.85      | 27.02     | 33.36      | 25.51      | 34.87      | https://testnet.snowtrace.io/address/0x8d81156294aBC787e5cBcc16774799Aeba574439 |
-      | 0x8d81156294aBC787e5cBcc16774799Aeba574439 | 1.5      | 30.19   | 28.53     | 31.85      | 27.02     | 33.36      | 25.51      | 34.87      | https://testnet.snowtrace.io/address/0x8d81156294aBC787e5cBcc16774799Aeba574439 |
-
   @severity=critical
   Scenario: As user GET resource /api/v1/wallet/avax/balance for multiple wallets in single query param
     Given valid API endpoint
@@ -417,10 +415,9 @@ Feature: WalletService API Test - positive
       | Avalanche | AVAX   |
     And receive wallets json data totals quantity
       | totalQuantity | totalBalance | totalBalance1h | totalBalance24h | totalBalance7d |
-      | 3.0           | 60.38        | 57.06          | 63.70           | 54.04          |
+      | 1.5          | 30.19        | 28.53          | 31.85           | 27.02          |
     And receive wallets json data balances
       | walletAddress                              | quantity | balance | balance1h | balance24h | balance7d | balance30d | balance60d | balance90d | walletExplorer                                                                  |
-      | 0x8d81156294aBC787e5cBcc16774799Aeba574439 | 1.5      | 30.19   | 28.53     | 31.85      | 27.02     | 33.36      | 25.51      | 34.87      | https://testnet.snowtrace.io/address/0x8d81156294aBC787e5cBcc16774799Aeba574439 |
       | 0x8d81156294aBC787e5cBcc16774799Aeba574439 | 1.5      | 30.19   | 28.53     | 31.85      | 27.02     | 33.36      | 25.51      | 34.87      | https://testnet.snowtrace.io/address/0x8d81156294aBC787e5cBcc16774799Aeba574439 |
 
   @severity=critical
@@ -495,27 +492,9 @@ Feature: WalletService API Test - positive
       | Avalanche | AVAX   |
     And receive wallets json data totals quantity
       | totalQuantity | totalBalance | totalBalance1h | totalBalance24h | totalBalance7d |
-      | 16.5          | 332.09       | 313.83         | 350.35          | 297.22         |
+      | 3.0           | 60.38        | 57.06          | 63.70           | 54.04          |
     And receive wallets json data balances
       | walletAddress                              | quantity | balance | balance1h | balance24h | balance7d | balance30d | balance60d | balance90d | walletExplorer                                                                  |
-      | 0x0E510578889ce76db52686625E2E12D35D0b092e | 0        | 0.00    | 0.00      | 0.00       | 0.00      | 0.00       | 0.00       | 0.00       | https://testnet.snowtrace.io/address/0x0E510578889ce76db52686625E2E12D35D0b092e |
-      | 0x8d81156294aBC787e5cBcc16774799Aeba574439 | 1.5      | 30.19   | 28.53     | 31.85      | 27.02     | 33.36      | 25.51      | 34.87      | https://testnet.snowtrace.io/address/0x8d81156294aBC787e5cBcc16774799Aeba574439 |
-      | 0x0E510578889ce76db52686625E2E12D35D0b092e | 0        | 0.00    | 0.00      | 0.00       | 0.00      | 0.00       | 0.00       | 0.00       | https://testnet.snowtrace.io/address/0x0E510578889ce76db52686625E2E12D35D0b092e |
-      | 0x8d81156294aBC787e5cBcc16774799Aeba574439 | 1.5      | 30.19   | 28.53     | 31.85      | 27.02     | 33.36      | 25.51      | 34.87      | https://testnet.snowtrace.io/address/0x8d81156294aBC787e5cBcc16774799Aeba574439 |
-      | 0x0E510578889ce76db52686625E2E12D35D0b092e | 0        | 0.00    | 0.00      | 0.00       | 0.00      | 0.00       | 0.00       | 0.00       | https://testnet.snowtrace.io/address/0x0E510578889ce76db52686625E2E12D35D0b092e |
-      | 0x8d81156294aBC787e5cBcc16774799Aeba574439 | 1.5      | 30.19   | 28.53     | 31.85      | 27.02     | 33.36      | 25.51      | 34.87      | https://testnet.snowtrace.io/address/0x8d81156294aBC787e5cBcc16774799Aeba574439 |
-      | 0x0E510578889ce76db52686625E2E12D35D0b092e | 0        | 0.00    | 0.00      | 0.00       | 0.00      | 0.00       | 0.00       | 0.00       | https://testnet.snowtrace.io/address/0x0E510578889ce76db52686625E2E12D35D0b092e |
-      | 0x8d81156294aBC787e5cBcc16774799Aeba574439 | 1.5      | 30.19   | 28.53     | 31.85      | 27.02     | 33.36      | 25.51      | 34.87      | https://testnet.snowtrace.io/address/0x8d81156294aBC787e5cBcc16774799Aeba574439 |
-      | 0x0E510578889ce76db52686625E2E12D35D0b092e | 0        | 0.00    | 0.00      | 0.00       | 0.00      | 0.00       | 0.00       | 0.00       | https://testnet.snowtrace.io/address/0x0E510578889ce76db52686625E2E12D35D0b092e |
-      | 0x8d81156294aBC787e5cBcc16774799Aeba574439 | 1.5      | 30.19   | 28.53     | 31.85      | 27.02     | 33.36      | 25.51      | 34.87      | https://testnet.snowtrace.io/address/0x8d81156294aBC787e5cBcc16774799Aeba574439 |
-      | 0x0E510578889ce76db52686625E2E12D35D0b092e | 0        | 0.00    | 0.00      | 0.00       | 0.00      | 0.00       | 0.00       | 0.00       | https://testnet.snowtrace.io/address/0x0E510578889ce76db52686625E2E12D35D0b092e |
-      | 0x8d81156294aBC787e5cBcc16774799Aeba574439 | 1.5      | 30.19   | 28.53     | 31.85      | 27.02     | 33.36      | 25.51      | 34.87      | https://testnet.snowtrace.io/address/0x8d81156294aBC787e5cBcc16774799Aeba574439 |
-      | 0x0E510578889ce76db52686625E2E12D35D0b092e | 0        | 0.00    | 0.00      | 0.00       | 0.00      | 0.00       | 0.00       | 0.00       | https://testnet.snowtrace.io/address/0x0E510578889ce76db52686625E2E12D35D0b092e |
-      | 0x8d81156294aBC787e5cBcc16774799Aeba574439 | 1.5      | 30.19   | 28.53     | 31.85      | 27.02     | 33.36      | 25.51      | 34.87      | https://testnet.snowtrace.io/address/0x8d81156294aBC787e5cBcc16774799Aeba574439 |
-      | 0x0E510578889ce76db52686625E2E12D35D0b092e | 0        | 0.00    | 0.00      | 0.00       | 0.00      | 0.00       | 0.00       | 0.00       | https://testnet.snowtrace.io/address/0x0E510578889ce76db52686625E2E12D35D0b092e |
-      | 0x8d81156294aBC787e5cBcc16774799Aeba574439 | 1.5      | 30.19   | 28.53     | 31.85      | 27.02     | 33.36      | 25.51      | 34.87      | https://testnet.snowtrace.io/address/0x8d81156294aBC787e5cBcc16774799Aeba574439 |
-      | 0x0E510578889ce76db52686625E2E12D35D0b092e | 0        | 0.00    | 0.00      | 0.00       | 0.00      | 0.00       | 0.00       | 0.00       | https://testnet.snowtrace.io/address/0x0E510578889ce76db52686625E2E12D35D0b092e |
-      | 0x8d81156294aBC787e5cBcc16774799Aeba574439 | 1.5      | 30.19   | 28.53     | 31.85      | 27.02     | 33.36      | 25.51      | 34.87      | https://testnet.snowtrace.io/address/0x8d81156294aBC787e5cBcc16774799Aeba574439 |
       | 0x0E510578889ce76db52686625E2E12D35D0b092e | 0        | 0.00    | 0.00      | 0.00       | 0.00      | 0.00       | 0.00       | 0.00       | https://testnet.snowtrace.io/address/0x0E510578889ce76db52686625E2E12D35D0b092e |
       | 0x8d81156294aBC787e5cBcc16774799Aeba574439 | 1.5      | 30.19   | 28.53     | 31.85      | 27.02     | 33.36      | 25.51      | 34.87      | https://testnet.snowtrace.io/address/0x8d81156294aBC787e5cBcc16774799Aeba574439 |
       | 0x0E510578889ce76db52686625E2E12D35D0b092e | 0        | 0.00    | 0.00      | 0.00       | 0.00      | 0.00       | 0.00       | 0.00       | https://testnet.snowtrace.io/address/0x0E510578889ce76db52686625E2E12D35D0b092e |
